@@ -1,3 +1,4 @@
+using Domain.Authorization;
 using Domain.Authorization.Roles;
 using Domain.Entities.Account;
 using Microsoft.AspNetCore.Identity;
@@ -55,6 +56,147 @@ namespace Persistence.Migrations.Seed
                     context.UserRoles.Add(new IdentityUserRole<string> { RoleId = companyRole.Id, UserId = admin.Id});
                     await context.SaveChangesAsync();
                 }
+            }
+
+            //Permissions Role Admin
+            var adminPagesPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages && p.IdRole == adminRole.Id);
+            if (adminPagesPermission == null)
+            {
+                adminPagesPermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages,
+                    IdRole = adminRole.Id
+                };
+
+                context.Permissions.Add(adminPagesPermission);
+                await context.SaveChangesAsync();
+            }
+
+            var adminAdministrationPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Administration && p.IdRole == adminRole.Id);
+            if (adminAdministrationPermission == null)
+            {
+                adminAdministrationPermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Administration,
+                    IdRole = adminRole.Id
+                };
+
+                context.Permissions.Add(adminAdministrationPermission);
+                await context.SaveChangesAsync();
+            }
+
+            var adminAdministrationRolesPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Administration_Roles && p.IdRole == adminRole.Id);
+            if (adminAdministrationRolesPermission == null)
+            {
+                adminAdministrationRolesPermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Administration_Roles,
+                    IdRole = adminRole.Id
+                };
+
+                context.Permissions.Add(adminAdministrationRolesPermission);
+                await context.SaveChangesAsync();
+            }
+
+            var adminAdministrationRolesCreatePermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Administration_Roles_Create && p.IdRole == adminRole.Id);
+            if (adminAdministrationRolesCreatePermission == null)
+            {
+                adminAdministrationRolesCreatePermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Administration_Roles_Create,
+                    IdRole = adminRole.Id
+                };
+
+                context.Permissions.Add(adminAdministrationRolesCreatePermission);
+                await context.SaveChangesAsync();
+            }
+
+            var adminAdministrationRolesEditPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Administration_Roles_Edit && p.IdRole == adminRole.Id);
+            if (adminAdministrationRolesEditPermission == null)
+            {
+                adminAdministrationRolesEditPermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Administration_Roles_Edit,
+                    IdRole = adminRole.Id
+                };
+
+                context.Permissions.Add(adminAdministrationRolesEditPermission);
+                await context.SaveChangesAsync();
+            }
+
+            var adminAdministrationRolesDeletePermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Administration_Roles_Delete && p.IdRole == adminRole.Id);
+            if (adminAdministrationRolesDeletePermission == null)
+            {
+                adminAdministrationRolesDeletePermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Administration_Roles_Delete,
+                    IdRole = adminRole.Id
+                };
+
+                context.Permissions.Add(adminAdministrationRolesDeletePermission);
+                await context.SaveChangesAsync();
+            }
+
+            var adminAdministrationUsersPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Administration_Users && p.IdRole == adminRole.Id);
+            if (adminAdministrationUsersPermission == null)
+            {
+                adminAdministrationUsersPermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Administration_Users,
+                    IdRole = adminRole.Id
+                };
+
+                context.Permissions.Add(adminAdministrationUsersPermission);
+                await context.SaveChangesAsync();
+            }
+
+            var adminAdministrationUsersCreatePermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Administration_Users_Create && p.IdRole == adminRole.Id);
+            if (adminAdministrationUsersCreatePermission == null)
+            {
+                adminAdministrationUsersCreatePermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Administration_Users_Create,
+                    IdRole = adminRole.Id
+                };
+
+                context.Permissions.Add(adminAdministrationUsersCreatePermission);
+                await context.SaveChangesAsync();
+            }
+
+            var adminAdministrationUsersEditPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Administration_Users_Edit && p.IdRole == adminRole.Id);
+            if (adminAdministrationUsersEditPermission == null)
+            {
+                adminAdministrationUsersEditPermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Administration_Users_Edit,
+                    IdRole = adminRole.Id
+                };
+
+                context.Permissions.Add(adminAdministrationUsersEditPermission);
+                await context.SaveChangesAsync();
+            }
+            
+            var adminAdministrationUsersDeletePermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Administration_Users_Delete && p.IdRole == adminRole.Id);
+            if (adminAdministrationUsersDeletePermission == null)
+            {
+                adminAdministrationUsersDeletePermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Administration_Users_Delete,
+                    IdRole = adminRole.Id
+                };
+
+                context.Permissions.Add(adminAdministrationUsersDeletePermission);
+                await context.SaveChangesAsync();
             }
         }
     }

@@ -5,11 +5,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Persistence
 {
-    public class ProgresaDataContext : IdentityDbContext<AppUser>
+    public class ProgresaDataContext : IdentityDbContext<AppUser, IdentityRole, string>
     {
         public ProgresaDataContext(DbContextOptions options) : base(options)
         {
 
+        }
+        public DbSet<AppPermission> Permissions { get; set; }
+        public DbSet<AppRole> AppRoles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<AppPermission>(x => x.HasKey(a => new { a.Id }));
+
+            builder.Entity<AppRole>()
+            .HasMany(r => r.Permissions)
+            .WithOne(p => (AppRole)p.Role)
+            .HasForeignKey(p => p.IdRole);
         }
     }
 }

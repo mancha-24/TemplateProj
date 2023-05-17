@@ -15,7 +15,7 @@ namespace API.Extensions
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.User.RequireUniqueEmail = true;
             })
-            // .AddRoles<AppRole>() 
+            .AddRoles<AppRole>() 
             // .AddRoleManager<RoleManager<AppRole>>()
             .AddEntityFrameworkStores<ProgresaDataContext>();
 
