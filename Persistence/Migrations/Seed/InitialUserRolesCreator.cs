@@ -10,25 +10,25 @@ namespace Persistence.Migrations.Seed
         public static async Task Create(ProgresaDataContext context)
         {
             //var adminRole = await roleManager.FindByNameAsync(StaticRoleNames.Host.Instance.Admin);
-            var adminRole = context.Roles.FirstOrDefault(r => r.Name == StaticRoleNames.Host.Instance.Admin);
+            var adminRole = context.AppRoles.FirstOrDefault(r => r.Name == StaticRoleNames.Host.Instance.Admin);
             if (adminRole == null)
             {
-                adminRole = context.Roles.Add(new AppRole { Name = StaticRoleNames.Host.Instance.Admin }).Entity;
+                adminRole = context.AppRoles.Add(new AppRole { Name = StaticRoleNames.Host.Instance.Admin }).Entity;
                 await context.SaveChangesAsync();
                 //await roleManager.CreateAsync(adminRole); 
             }
 
-            var userDPLRole = context.Roles.FirstOrDefault(r => r.Name == StaticRoleNames.Host.Instance.UserDPL);
+            var userDPLRole = context.AppRoles.FirstOrDefault(r => r.Name == StaticRoleNames.Host.Instance.UserDPL);
             if (userDPLRole == null)
             {
-                userDPLRole = context.Roles.Add(new AppRole { Name = StaticRoleNames.Host.Instance.UserDPL }).Entity;
+                userDPLRole = context.AppRoles.Add(new AppRole { Name = StaticRoleNames.Host.Instance.UserDPL }).Entity;
                 await context.SaveChangesAsync();
             }
 
-            var companyRole = context.Roles.FirstOrDefault(r => r.Name == StaticRoleNames.Host.Instance.Company);
+            var companyRole = context.AppRoles.FirstOrDefault(r => r.Name == StaticRoleNames.Host.Instance.Company);
             if (companyRole == null)
             {
-                companyRole = context.Roles.Add(new AppRole { Name = StaticRoleNames.Host.Instance.Company }).Entity;
+                companyRole = context.AppRoles.Add(new AppRole { Name = StaticRoleNames.Host.Instance.Company }).Entity;
                 await context.SaveChangesAsync();
             }
 
