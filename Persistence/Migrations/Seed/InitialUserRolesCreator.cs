@@ -6,7 +6,7 @@ namespace Persistence.Migrations.Seed
 {
     public static class InitialUserRolesCreator
     {
-        public static async Task Create(ProgresaDataContext context, RoleManager<AppRole> roleManager)
+        public static async Task Create(ProgresaDataContext context)
         {
             //var adminRole = await roleManager.FindByNameAsync(StaticRoleNames.Host.Instance.Admin);
             var adminRole = context.Roles.FirstOrDefault(r => r.Name == StaticRoleNames.Host.Instance.Admin);

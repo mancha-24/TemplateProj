@@ -47,6 +47,16 @@ namespace API.Controllers.Account
             
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
+            foreach (var role in registerDto.Roles)
+            {
+                var appRole = await _context.Roles.FindAsync(role.UserRoleId);
+                if(appRole != null)
+                {
+                    _context.UserRoles.Add(new IdentityUserRole<string> { RoleId = role.UserRoleId, UserId =  user.Id});
+                    _context.SaveChanges();
+                }
+            }
+            
             if (result.Succeeded)
             {
                 return CreateUserObject(user);
@@ -66,17 +76,28 @@ namespace API.Controllers.Account
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 
             if (result) return CreateUserObject(user);
-
+            
             return Unauthorized();
         }
 
         private UserDto CreateUserObject(AppUser user)
         {
+            var listRolesDto = (from role in _context.Roles.AsNoTracking()
+                             join userRole in _context.UserRoles.AsNoTracking() on role.Id equals userRole.RoleId
+                             where userRole.UserId == user.Id
+                             select new UserRolesDto
+                             {
+                                UserRoleId = role.Id,
+                                UserRoleName = role.Name
+                             })
+                        .ToList();
+
             return new UserDto
             {
                 DisplayName = user.DisplayName,
                 Token = _tokenService.CreateToken(user),
-                UserName = user.UserName
+                UserName = user.UserName,
+                Roles = listRolesDto
             };
         }
     }

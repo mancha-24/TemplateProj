@@ -39,10 +39,9 @@ try
 {
     var context = services.GetRequiredService<ProgresaDataContext>();
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
-    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
     await context.Database.MigrateAsync();
 
-    var initializer = new InitialDbBuilder(context, userManager, roleManager);
+    var initializer = new InitialDbBuilder(context, userManager);
     await initializer.Create();
 }
 catch (Exception ex)
