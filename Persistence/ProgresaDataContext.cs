@@ -1,4 +1,5 @@
 using Domain.Entities.Account;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ namespace Persistence
     {
         public ProgresaDataContext(DbContextOptions options) : base(options)
         {
+
         }
     }
 }

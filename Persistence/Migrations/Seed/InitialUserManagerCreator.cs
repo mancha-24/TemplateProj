@@ -11,7 +11,7 @@ namespace Persistence.Migrations.Seed
             {
                 var users = new List<AppUser>
                 {
-                    new AppUser { DisplayName = "Administrator", UserName = "admin",Email = "admin@progresa.com" } 
+                    new AppUser { DisplayName = "Administrator", UserName = "admin", Email = "admin@progresa.com" } 
                 };
 
                 foreach (var user in users)

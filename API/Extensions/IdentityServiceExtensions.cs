@@ -1,4 +1,5 @@
 using Domain.Entities.Account;
+using Microsoft.AspNetCore.Identity;
 using Persistence;
 
 namespace API.Extensions
@@ -11,7 +12,11 @@ namespace API.Extensions
                 opt.Password.RequireNonAlphanumeric = false;
                 opt.User.RequireUniqueEmail = true;
             })
+            .AddRoles<AppRole>() 
+            .AddRoleManager<RoleManager<AppRole>>()
             .AddEntityFrameworkStores<ProgresaDataContext>();
+
+            //services.AddScoped<RoleManager<AppRole>>();
 
             services.AddAuthentication();
 
