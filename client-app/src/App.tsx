@@ -1,10 +1,11 @@
 import { } from 'react'
 import './App.css'
+import Login from './app/master/components/Login'
 
 function App () {
   return (
     <>
-      <h1>Hola</h1>
+      <Login />
     </>
   )
 }

@@ -4,7 +4,10 @@ import App from '../../App'
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <App />
+    element: <App />,
+    children: [
+      { path: 'login', element: <App /> }
+    ]
   }
 ]
 
