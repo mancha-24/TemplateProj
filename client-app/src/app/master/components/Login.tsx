@@ -1,5 +1,5 @@
-import { Field, Form, Formik } from 'formik'
-import { Button } from 'semantic-ui-react'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { Button, Label } from 'semantic-ui-react'
 
 export default function Login () {
   return (
@@ -9,12 +9,16 @@ export default function Login () {
             </div>
             <div className="bg-gray-800 flex flex-col justify-center">
                 <Formik
-                    initialValues={{ userName: '', password: '' }}
-                    // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
-                    onSubmit={values => console.log(values)}>
-                        {({ handleSubmit, isSubmitting }) => (
+                    initialValues={{ userName: '', password: '', error: null }}
+                    onSubmit={(values, { setErrors }) => { console.log(values) } }>
+                        {({ handleSubmit, isSubmitting, errors }) => (
                             <Form className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg" onSubmit={handleSubmit} autoComplete="off">
                                 <h2 className="text-4xl dark:text-white font-bold text-center">SIGN IN</h2>
+                                <ErrorMessage
+                                        name='error'
+                                        render={() =>
+                                        <Label style={{ marginBottom: 10 }} basic color='red' content={errors.error}/>
+                                        }/>
                                 <div className="flex flex-col text-gray-400 py-2">
                                     <label>User Name</label>
                                     <Field className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none" name="userName" type="text"/>
