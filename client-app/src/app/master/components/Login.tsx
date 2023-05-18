@@ -1,7 +1,10 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { observer } from 'mobx-react-lite'
 import { Button, Label } from 'semantic-ui-react'
+import { useStore } from '../../stores/store'
 
-export default function Login () {
+export default observer(function Login () {
+  const { userStore } = useStore()
   return (
         <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
             <div className="hidden sm:block">
@@ -9,8 +12,13 @@ export default function Login () {
             </div>
             <div className="bg-gray-800 flex flex-col justify-center">
                 <Formik
-                    initialValues={{ userName: '', password: '', error: null }}
-                    onSubmit={(values, { setErrors }) => { console.log(values) } }>
+                    initialValues={{ email: '', password: '', error: null }}
+                    onSubmit={async (values, { setErrors }) => {
+                      await userStore.login(values)
+                        .catch(err => {
+                          setErrors({ error: err })
+                        })
+                    } }>
                         {({ handleSubmit, isSubmitting, errors }) => (
                             <Form className="max-w-[400px] w-full mx-auto bg-gray-900 p-8 px-8 rounded-lg" onSubmit={handleSubmit} autoComplete="off">
                                 <h2 className="text-4xl dark:text-white font-bold text-center">SIGN IN</h2>
@@ -21,7 +29,7 @@ export default function Login () {
                                         }/>
                                 <div className="flex flex-col text-gray-400 py-2">
                                     <label>User Name</label>
-                                    <Field className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none" name="userName" type="text"/>
+                                    <Field className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none" name="email" type="text"/>
                                 </div>
                                 <div className="flex flex-col text-gray-400 py-2">
                                     <label>Password</label>
@@ -43,4 +51,4 @@ export default function Login () {
             </div>
         </div>
   )
-}
+})
