@@ -20,7 +20,7 @@ export default observer(function NavBarComponent () {
                           Progresa
                       </h1>
                 </div> */}
-                <h1 className="text-white origin-left font-medium text-3xl ml-16">
+                <h1 className="text-white origin-left font-medium text-3xl ml-4">
                   PROGRESA
                 </h1>
             </Menu.Item>

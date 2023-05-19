@@ -8,21 +8,28 @@ import MenuComponent from './components/MenuComponent'
 
 export default observer(function MainPage () {
   const location = useLocation()
-  const { commonStore, userStore } = useStore()
+  const { commonStore, userStore, permissionsStore } = useStore()
   useEffect(() => {
     if (commonStore.token != null) {
-      userStore.getUser().finally(() => { commonStore.setAppLoaded() })
+      void LoadAppSettings()
     } else {
       commonStore.setAppLoaded()
     }
   }, [])
+
+  async function LoadAppSettings () {
+    await userStore.getUser()
+    await permissionsStore.getPermissions()
+    commonStore.loadMenuItems()
+    commonStore.setAppLoaded()
+  }
 
   if (!commonStore.appLoaded) return <LoadingComponent content='Loading Progresa'/>
   if (location.pathname === '/') return <Navigate to='/home' state={{ from: location }} />
   return (
         <>
           <NavbarComponent />
-          <MenuComponent />
+          <MenuComponent menuItems={commonStore.menuItems}/>
         </>
   )
 })

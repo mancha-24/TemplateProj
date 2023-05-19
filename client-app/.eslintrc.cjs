@@ -24,6 +24,7 @@ module.exports = {
     'no-useless-catch': 'off',
     'no-return-assign': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
-    '@typescript-eslint/restrict-template-expressions': 'off'
+    '@typescript-eslint/restrict-template-expressions': 'off',
+    'no-case-declarations': 'off'
   }
 }

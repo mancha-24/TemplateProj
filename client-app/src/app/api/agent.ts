@@ -2,6 +2,7 @@ import axios, { type AxiosResponse, type AxiosError, type AxiosHeaders } from 'a
 import { type User, type UserFormValues } from '../master/models/user'
 import { toast } from 'react-toastify'
 import { store } from '../stores/store'
+import { type Permissions } from '../master/models/permissions'
 
 const sleep = async (delay: number) => {
   return await new Promise((resolve) => {
@@ -49,6 +50,10 @@ const Account = {
   // register: (user: UserFormValues) => requests.post<User>('/account/register', user)
 }
 
+const Permission = {
+  permissions: async () => await requests.get<Permissions[]>('/permissions')
+}
+
 const requests = {
   get: async <T> (url: string) => await axios.get<T>(url).then(responseBody),
   post: async <T> (url: string, body: {}) => await axios.post<T>(url, body).then(responseBody)
@@ -57,7 +62,8 @@ const requests = {
 }
 
 const agent = {
-  Account
+  Account,
+  Permission
 }
 
 export default agent
