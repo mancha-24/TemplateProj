@@ -1,9 +1,10 @@
 import { observer } from 'mobx-react-lite'
 
 export default observer(function HomePage () {
+  // return <LoadingComponent content='Loading Progresa'/>
   return (
-        <>
-            Hola desde Home
-        </>
+    <>
+      <div>hola home page</div>
+    </>
   )
 })

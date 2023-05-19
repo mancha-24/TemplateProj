@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using API.Services;
 using Application.DTOs;
 using Domain.Entities.Account;
@@ -78,6 +79,15 @@ namespace API.Controllers.Account
             if (result) return CreateUserObject(user);
             
             return Unauthorized();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<UserDto>> GetCurrentUser()
+        {
+            var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+
+            return CreateUserObject(user);
         }
 
         private UserDto CreateUserObject(AppUser user)

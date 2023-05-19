@@ -15,8 +15,8 @@ export default observer(function Login () {
                     initialValues={{ email: '', password: '', error: null }}
                     onSubmit={async (values, { setErrors }) => {
                       await userStore.login(values)
-                        .catch(err => {
-                          setErrors({ error: err })
+                        .catch(() => {
+                          setErrors({ error: 'Invalid email or password' })
                         })
                     } }>
                         {({ handleSubmit, isSubmitting, errors }) => (

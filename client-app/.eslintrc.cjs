@@ -22,6 +22,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     '@typescript-eslint/ban-types': 'off',
     'no-useless-catch': 'off',
-    'no-return-assign': 'off'
+    'no-return-assign': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off'
   }
 }
