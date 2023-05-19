@@ -2,7 +2,9 @@ import { observer } from 'mobx-react-lite'
 import LoadingComponent from './components/LoadingComponent'
 import { useStore } from '../stores/store'
 import { useEffect } from 'react'
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
+import NavbarComponent from './components/NavbarComponent'
+import MenuComponent from './components/MenuComponent'
 
 export default observer(function MainPage () {
   const location = useLocation()
@@ -19,7 +21,8 @@ export default observer(function MainPage () {
   if (location.pathname === '/') return <Navigate to='/home' state={{ from: location }} />
   return (
         <>
-          <Outlet/>
+          <NavbarComponent />
+          <MenuComponent />
         </>
   )
 })

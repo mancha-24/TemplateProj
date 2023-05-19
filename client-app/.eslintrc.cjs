@@ -23,6 +23,7 @@ module.exports = {
     '@typescript-eslint/ban-types': 'off',
     'no-useless-catch': 'off',
     'no-return-assign': 'off',
-    '@typescript-eslint/strict-boolean-expressions': 'off'
+    '@typescript-eslint/strict-boolean-expressions': 'off',
+    '@typescript-eslint/restrict-template-expressions': 'off'
   }
 }

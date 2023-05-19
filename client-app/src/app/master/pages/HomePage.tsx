@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react-lite'
+import LoadingComponent from '../components/LoadingComponent'
 
 export default observer(function HomePage () {
-  // return <LoadingComponent content='Loading Progresa'/>
-  return (
-    <>
-      <div>hola home page</div>
-    </>
-  )
+  return <LoadingComponent content='' inverted/>
+  // return (
+  //   <>
+  //     hola home page
+  //   </>
+  // )
 })
