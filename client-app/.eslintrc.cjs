@@ -19,6 +19,9 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/explicit-function-return-type': 'off',
-    'react/react-in-jsx-scope': 'off'
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/ban-types': 'off',
+    'no-useless-catch': 'off',
+    'no-return-assign': 'off'
   }
 }

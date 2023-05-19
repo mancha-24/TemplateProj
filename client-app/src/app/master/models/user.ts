@@ -1,8 +1,8 @@
 export interface User {
-  userName: string
   displayName: string
+  roles: Role[]
   token: string
-  image?: string
+  userName: string
 }
 
 export interface UserFormValues {
@@ -10,4 +10,9 @@ export interface UserFormValues {
   password: string
   displayName?: string
   userName?: string
+}
+
+export interface Role {
+  userRoleId: string
+  userRoleName: string
 }
