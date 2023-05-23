@@ -46,9 +46,9 @@ export default observer(function MenuComponent ({ menuItems }: Props) {
                 </div>
                 <ul className='pt-16'>
                     {menuItems.map((menu, index) => (
-                        <li key={index} className={`text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md 
+                        <li key={index} className={`text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-gray rounded-md 
                                         ${(menu.gap ?? false) ? 'mt-9' : 'mt-2'}
-                                         ${index === 0 && 'bg-light-white'}`}>
+                                         ${index === 0 && 'bg-light-gray'}`}>
                             <img src={`./src/assets/${menu.src}.png`}/>
                             <span className={`${!open && 'hidden'} origin-left duration-200`}>{menu.title}</span>
                             {/* <ul className="absolute left-0 top-full bg-white shadow rounded-md p-2">
