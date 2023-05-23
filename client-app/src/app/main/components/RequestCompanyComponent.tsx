@@ -2,37 +2,96 @@ import { observer } from 'mobx-react-lite'
 import TextInputCustom from '../../master/components/customInputs/TextInputBasic'
 import { Form, Formik } from 'formik'
 import { Button } from 'semantic-ui-react'
+import * as Yup from 'yup'
+import FileUploadComponent from '../../master/components/customInputs/FileInputComponent'
+import DropdownComponent from '../../master/components/customInputs/DropdownComponent'
+import { sectorOptions } from '../../master/common/options/sectorOptions'
+import { Collapse, Switch } from '@material-tailwind/react'
+import { useState } from 'react'
 
 export default observer(function RequestCompanyComponent () {
+  const [isConsultancy, setIsConsultancy] = useState(false)
+  const consultancyOpen = () => { setIsConsultancy(cur => !cur) }
+  const validationSchema = Yup.object({
+    trade: Yup.string().required('Handels naam is required'),
+    regName: Yup.string().required('Registratie naam is required'),
+    kvkNro: Yup.string().required('# Kvk is required'),
+    director: Yup.string().required('Naar directeur is required'),
+    address: Yup.string().required('Adres is required'),
+    phone: Yup.string().required('Telefoon is required'),
+    emailCompany: Yup.string().required('Email is required'),
+    svbNro: Yup.string().required('# SVB is required'),
+    kvkDoc: Yup.string().required('KvK document is required'),
+    ownerId: Yup.string().required('ID van eigenaar is required'),
+    sector: Yup.string().required('Sector is required'),
+    email: Yup.string().required('Email is required'),
+    password: Yup.string().required('Password is required')
+  })
   return (
     <Formik
-    initialValues={{ trade: '', tradeb: '', tradec: '', error: null }}
-    onSubmit={async (values, { setErrors }) => {
-      console.log(values)
-      // .catch(() => {
-      //   setErrors({ error: 'Invalid email or password' })
-      // })
-    } }>
+    validationSchema={validationSchema}
+        onSubmit={async (values, { setErrors }) => {
+          console.log(values)
+          // .catch(() => {
+          //   setErrors({ error: 'Invalid email or password' })
+          // })
+        } }
+    enableReinitialize
+    initialValues={{
+      trade: '',
+      regName: '',
+      kvkNro: '',
+      director: '',
+      address: '',
+      phone: '',
+      emailCompany: '',
+      svbNro: '',
+      kvkDoc: '',
+      ownerId: '',
+      sector: '',
+      email: '',
+      password: '',
+      error: null
+    }}
+    >
         {({ handleSubmit, isSubmitting, errors }) => (
-            <Form onSubmit={handleSubmit} autoComplete="off">
-                <h2 className="text-3xl dark:text-black font-semibold text-left">Request Account</h2>
+            <Form onSubmit={handleSubmit} autoComplete='off' className='p-8'>
+                <h2 className="text-3xl dark:text-black font-semibold text-left">Request company account</h2>
                 <div className='grid grid-cols-3 gap-4 h-full w-full'>
-                    <div>
-                        <TextInputCustom placeholder='Handels naam *' name='trade'
-                            type='text'
-                        />
+                    <TextInputCustom placeholder='Handels naam *' name='trade' type='text'/>
+                    <TextInputCustom placeholder='Registratie naam *' name='regName' type='text'/>
+                    <TextInputCustom placeholder='KvK # *' name='kvkNro' type='text'/>
+                    <TextInputCustom placeholder='Naar directeur *' name='director' type='text'/>
+                    <TextInputCustom placeholder='Adres *' name='address' type='text'/>
+                    <TextInputCustom placeholder='Telefoon *' name='phone' type='text'/>
+                    <TextInputCustom placeholder='Email *' name='emailCompany' type='text'/>
+                    <TextInputCustom placeholder='# SVB *' name='svbNro' type='text'/>
+                    <DropdownComponent options={sectorOptions} placeholder='Sector' name='sector'/>
+                    <div className='col-start-1 col-end-2'>
+                        <FileUploadComponent name='kvkDoc' type='file' title='kvk'/>
                     </div>
-                    <div>
-                        <TextInputCustom placeholder='Handels naam *' name='tradeb'
-                            type='text'
-                        />
+                    <div className='col-start-2 col-end-3'>
+                        <FileUploadComponent name='ownerId' type='file' title='Id van eigenaar'/>
                     </div>
-                    <div>
-                        <TextInputCustom placeholder='Handels naam *' name='tradec'
-                            type='text'
-                        />
+                    <div className='col-span-3 mt-5 mb-3'>
+                        <Switch color="amber" label='Consultancy' id="auto-update" onChange={consultancyOpen}/>
+                        <Collapse open={isConsultancy} className='col-start-1 col-end-3'>
+                            <div className='grid grid-cols-3 gap-2 h-full w-full'>
+                                <TextInputCustom placeholder='Naam' name='nameConsultancy' type='text'/>
+                                <TextInputCustom placeholder='Email' name='emailConsultancy' type='text'/>
+                                <TextInputCustom placeholder='Telefoon' name='phoneConsultancy' type='text'/>
+                                <div className='col-span-2'>
+                                    <FileUploadComponent name='authDoc' type='file' title='Machtiging (1 jaar geldig)'/>
+                                </div>
+                            </div>
+                        </Collapse>
                     </div>
-                    <div className='col-span-1'>
+
+                    <h2 className="col-span-3 text-xl dark:text-black font-semibold my-0">Account data</h2>
+                    <TextInputCustom placeholder='Email *' name='email' type='text'/>
+                    <TextInputCustom placeholder='Password *' name='password' type='password'/>
+
+                    <div className='col-start-1 col-end-2 text-center mt-8'>
                         <Button loading={isSubmitting}
                                 content='Send'
                                 type="submit" fluid color='orange' style={{ borderRadius: '0.5rem' }}/>
@@ -40,22 +99,6 @@ export default observer(function RequestCompanyComponent () {
                 </div>
             </Form>
         )}
-        {/* <div className='grid grid-cols-3 gap-4 h-full w-full'>
-            <div>
-                <input placeholder='Handels naam *'
-                        className='text-gray-500 font-light rounded-lg bg-gray-50 mt-2 p-5 focus:border-orange-600 focus:border-2 focus:outline-none h-11'
-                        name='trade'
-                        type='text' />
-
-            </div>
-            <div>
-                <TextInputCustom placeholder='Handels naam *' name='trade'
-                    type='text'
-                />
-
-            </div>
-        </div> */}
-
         </Formik>
   )
 })

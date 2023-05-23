@@ -4,6 +4,9 @@ import { Button, Label } from 'semantic-ui-react'
 import { useStore } from '../../stores/store'
 import loginImg from '../../../assets/dpl_main.jpg'
 import RequestCompanyComponent from '../../main/components/RequestCompanyComponent'
+import { ArrowLongRightIcon } from '@heroicons/react/20/solid'
+import { Checkbox } from '@material-tailwind/react'
+
 export default observer(function Login () {
   const { userStore, modalStore } = useStore()
   return (
@@ -33,29 +36,30 @@ export default observer(function Login () {
                                     <Field placeholder="Email *" className="text-gray-400 font-light rounded-lg bg-light-gray mt-2 p-5 focus:border-orange-600 focus:outline-none h-14" name="email" type="text"/>
                                 </div>
                                 <div className="flex flex-col text-gray-400 py-2">
-                                    <label>Password</label>
                                     <Field placeholder="Password *" className="text-gray-400 font-light rounded-lg bg-light-gray mt-2 p-5 focus:border-orange-600 focus:outline-none h-14" name="password" type="password" />
                                 </div>
                                 <div className="flex justify-between text-gray-400 py-2">
-                                    <p className="flex intems-center"><input className="mr-2" type="checkbox"/> Remember Me</p>
+                                    {/* <p className="flex intems-center"><input className="mr-2" type="checkbox"/> Remember Me</p> */}
+                                    <Checkbox label='Remember Me' color='teal' />
                                     <p>Forgot Password</p>
                                 </div>
                                 <Button loading={isSubmitting}
                                         content='Sign In'
                                         type="submit" fluid color='orange' style={{ borderRadius: '0.5rem' }}/>
+
                                 <div className='flex items-center justify-between mt-10'>
-                                    <p className='mb-0 mr-2 text-gray-400'>Is it a company?</p>
-                                    <button type='button' className='inline-block rounded border-2 px-6 pb-[6px] pt-2
-                                                text-xs font-medium uppercase bg-light-gray text-gray-400
+                                    <p className='mb-0 mr-2 text-gray-400 cursor-default'>Is it a company?</p>
+                                    <button type='button'
+                                        className='flex items-center gap-2 rounded px-6 pb-[6px] pt-2
+                                                text-sm font-semibold bg-teal-200 text-white border-2 border-white
                                                 transition duration-150 ease-in-out
                                                  hover:border-orange-600 hover:bg-opacity-10 hover:text-orange-600
-                                                 focus:border-orange-600 focus:text-orange-600 focus:bg-opacity-10 focus:outline-none focus:ring-0
-                                                 active:border-orange-600 active:text-orange-600'
-                                        data-te-ripple-init
-                                        data-te-ripple-color='light' onClick={() => { modalStore.openModal(<RequestCompanyComponent />) }}>
-                                        Request User
-                                        {/* https://tailwind-elements.com/docs/standard/forms/login-form/ */}
+                                                 focus:border-orange-600 focus:text-orange-600 focus:bg-opacity-10
+                                                 active:border-orange-600 active:text-orange-600' onClick={() => { modalStore.openModal(<RequestCompanyComponent />) }}>
+                                        Request Account
+                                        <ArrowLongRightIcon strokeWidth={2} className="h-5 w-5" />
                                     </button>
+                                    {/* https://tailwind-elements.com/docs/standard/forms/login-form/ */}
                                 </div>
                             </Form>
                         )}

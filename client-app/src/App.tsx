@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite'
 import { useStore } from './app/stores/store'
 import MainPage from './app/master/MainPage'
 import ModalComponent from './app/master/components/ModalComponent'
-
 function App () {
   const { commonStore, userStore } = useStore()
   // useEffect(() => {
