@@ -3,9 +3,9 @@ import { observer } from 'mobx-react-lite'
 import { Button, Label } from 'semantic-ui-react'
 import { useStore } from '../../stores/store'
 import loginImg from '../../../assets/dpl_main.jpg'
-import { Card } from '@material-tailwind/react'
+import RequestCompanyComponent from '../../main/components/RequestCompanyComponent'
 export default observer(function Login () {
-  const { userStore } = useStore()
+  const { userStore, modalStore } = useStore()
   return (
         <div className="grid grid-cols-1 sm:grid-cols-3 h-screen w-full">
             <div className="hidden sm:block">
@@ -43,11 +43,8 @@ export default observer(function Login () {
                                 <Button loading={isSubmitting}
                                         content='Sign In'
                                         type="submit" fluid color='orange' style={{ borderRadius: '0.5rem' }}/>
-                                {/* <button type='submit' className="w-full my-5 py-2 bg-teal-500 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/40 text-white font-semibold rounded-lg">
-                                    Sign In
-                                </button> */}
                                 <div className='flex items-center justify-between mt-10'>
-                                    <p className='mb-0 mr-2 text-gray-400'>Are you a Company?</p>
+                                    <p className='mb-0 mr-2 text-gray-400'>Is it a company?</p>
                                     <button type='button' className='inline-block rounded border-2 px-6 pb-[6px] pt-2
                                                 text-xs font-medium uppercase bg-light-gray text-gray-400
                                                 transition duration-150 ease-in-out
@@ -55,7 +52,7 @@ export default observer(function Login () {
                                                  focus:border-orange-600 focus:text-orange-600 focus:bg-opacity-10 focus:outline-none focus:ring-0
                                                  active:border-orange-600 active:text-orange-600'
                                         data-te-ripple-init
-                                        data-te-ripple-color='light'>
+                                        data-te-ripple-color='light' onClick={() => { modalStore.openModal(<RequestCompanyComponent />) }}>
                                         Request User
                                         {/* https://tailwind-elements.com/docs/standard/forms/login-form/ */}
                                     </button>
