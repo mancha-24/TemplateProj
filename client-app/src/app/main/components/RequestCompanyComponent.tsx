@@ -8,25 +8,29 @@ import DropdownComponent from '../../master/components/customInputs/DropdownComp
 import { sectorOptions } from '../../master/common/options/sectorOptions'
 import { Collapse, Switch } from '@material-tailwind/react'
 import { useState } from 'react'
+import { CompanyFormValues } from '../../master/models/company'
 
 export default observer(function RequestCompanyComponent () {
+  const [company, setCompany] = useState<CompanyFormValues>(new CompanyFormValues())
+
   const [isConsultancy, setIsConsultancy] = useState(false)
   const consultancyOpen = () => { setIsConsultancy(cur => !cur) }
   const validationSchema = Yup.object({
     trade: Yup.string().required('Handels naam is required'),
     regName: Yup.string().required('Registratie naam is required'),
-    kvkNro: Yup.string().required('# Kvk is required'),
+    kvkNumber: Yup.string().required('# Kvk is required'),
     director: Yup.string().required('Naar directeur is required'),
     address: Yup.string().required('Adres is required'),
     phone: Yup.string().required('Telefoon is required'),
     emailCompany: Yup.string().required('Email is required'),
-    svbNro: Yup.string().required('# SVB is required'),
+    svbNumber: Yup.string().required('# SVB is required'),
     kvkDoc: Yup.string().required('KvK document is required'),
     ownerId: Yup.string().required('ID van eigenaar is required'),
     sector: Yup.string().required('Sector is required'),
     email: Yup.string().required('Email is required'),
     password: Yup.string().required('Password is required')
   })
+
   return (
     <Formik
     validationSchema={validationSchema}
@@ -37,22 +41,7 @@ export default observer(function RequestCompanyComponent () {
           // })
         } }
     enableReinitialize
-    initialValues={{
-      trade: '',
-      regName: '',
-      kvkNro: '',
-      director: '',
-      address: '',
-      phone: '',
-      emailCompany: '',
-      svbNro: '',
-      kvkDoc: '',
-      ownerId: '',
-      sector: '',
-      email: '',
-      password: '',
-      error: null
-    }}
+    initialValues={company}
     >
         {({ handleSubmit, isSubmitting, errors }) => (
             <Form onSubmit={handleSubmit} autoComplete='off' className='p-8'>
@@ -60,12 +49,12 @@ export default observer(function RequestCompanyComponent () {
                 <div className='grid grid-cols-3 gap-4 h-full w-full'>
                     <TextInputCustom placeholder='Handels naam *' name='trade' type='text'/>
                     <TextInputCustom placeholder='Registratie naam *' name='regName' type='text'/>
-                    <TextInputCustom placeholder='KvK # *' name='kvkNro' type='text'/>
+                    <TextInputCustom placeholder='KvK # *' name='kvkNumber' type='text'/>
                     <TextInputCustom placeholder='Naar directeur *' name='director' type='text'/>
                     <TextInputCustom placeholder='Adres *' name='address' type='text'/>
                     <TextInputCustom placeholder='Telefoon *' name='phone' type='text'/>
                     <TextInputCustom placeholder='Email *' name='emailCompany' type='text'/>
-                    <TextInputCustom placeholder='# SVB *' name='svbNro' type='text'/>
+                    <TextInputCustom placeholder='SVB # *' name='svbNumber' type='text'/>
                     <DropdownComponent options={sectorOptions} placeholder='Sector' name='sector'/>
                     <div className='col-start-1 col-end-2'>
                         <FileUploadComponent name='kvkDoc' type='file' title='kvk'/>
