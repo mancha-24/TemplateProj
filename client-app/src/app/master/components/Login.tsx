@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 import { Button, Label } from 'semantic-ui-react'
 import { useStore } from '../../stores/store'
 import loginImg from '../../../assets/dpl_main.jpg'
+import { Card } from '@material-tailwind/react'
 export default observer(function Login () {
   const { userStore } = useStore()
   return (
