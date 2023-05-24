@@ -46,13 +46,11 @@ namespace Application.Companies
                     };
                     
                     var result = await _userManager.CreateAsync(newUser, request.Company.Password);
+
+                    if (result.Succeeded) return Result<Unit>.Success(Unit.Value);
                 }
-                else
-                {
-                    return Result<Unit>.Failure("Account coudn't be created");
-                }
-                
-                return Result<Unit>.Success(Unit.Value);
+               
+                return Result<Unit>.Failure("Account coudn't be created");
             }
         }
     }
