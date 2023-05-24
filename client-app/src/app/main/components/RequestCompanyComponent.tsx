@@ -13,7 +13,7 @@ import { useStore } from '../../stores/store'
 
 export default observer(function RequestCompanyComponent () {
   const { companyStore } = useStore()
-  const [company, setCompany] = useState<CompanyFormValues>(new CompanyFormValues())
+  const [company] = useState<CompanyFormValues>(new CompanyFormValues())
 
   const [isConsultancy, setIsConsultancy] = useState(false)
   const [error, setError] = useState(false)

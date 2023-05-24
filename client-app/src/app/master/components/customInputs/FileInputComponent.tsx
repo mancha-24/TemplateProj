@@ -12,10 +12,10 @@ interface Props {
 
 export default function FileUploadComponent (props: Props) {
   const [field, meta] = useField(props.name)
-  const inputRef = useRef()
+  const inputRef = useRef<HTMLInputElement>(null)
   const handleClick = () => {
     if (inputRef.current) {
-      inputRef.current.click()
+      (inputRef.current).click()
     }
   }
   return (
