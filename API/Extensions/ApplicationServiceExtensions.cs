@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Companies;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -30,6 +32,7 @@ namespace API.Extensions
                                 .WithOrigins("http://127.0.0.1:5173");
                     });
                 });
+                services.AddMediatR(typeof(Create.Handler));
 
                 return services;
             }

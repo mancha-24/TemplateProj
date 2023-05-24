@@ -6,15 +6,20 @@ import * as Yup from 'yup'
 import FileUploadComponent from '../../master/components/customInputs/FileInputComponent'
 import DropdownComponent from '../../master/components/customInputs/DropdownComponent'
 import { sectorOptions } from '../../master/common/options/sectorOptions'
-import { Collapse, Switch } from '@material-tailwind/react'
+import { Alert, Collapse, Switch } from '@material-tailwind/react'
 import { useState } from 'react'
 import { CompanyFormValues } from '../../master/models/company'
+import { useStore } from '../../stores/store'
 
 export default observer(function RequestCompanyComponent () {
+  const { companyStore } = useStore()
   const [company, setCompany] = useState<CompanyFormValues>(new CompanyFormValues())
 
   const [isConsultancy, setIsConsultancy] = useState(false)
+  const [error, setError] = useState(false)
+
   const consultancyOpen = () => { setIsConsultancy(cur => !cur) }
+
   const validationSchema = Yup.object({
     trade: Yup.string().required('Handels naam is required'),
     regName: Yup.string().required('Registratie naam is required'),
@@ -24,8 +29,8 @@ export default observer(function RequestCompanyComponent () {
     phone: Yup.string().required('Telefoon is required'),
     emailCompany: Yup.string().required('Email is required'),
     svbNumber: Yup.string().required('# SVB is required'),
-    kvkDoc: Yup.string().required('KvK document is required'),
-    ownerId: Yup.string().required('ID van eigenaar is required'),
+    // kvkDoc: Yup.string().required('KvK document is required'),
+    // ownerId: Yup.string().required('ID van eigenaar is required'),
     sector: Yup.string().required('Sector is required'),
     email: Yup.string().required('Email is required'),
     password: Yup.string().required('Password is required')
@@ -34,18 +39,35 @@ export default observer(function RequestCompanyComponent () {
   return (
     <Formik
     validationSchema={validationSchema}
-        onSubmit={async (values, { setErrors }) => {
-          console.log(values)
-          // .catch(() => {
-          //   setErrors({ error: 'Invalid email or password' })
-          // })
+        onSubmit={async (values) => {
+          console.log('pasa')
+          await companyStore.create(values)
+            .catch(() => {
+              setError(true)
+            })
         } }
     enableReinitialize
     initialValues={company}
     >
-        {({ handleSubmit, isSubmitting, errors }) => (
+        {({ handleSubmit, isSubmitting }) => (
             <Form onSubmit={handleSubmit} autoComplete='off' className='p-8'>
                 <h2 className="text-3xl dark:text-black font-semibold text-left">Request company account</h2>
+                <Alert open={error}
+                        onClose={() => { setError(false) }}
+                        animate={{
+                          mount: { y: 0 },
+                          unmount: { y: 100 }
+                        }}
+                        color="red"
+                        variant="gradient"
+                        className='mb-7'>
+                    <span>An error occurred while creating the account. Please contact your administrator.</span>
+                </Alert>
+                {/* <AlertComponent color='red'
+                                open={error}
+                                text='An error occurred while creating the account. Please contact your administrator.'
+
+                                    /> */}
                 <div className='grid grid-cols-3 gap-4 h-full w-full'>
                     <TextInputCustom placeholder='Handels naam *' name='trade' type='text'/>
                     <TextInputCustom placeholder='Registratie naam *' name='regName' type='text'/>

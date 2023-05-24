@@ -3,6 +3,7 @@ import { type User, type UserFormValues } from '../master/models/user'
 import { toast } from 'react-toastify'
 import { store } from '../stores/store'
 import { type Permissions } from '../master/models/permissions'
+import { type CompanyFormValues } from '../master/models/company'
 
 const sleep = async (delay: number) => {
   return await new Promise((resolve) => {
@@ -54,6 +55,10 @@ const Permission = {
   permissions: async () => await requests.get<Permissions[]>('/permissions')
 }
 
+const Company = {
+  create: async (company: CompanyFormValues) => await requests.post('/companies', company)
+}
+
 const requests = {
   get: async <T> (url: string) => await axios.get<T>(url).then(responseBody),
   post: async <T> (url: string, body: {}) => await axios.post<T>(url, body).then(responseBody)
@@ -63,7 +68,8 @@ const requests = {
 
 const agent = {
   Account,
-  Permission
+  Permission,
+  Company
 }
 
 export default agent
