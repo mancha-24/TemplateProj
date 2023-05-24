@@ -73,6 +73,8 @@ namespace API.Controllers.Account
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
             
             if (user == null) return Unauthorized();
+            
+            if (await _userManager.IsLockedOutAsync(user)) return Unauthorized();
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 

@@ -1,3 +1,4 @@
+using Domain.Entities;
 using Domain.Entities.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace Persistence
         }
         public DbSet<AppPermission> Permissions { get; set; }
         public DbSet<AppRole> AppRoles { get; set; }
+        public DbSet<CompanyUser> CompanyUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -24,6 +26,11 @@ namespace Persistence
             .HasMany(r => r.Permissions)
             .WithOne(p => (AppRole)p.Role)
             .HasForeignKey(p => p.IdRole);
+
+            builder.Entity<AppUser>()
+                .HasOne(u => u.Company)
+                .WithOne(c => c.User)
+                .HasForeignKey<AppUser>(u => u.IdCompany);
         }
     }
 }
