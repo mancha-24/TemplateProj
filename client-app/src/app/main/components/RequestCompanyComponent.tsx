@@ -13,10 +13,11 @@ import { useStore } from '../../stores/store'
 
 export default observer(function RequestCompanyComponent () {
   const { companyStore } = useStore()
-  const [company, setCompany] = useState<CompanyFormValues>(new CompanyFormValues())
+  const [company] = useState<CompanyFormValues>(new CompanyFormValues())
 
   const [isConsultancy, setIsConsultancy] = useState(false)
   const [error, setError] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const consultancyOpen = () => { setIsConsultancy(cur => !cur) }
 
@@ -27,24 +28,24 @@ export default observer(function RequestCompanyComponent () {
     director: Yup.string().required('Naar directeur is required'),
     address: Yup.string().required('Adres is required'),
     phone: Yup.string().required('Telefoon is required'),
-    emailCompany: Yup.string().required('Email is required'),
+    emailCompany: Yup.string().required('Email is required').email('Incorrect Format'),
     svbNumber: Yup.string().required('# SVB is required'),
-    // kvkDoc: Yup.string().required('KvK document is required'),
-    // ownerId: Yup.string().required('ID van eigenaar is required'),
+    kvkDoc: Yup.string().required('KvK document is required'),
+    ownerDoc: Yup.string().required('ID van eigenaar is required'),
     sector: Yup.string().required('Sector is required'),
-    email: Yup.string().required('Email is required'),
-    password: Yup.string().required('Password is required')
+    email: Yup.string().required('Email is required').email('Incorrect Format'),
+    password: Yup.string().required('Password is required').min(3, 'must be at least 3 characters long')
+      .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        'Password must be at least 6 characters long and contain at least one letter and one number')
   })
 
   return (
     <Formik
     validationSchema={validationSchema}
         onSubmit={async (values) => {
-          console.log('pasa')
           await companyStore.create(values)
-            .catch(() => {
-              setError(true)
-            })
+            .then(() => { setSuccess(true) })
+            .catch(() => { setError(true) })
         } }
     enableReinitialize
     initialValues={company}
@@ -62,6 +63,17 @@ export default observer(function RequestCompanyComponent () {
                         variant="gradient"
                         className='mb-7'>
                     <span>An error occurred while creating the account. Please contact your administrator.</span>
+                </Alert>
+                <Alert open={success}
+                        onClose={() => { setSuccess(false) }}
+                        animate={{
+                          mount: { y: 0 },
+                          unmount: { y: 100 }
+                        }}
+                        color="green"
+                        variant="gradient"
+                        className='mb-7'>
+                    <span>Your request has been registered. An administrator will review your account and activate it.</span>
                 </Alert>
                 {/* <AlertComponent color='red'
                                 open={error}
@@ -82,7 +94,7 @@ export default observer(function RequestCompanyComponent () {
                         <FileUploadComponent name='kvkDoc' type='file' title='kvk'/>
                     </div>
                     <div className='col-start-2 col-end-3'>
-                        <FileUploadComponent name='ownerId' type='file' title='Id van eigenaar'/>
+                        <FileUploadComponent name='ownerDoc' type='file' title='Id van eigenaar'/>
                     </div>
                     <div className='col-span-3 mt-5 mb-3'>
                         <Switch color="amber" label='Consultancy' id="auto-update" onChange={consultancyOpen}/>
@@ -91,7 +103,7 @@ export default observer(function RequestCompanyComponent () {
                                 <TextInputCustom placeholder='Naam' name='nameConsultancy' type='text'/>
                                 <TextInputCustom placeholder='Email' name='emailConsultancy' type='text'/>
                                 <TextInputCustom placeholder='Telefoon' name='phoneConsultancy' type='text'/>
-                                <div className='col-span-2'>
+                                <div className='col-span-1'>
                                     <FileUploadComponent name='authDoc' type='file' title='Machtiging (1 jaar geldig)'/>
                                 </div>
                             </div>

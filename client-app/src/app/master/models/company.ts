@@ -11,6 +11,8 @@ export class CompanyFormValues {
   sector: string = ''
   email: string = ''
   password: string = ''
+  kvkDoc: string = ''
+  ownerDoc: string = ''
 
   constructor (company?: CompanyFormValues) {
     if (company) {
@@ -26,6 +28,8 @@ export class CompanyFormValues {
       this.sector = company.sector
       this.email = company.email
       this.password = company.password
+      this.kvkDoc = company.kvkDoc
+      this.ownerDoc = company.ownerDoc
     }
   }
 }

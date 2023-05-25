@@ -24,22 +24,11 @@ export default observer(function MenuComponent ({ menuItems }: Props) {
     }
   }, [])
 
-  //   const Menus = [
-  //     { title: 'Dashboard', src: 'Chart_fill' },
-  //     { title: 'Inbox', src: 'Chat' },
-  //     { title: 'Accounts', src: 'User', gap: true },
-  //     { title: 'Schedule ', src: 'Calendar' },
-  //     { title: 'Search', src: 'Search' },
-  //     { title: 'Analytics', src: 'Chart' },
-  //     { title: 'Files ', src: 'Folder', gap: true },
-  //     { title: 'Setting', src: 'Setting' }
-  //   ]
-
   return (
         <div className="flex">
             <div className={`${open ? 'w-72' : 'w-24'} duration-300 h-screen p-5 pt-8 bg-dark-purple relative`} ref={componentRef}>
                 <div className={`flex ${open ? 'justify-end' : 'justify-center'} mt-4`}>
-                    <img src="./src/assets/arrow.png"
+                    <img src="/assets/arrow.png"
                         className={`cursor-pointer rounded-full w-4 top-20 absolute
                                     border-2 border-dark-purple ${!open && 'rotate-180'}`}
                         onClick={() => { setOpen(!open) }}/>
@@ -49,7 +38,7 @@ export default observer(function MenuComponent ({ menuItems }: Props) {
                         <li key={index} className={`text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-gray rounded-md 
                                         ${(menu.gap ?? false) ? 'mt-9' : 'mt-2'}
                                          ${index === 0 && 'bg-light-gray'}`}>
-                            <img src={`./src/assets/${menu.src}.png`}/>
+                            <img src={`/assets/${menu.src}.png`}/>
                             <span className={`${!open && 'hidden'} origin-left duration-200`}>{menu.title}</span>
                             {/* <ul className="absolute left-0 top-full bg-white shadow rounded-md p-2">
                                 {menu.subMenu?.map((submenu, ind) => (

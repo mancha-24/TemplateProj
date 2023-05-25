@@ -13,7 +13,7 @@ export default function TextInputCustom (props: Props) {
   return (
         <Form.Field error={meta.touched && !!meta.error}>
             <input {...field} {...props} className={`text-gray-500 font-light 
-                    rounded-lg bg-gray-50 mt-2 p-5 focus:border-green-600 focus:border-2 
+                    rounded-lg bg-gray-50 mt-2 p-5 focus:border-blue-600 focus:border-2 
                     focus:outline-none h-11 ${meta.touched && meta.error ? 'border-red-400 border-2' : ''}`}/>
             { meta.touched && meta.error
               ? (
