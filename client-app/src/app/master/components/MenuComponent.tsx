@@ -25,34 +25,27 @@ export default observer(function MenuComponent ({ menuItems }: Props) {
   }, [])
 
   return (
-        <div className="flex">
-            <div className={`${open ? 'w-72' : 'w-24'} duration-300 h-screen p-5 pt-8 bg-dark-purple relative`} ref={componentRef}>
-                <div className={`flex ${open ? 'justify-end' : 'justify-center'} mt-4`}>
+        <div className="flex absolute top-0 left-0 w-full h-full">
+            <div className={`${open ? 'w-72' : 'w-24'} duration-300 h-screen p-5 pt-20 bg-gray-800 relative`} ref={componentRef}>
+                <div className={`flex ${open ? 'justify-end' : 'justify-center'} mt-8`}>
                     <img src="/assets/arrow.png"
-                        className={`cursor-pointer rounded-full w-4 top-20 absolute
+                        className={`cursor-pointer rounded-full w-4 top-24 absolute
                                     border-2 border-dark-purple ${!open && 'rotate-180'}`}
                         onClick={() => { setOpen(!open) }}/>
                 </div>
-                <ul className='pt-16'>
+                <ul className='pt-5'>
                     {menuItems.map((menu, index) => (
-                        <li key={index} className={`text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-gray rounded-md 
+                        <li key={index} className={`text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer 
+                                  p-2 hover:bg-orange-300 rounded-md h-12
                                         ${(menu.gap ?? false) ? 'mt-9' : 'mt-2'}
-                                         ${index === 0 && 'bg-light-gray'}`}>
-                            <img src={`/assets/${menu.src}.png`}/>
+                                         ${index === 0 && 'bg-orange-600 text-gray-100'}`}>
+                            <img src={`/assets/${menu.src}.png`} className='h-8'/>
                             <span className={`${!open && 'hidden'} origin-left duration-200`}>{menu.title}</span>
-                            {/* <ul className="absolute left-0 top-full bg-white shadow rounded-md p-2">
-                                {menu.subMenu?.map((submenu, ind) => (
-                                    <li key={ind} className="text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md">
-                                        <span>{submenu.title}</span>
-                                    </li>
-                                ))}
-                            </ul> */}
                         </li>
                     ))}
                 </ul>
-
             </div>
-            <Dimmer.Dimmable as={Segment} dimmed={open} className="outlet-box" style={{ marginTop: '5rem' }}>
+            <Dimmer.Dimmable as={Segment} dimmed={open} className="outlet-box">
                 <Dimmer simple/>
                 <Outlet/>
             </Dimmer.Dimmable>

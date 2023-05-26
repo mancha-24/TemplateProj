@@ -1,36 +1,26 @@
-import { Label, Menu } from 'semantic-ui-react'
 import { useStore } from '../../stores/store'
 import { observer } from 'mobx-react-lite'
+import { Button, Navbar } from '@material-tailwind/react'
+import { UserCircleIcon } from '@heroicons/react/24/outline'
 
 export default observer(function NavBarComponent () {
   const { userStore: { user } } = useStore()
-  const imageProps = {
-    avatar: true,
-    spaced: 'right',
-    src: '/assets/default-profile-picture.png'
-  }
   return (
-        // <Menu fixed='top' inverted>
-        <Menu fixed='top' style={{ backgroundColor: '#081A51' }}>
-            <Menu.Item style={{ flex: 1, textAlign: 'center' }} >
-              {/* <div className='items-center'>
-                      <img src="./src/assets/logo.png"
-                              className="cursor-pointer"/>
-                      <h1 className={`text-white origin-left font-medium text-xl duration-200 ${!open && 'scale-0'}`}>
-                          Progresa
-                      </h1>
-                </div> */}
-                <h1 className="text-white origin-left font-medium text-3xl ml-4">
-                  PROGRESA
-                </h1>
-            </Menu.Item>
-            <Menu.Menu position='right'>
-                <Menu.Item>
-                  <Label as='a' size='large' content={`${user?.displayName}`} image={imageProps}
-                          onClick={() => { console.log('click...') }}
-                          style={{ backgroundColor: 'rgba(255,255,255,0.17)', height: '3rem' }}/>
-                </Menu.Item>
-            </Menu.Menu>
-        </Menu>
+        <Navbar className='sticky inset-0 z-10 h-20 max-w-full
+              rounded-none pb-0 pt-0 px-16
+              from-gray-800 to-gray-800'
+               color='blue-gray' variant="gradient">
+          <div className="flex items-center justify-between text-gray-100 h-20">
+            <span className='cursor-pointer origin-left font-medium text-2xl'>Progresa Portal</span>
+            <div>
+            <Button className="font-medium normal-case text-base flex items-center gap-3 bg-orange-300
+                            text-white border-2 border-orange-400 tracking-wider" variant="outlined" ripple
+                            onClick={() => { console.log('click...') }}>
+             {user?.displayName}
+              <UserCircleIcon strokeWidth={2} className="h-6 w-6"/>
+            </Button>
+            </div>
+          </div>
+        </Navbar>
   )
 })
