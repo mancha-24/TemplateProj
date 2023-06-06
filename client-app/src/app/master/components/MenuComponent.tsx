@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import { useEffect, useRef, useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import { Dimmer, Segment } from 'semantic-ui-react'
 import { type MenuItems } from '../types/menuItems'
+import { Typography } from '@material-tailwind/react'
 
 interface Props {
   menuItems: MenuItems[]
@@ -11,6 +12,11 @@ interface Props {
 export default observer(function MenuComponent ({ menuItems }: Props) {
   const [open, setOpen] = useState(true)
   const componentRef = useRef<HTMLDivElement | null>(null)
+
+  const [selectedMenu, setSelectedMenu] = useState<number | null>(0)
+  const handleMenuClick = (index: number) => {
+    setSelectedMenu(index)
+  }
 
   useEffect(() => {
     function handleClickOutside (event: MouseEvent) {
@@ -35,20 +41,24 @@ export default observer(function MenuComponent ({ menuItems }: Props) {
                 </div>
                 <ul className='pt-5'>
                     {menuItems.map((menu, index) => (
-                        <li key={index} className={`text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer 
-                                  p-2 hover:bg-orange-300 rounded-md h-12
-                                        ${(menu.gap ?? false) ? 'mt-9' : 'mt-2'}
-                                         ${index === 0 && 'bg-orange-600 text-gray-100'}`}>
-                            <img src={`/assets/${menu.src}.png`} className='h-8'/>
-                            <span className={`${!open && 'hidden'} origin-left duration-200`}>{menu.title}</span>
-                        </li>
+                        <Link to={menu.action} key={index}>
+                          <li key={index} className={`text-gray-300 text-lg flex items-center gap-x-4 cursor-pointer 
+                                    p-2 hover:bg-orange-300 rounded-md h-12
+                                          ${(menu.gap ?? false) ? 'mt-9' : 'mt-2'}
+                                          ${selectedMenu === index && 'bg-orange-600 text-gray-100'}`}
+                                          onClick={() => { handleMenuClick(index) }}>
+                              <img src={`/assets/${menu.src}.png`} className='h-8'/>
+                              <span className={`${!open && 'hidden'} origin-left duration-200`}>{menu.title}</span>
+                          </li>
+                        </Link>
                     ))}
                 </ul>
             </div>
             <Dimmer.Dimmable as={Segment} dimmed={open} className="outlet-box">
-                <Dimmer simple/>
+                <Dimmer/>
                 <Outlet/>
             </Dimmer.Dimmable>
+
         </div>
   )
 })

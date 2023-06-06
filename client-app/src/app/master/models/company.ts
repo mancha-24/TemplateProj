@@ -13,6 +13,12 @@ export class CompanyFormValues {
   password: string = ''
   kvkDoc: string = ''
   ownerDoc: string = ''
+  validExtractCoC: string = ''
+  copyOfMinisterialPermitDEZHI: string = ''
+  copyOfDirectorPermit: string = ''
+  copyOfResidencePermitDirector: string = ''
+  copyOfIDDirector: string = ''
+  copyOfValidContractsProjects: string = ''
 
   constructor (company?: CompanyFormValues) {
     if (company) {
@@ -30,6 +36,12 @@ export class CompanyFormValues {
       this.password = company.password
       this.kvkDoc = company.kvkDoc
       this.ownerDoc = company.ownerDoc
+      this.validExtractCoC = company.validExtractCoC
+      this.copyOfMinisterialPermitDEZHI = company.copyOfMinisterialPermitDEZHI
+      this.copyOfDirectorPermit = company.copyOfDirectorPermit
+      this.copyOfResidencePermitDirector = company.copyOfResidencePermitDirector
+      this.copyOfIDDirector = company.copyOfIDDirector
+      this.copyOfValidContractsProjects = company.copyOfValidContractsProjects
     }
   }
 }

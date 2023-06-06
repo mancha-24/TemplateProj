@@ -19,7 +19,7 @@ export default function DropdownComponent (props: Props) {
     <Form.Field error={meta.touched && !!meta.error}>
         <label>{props.label}</label>
         <Dropdown
-        className='mt-2 p-5'
+        className='mt-5 p-5 font-poppins w-full'
             clearable
             options={props.options}
             value={field.value || null}
@@ -31,7 +31,7 @@ export default function DropdownComponent (props: Props) {
             />
         { meta.touched && meta.error
           ? (
-                <Label pointing prompt>{meta.error} </Label>
+                <Label pointing prompt className='font-poppins'>{meta.error} </Label>
             )
           : null }
     </Form.Field>

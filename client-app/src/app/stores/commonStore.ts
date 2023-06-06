@@ -40,19 +40,19 @@ export default class CommonStore {
     permissions?.forEach((item) => {
       switch (item.permissionName) {
         case 'Pages.Administration.Users':
-          const menuUsers: MenuItems = {
-            action: '/user-page',
-            gap: false,
-            title: 'Accounts',
-            src: 'User'
-          }
-          this.menuItems.push(menuUsers)
+          // const menuUsers: MenuItems = {
+          //   action: '/user-page',
+          //   gap: false,
+          //   title: 'Accounts',
+          //   src: 'User'
+          // }
+          // this.menuItems.push(menuUsers)
           break
         case 'Pages.Administration':
           const menuAdmin: MenuItems = {
-            action: '/user-page',
+            action: '/companyPortal',
             gap: true,
-            title: 'Administration',
+            title: 'Company Users',
             src: 'Setting'
           }
           this.menuItems.push(menuAdmin)

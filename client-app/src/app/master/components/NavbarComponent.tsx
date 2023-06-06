@@ -13,12 +13,12 @@ export default observer(function NavBarComponent () {
           <div className="flex items-center justify-between text-gray-100 h-20">
             <span className='cursor-pointer origin-left font-medium text-2xl'>Progresa Portal</span>
             <div>
-            <Button className="font-medium normal-case text-base flex items-center gap-3 bg-orange-300
-                            text-white border-2 border-orange-400 tracking-wider" variant="outlined" ripple
-                            onClick={() => { console.log('click...') }}>
-             {user?.displayName}
-              <UserCircleIcon strokeWidth={2} className="h-6 w-6"/>
-            </Button>
+              <Button className="font-medium normal-case text-base flex items-center gap-3 bg-orange-300
+                              text-white border-2 border-orange-400 tracking-wider" variant="outlined" ripple
+                              onClick={() => { console.log('click...') }}>
+              {user?.displayName}
+                <UserCircleIcon strokeWidth={2} className="h-6 w-6"/>
+              </Button>
             </div>
           </div>
         </Navbar>

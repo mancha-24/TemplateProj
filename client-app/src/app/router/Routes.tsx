@@ -4,6 +4,7 @@ import Login from '../master/components/Login'
 import RequireAuth from './RequireAuth'
 import HomePage from '../master/pages/HomePage'
 import MainPage from '../master/MainPage'
+import CompanyComponent from '../master/pages/company/companyComponent'
 
 export const routes: RouteObject[] = [
   {
@@ -14,12 +15,11 @@ export const routes: RouteObject[] = [
         element: <RequireAuth />,
         children: [
           { path: 'main', element: <MainPage /> },
-          { path: 'home', element: <HomePage /> }
+          { path: 'home', element: <HomePage /> },
+          { path: 'companyPortal', element: <CompanyComponent /> }
         ]
       },
       { path: 'login', element: <Login /> }
-    //   { path: 'login', element: <App /> },
-    //   { path: 'home', element: <HomePage /> }
     ]
   }
 ]
