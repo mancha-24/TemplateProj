@@ -51,7 +51,7 @@ export default class CommonStore {
         case 'Pages.Administration':
           const menuAdmin: MenuItems = {
             action: '/companyPortal',
-            gap: true,
+            gap: false,
             title: 'Company Users',
             src: 'Setting'
           }

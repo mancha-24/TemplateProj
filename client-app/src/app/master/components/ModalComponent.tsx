@@ -25,7 +25,9 @@ export default observer(function ModalComponent () {
             </IconButton>
         </DialogHeader>
         <DialogBody>
+          <>
             {modalStore.modal.body}
+          </>
         </DialogBody>
     </Dialog>
   )
