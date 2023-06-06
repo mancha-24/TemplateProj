@@ -3,11 +3,11 @@ import { observer } from 'mobx-react-lite'
 import { Label } from 'semantic-ui-react'
 import { useStore } from '../../stores/store'
 // import loginImg from '../../../assets/dpl_main.jpg'
-import RequestCompanyComponent from '../../main/components/RequestCompanyComponent'
 import { ArrowLongRightIcon } from '@heroicons/react/20/solid'
 import { Checkbox } from '@material-tailwind/react'
 import { Ring } from '@uiball/loaders'
 import logo from '../../../../public/assets/plants-sitting.svg'
+import CreateCompanyComponent from '../pages/company/createCompanyComponent'
 
 export default observer(function Login () {
   const { userStore, modalStore } = useStore()
@@ -75,7 +75,7 @@ export default observer(function Login () {
                                                 transition duration-300
                                                  hover:border-red-500 hover:bg-opacity-10 hover:text-red-500
                                                  active:border-red-500 active:text-red-500'
-                                                 onClick={() => { modalStore.openModal(<RequestCompanyComponent />) }}>
+                                                 onClick={() => { modalStore.openModal(<CreateCompanyComponent />) }}>
                                             Request Account
                                         <ArrowLongRightIcon strokeWidth={2} className="h-5 w-5" />
                                     </button>

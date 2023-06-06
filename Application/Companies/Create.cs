@@ -1,4 +1,5 @@
 using Application.Core;
+using Domain.Authorization.Roles;
 using Domain.Entities;
 using Domain.Entities.Account;
 using MediatR;
@@ -28,8 +29,8 @@ namespace Application.Companies
             {
                 var user = await _userManager.FindByEmailAsync(request.Company.Email);
 
-                if (user != null && user.LockoutEnd == null) return Result<Unit>.Failure("Account already exits");
-                if (user != null && user.LockoutEnd != null) return Result<Unit>.Failure("Account Pending for activating");
+                // if (user != null && user.LockoutEnd == null) return Result<Unit>.Failure("Account already exits");
+                // if (user != null && user.LockoutEnd != null) return Result<Unit>.Failure("Account Pending for activating");
 
                 _context.CompanyUsers.Add(request.Company);
                 var companySaved = await _context.SaveChangesAsync() > 0;
@@ -47,7 +48,14 @@ namespace Application.Companies
                     
                     var result = await _userManager.CreateAsync(newUser, request.Company.Password);
 
-                    if (result.Succeeded) return Result<Unit>.Success(Unit.Value);
+                    if (result.Succeeded)
+                    {
+                        var companyRole = _context.AppRoles.FirstOrDefault(r => r.Name == StaticRoleNames.Host.Instance.Company);
+
+                        _context.UserRoles.Add(new IdentityUserRole<string> { RoleId = companyRole.Id, UserId = newUser.Id});
+
+                        if (await _context.SaveChangesAsync() > 0) return Result<Unit>.Success(Unit.Value);
+                    }
                 }
                
                 return Result<Unit>.Failure("Account coudn't be created");

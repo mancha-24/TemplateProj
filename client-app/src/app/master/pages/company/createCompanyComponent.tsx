@@ -1,17 +1,17 @@
 import { observer } from 'mobx-react-lite'
-import TextInputCustom from '../../master/components/customInputs/TextInputBasic'
+import TextInputCustom from '../../components/customInputs/TextInputBasic'
 import { Form, Formik } from 'formik'
-import FileUploadComponent from '../../master/components/customInputs/FileInputComponent'
-import DropdownComponent from '../../master/components/customInputs/DropdownComponent'
-import { sectorOptions } from '../../master/common/options/sectorOptions'
+import FileUploadComponent from '../../components/customInputs/FileInputComponent'
+import DropdownComponent from '../../components/customInputs/DropdownComponent'
+import { sectorOptions } from '../../common/options/sectorOptions'
 import { Alert } from '@material-tailwind/react'
 import { useState } from 'react'
-import { CompanyFormValues } from '../../master/models/company'
-import { useStore } from '../../stores/store'
+import { CompanyFormValues } from '../../models/company'
+import { useStore } from '../../../stores/store'
 import { Ring } from '@uiball/loaders'
-import { companyValidationSchema } from '../../master/common/validations/companyValidationSchema'
+import { companyValidationSchema } from '../../common/validations/companyValidationSchema'
 
-export default observer(function RequestCompanyComponent () {
+export default observer(function CreateCompanyComponent () {
   const { companyStore } = useStore()
   const [company] = useState<CompanyFormValues>(new CompanyFormValues())
 
@@ -112,7 +112,7 @@ export default observer(function RequestCompanyComponent () {
                                                                 text-base bg-red-500 text-white w-full border-2 font-poppins
                                                                 hover:bg-opacity-70 hover:border-red-300 hover:border-2 transition duration-300'>
                             {!isSubmitting
-                              ? 'Sign In'
+                              ? 'Send'
                               : <Ring
                                     size={25}
                                     lineWeight={7}

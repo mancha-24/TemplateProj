@@ -4,6 +4,7 @@ import Login from '../master/components/Login'
 import RequireAuth from './RequireAuth'
 import HomePage from '../master/pages/HomePage'
 import MainPage from '../master/MainPage'
+import CompanyAdminComponent from '../master/pages/company/companyAdminComponent'
 import CompanyComponent from '../master/pages/company/companyComponent'
 
 export const routes: RouteObject[] = [
@@ -16,7 +17,8 @@ export const routes: RouteObject[] = [
         children: [
           { path: 'main', element: <MainPage /> },
           { path: 'home', element: <HomePage /> },
-          { path: 'companyPortal', element: <CompanyComponent /> }
+          { path: 'companyAdmin', element: <CompanyAdminComponent /> },
+          { path: 'company', element: <CompanyComponent /> }
         ]
       },
       { path: 'login', element: <Login /> }

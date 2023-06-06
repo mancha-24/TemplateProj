@@ -74,7 +74,7 @@ namespace API.Controllers.Account
             
             if (user == null) return Unauthorized();
             
-            if (await _userManager.IsLockedOutAsync(user)) return Unauthorized();
+            //if (await _userManager.IsLockedOutAsync(user)) return Unauthorized();
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 

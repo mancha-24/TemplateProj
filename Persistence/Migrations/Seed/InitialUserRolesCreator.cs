@@ -198,6 +198,111 @@ namespace Persistence.Migrations.Seed
                 context.Permissions.Add(adminAdministrationUsersDeletePermission);
                 await context.SaveChangesAsync();
             }
+            
+            var adminCompanyPagesPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Company && p.IdRole == adminRole.Id);
+            if (adminCompanyPagesPermission == null)
+            {
+                adminCompanyPagesPermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Company,
+                    IdRole = adminRole.Id
+                };
+                context.Permissions.Add(adminCompanyPagesPermission);
+                await context.SaveChangesAsync();
+            }
+
+            var adminCompanyPagesCreatePermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Company_Create && p.IdRole == adminRole.Id);
+            if (adminCompanyPagesCreatePermission == null)
+            {
+                adminCompanyPagesCreatePermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Company_Create,
+                    IdRole = adminRole.Id
+                };
+                context.Permissions.Add(adminCompanyPagesCreatePermission);
+                await context.SaveChangesAsync();
+            }
+
+            var adminCompanyPagesEditPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Company_Edit && p.IdRole == adminRole.Id);
+            if (adminCompanyPagesEditPermission == null)
+            {
+                adminCompanyPagesEditPermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Company_Edit,
+                    IdRole = adminRole.Id
+                };
+                context.Permissions.Add(adminCompanyPagesEditPermission);
+                await context.SaveChangesAsync();
+            }
+
+            var adminCompanyPagesDeletePermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Company_Delete && p.IdRole == adminRole.Id);
+            if (adminCompanyPagesDeletePermission == null)
+            {
+                adminCompanyPagesDeletePermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Company_Delete,
+                    IdRole = adminRole.Id
+                };
+                context.Permissions.Add(adminCompanyPagesDeletePermission);
+                await context.SaveChangesAsync();
+            }
+
+            //Permissions role Company
+            var companyCompanyPagesPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Company && p.IdRole == companyRole.Id);
+            if (companyCompanyPagesPermission == null)
+            {
+                companyCompanyPagesPermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Company,
+                    IdRole = companyRole.Id
+                };
+                context.Permissions.Add(companyCompanyPagesPermission);
+                await context.SaveChangesAsync();
+            }
+
+            var companyCompanyPagesCreatePermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Company_Create && p.IdRole == companyRole.Id);
+            if (companyCompanyPagesCreatePermission == null)
+            {
+                companyCompanyPagesCreatePermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Company_Create,
+                    IdRole = companyRole.Id
+                };
+                context.Permissions.Add(companyCompanyPagesCreatePermission);
+                await context.SaveChangesAsync();
+            }
+
+            var companyCompanyPagesEditPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Company_Edit && p.IdRole == companyRole.Id);
+            if (companyCompanyPagesEditPermission == null)
+            {
+                companyCompanyPagesEditPermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Company_Edit,
+                    IdRole = companyRole.Id
+                };
+                context.Permissions.Add(companyCompanyPagesEditPermission);
+                await context.SaveChangesAsync();
+            }
+            
+            var companyCompanyPagesDeletePermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Company_Delete && p.IdRole == companyRole.Id);
+            if (companyCompanyPagesDeletePermission == null)
+            {
+                companyCompanyPagesDeletePermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Company_Delete,
+                    IdRole = companyRole.Id
+                };
+                context.Permissions.Add(companyCompanyPagesDeletePermission);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

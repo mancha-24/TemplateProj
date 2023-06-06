@@ -50,12 +50,21 @@ export default class CommonStore {
           break
         case 'Pages.Administration':
           const menuAdmin: MenuItems = {
-            action: '/companyPortal',
+            action: '/companyAdmin',
             gap: false,
             title: 'Company Users',
             src: 'Setting'
           }
           this.menuItems.push(menuAdmin)
+          break
+        case 'Pages.Company':
+          const menuCompany: MenuItems = {
+            action: '/company',
+            gap: false,
+            title: 'Company',
+            src: 'Folder'
+          }
+          this.menuItems.push(menuCompany)
           break
         default:
           break
