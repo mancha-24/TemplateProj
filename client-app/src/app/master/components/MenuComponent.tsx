@@ -31,7 +31,7 @@ export default observer(function MenuComponent ({ menuItems }: Props) {
 
   return (
         <div className='flex absolute top-0 left-0 w-full h-full'>
-            <div className={`${open ? 'w-72' : 'w-24'} duration-300 h-screen p-5 pt-20 bg-blue-700 relative`} ref={componentRef}>
+            <div className={`${open ? 'w-72' : 'w-24'} duration-300 h-screen p-5 pt-20 bg-gray-900 relative`} ref={componentRef}>
                 <div className={`flex ${open ? 'justify-end' : 'justify-center'} mt-8`}>
                     <img src="/assets/arrow.png"
                         className={`cursor-pointer rounded-full w-4 top-24 absolute

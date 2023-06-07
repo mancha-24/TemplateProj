@@ -32,7 +32,7 @@ export default class CommonStore {
     const dashboardMenu: MenuItems = {
       action: '/home',
       gap: false,
-      title: 'Dashboard',
+      title: 'Home',
       src: 'Chart_fill'
     }
     this.menuItems.push(dashboardMenu)

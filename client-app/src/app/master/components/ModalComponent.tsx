@@ -9,7 +9,7 @@ export default observer(function ModalComponent () {
   const [open, setOpen] = useState(true)
   const handleOpen = () => { modalStore.closeModal(); setOpen(!open) }
   return (
-    <Dialog open={modalStore.modal.open} handler={handleOpen} size='lg'
+    <Dialog open={modalStore.modal.open} handler={handleOpen} size={modalStore.modal.size}
       animate={{
         mount: { scale: 1, y: 0 },
         unmount: { scale: 0.9, y: -100 }

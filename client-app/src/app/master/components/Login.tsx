@@ -13,7 +13,7 @@ export default observer(function Login () {
   const { userStore, modalStore } = useStore()
   return (
         <div className="grid grid-cols-1 sm:grid-cols-3 h-screen w-full">
-            <div className='hidden sm:flex items-center justify-center flex-col bg-blue-700 h-screen'>
+            <div className='hidden sm:flex items-center justify-center flex-col bg-gray-900 h-screen'>
                 <div className='flex-grow'></div>
                 <img src={logo} className='object-contain w-full'/>
             </div>
