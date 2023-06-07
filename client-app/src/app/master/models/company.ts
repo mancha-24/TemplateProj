@@ -3,6 +3,12 @@ export interface Company {
   trade: string
   regName: string
   kvkNumber: string
+  director: string
+  address: string
+  phone: string
+  emailCompany: string
+  svbNumber: string
+  sector: string
 }
 
 export class Company implements Company {

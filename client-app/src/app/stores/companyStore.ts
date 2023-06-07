@@ -18,13 +18,18 @@ export default class CompanyStore {
     }
   }
 
-  loadCompany = async (id: string) => {
+  loadCompany = async (id: string | undefined) => {
     this.setLoadingScreen(true)
     await agent.sleep(1000)
 
     try {
-      const company = await agent.CompanyService.details(id)
-      console.log(company)
+      let company: Company
+      if (id) {
+        company = await agent.CompanyService.details(id)
+      } else {
+        company = await agent.CompanyService.current()
+      }
+
       this.setCompany(company)
       runInAction(() => this.selectedCompany = company)
       this.setLoadingScreen(false)

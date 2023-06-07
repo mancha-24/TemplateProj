@@ -56,11 +56,21 @@ const Permission = {
 
 const CompanyService = {
   create: async (company: CompanyFormValues) => await requests.post('/companies', company),
-  details: async (id: string) => await requests.get<Company>(`/companies/${id}`)
+  details: async (id: string) => await requests.get<Company>(`/companies/${id}`),
+  current: async () => await requests.get<Company>('/companies')
 }
 
 const requests = {
-  get: async <T> (url: string) => await axios.get<T>(url).then(responseBody),
+  // get: async <T> (url: string) => await axios.get<T>(url).then(responseBody),
+  get: async<T> (url: string): Promise<T> => {
+    try {
+      const response = await axios.get<T>(url)
+      return response.data
+    } catch (error) {
+      console.log('error: ', error)
+      throw error
+    }
+  },
   post: async <T> (url: string, body: {}) => await axios.post<T>(url, body).then(responseBody)
   // put: async <T> (url: string, body: {}) => await axios.put<T>(url, body).then(responseBody),
   // del: async <T> (url: string) => await axios.delete<T>(url).then(responseBody)
