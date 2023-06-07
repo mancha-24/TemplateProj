@@ -5,13 +5,29 @@ import SimpleCardComponent from '../common/simpleCardComponent'
 import { useStore } from '../../../stores/store'
 import LaborMarketFormHotel from './forms/laborMarketFormHotel'
 import NotImplementedComponent from '../common/notImplementedComponent'
+import { useParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import LoadingComponent from '../../components/LoadingComponent'
 
 export default observer(function CompanyComponent () {
-  const { modalStore } = useStore()
+  const { modalStore, companyStore } = useStore()
+  const { selectedCompany: company, loadCompany, loadingScreen, clearSelectedCompany } = companyStore
+  const { id } = useParams()
+
+  useEffect(() => {
+    if (id) void loadCompany(id)
+
+    void loadCompany('0be8fd79-6626-4945-7c3d-08db66c7faaa')
+
+    return () => { clearSelectedCompany() }
+  }, [id, loadCompany, clearSelectedCompany])
+
+  if (loadingScreen || !company) return <LoadingComponent inverted />
+
   return (
     <>
         <HeaderModule title='Company data' subtitle='Administration' />
-        <div className='static my-5 bg-white rounded-md shadow-md'>
+        <div className='static my-5 mx-4 bg-white rounded-md shadow-md'>
             <CompanyDataComponent />
 
             <div className='border-t mt-4'/>

@@ -1,3 +1,16 @@
+export interface Company {
+  id: string
+  trade: string
+  regName: string
+  kvkNumber: string
+}
+
+export class Company implements Company {
+  constructor (init?: CompanyFormValues) {
+    Object.assign(this, init)
+  }
+}
+
 export class CompanyFormValues {
   id?: string = undefined
   trade: string = ''
