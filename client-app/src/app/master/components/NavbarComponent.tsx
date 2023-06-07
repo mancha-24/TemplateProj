@@ -2,9 +2,10 @@ import { useStore } from '../../stores/store'
 import { observer } from 'mobx-react-lite'
 import { Navbar } from '@material-tailwind/react'
 import { UserIcon } from '@heroicons/react/24/outline'
+import NotImplementedComponent from '../pages/common/notImplementedComponent'
 
 export default observer(function NavBarComponent () {
-  const { userStore: { user } } = useStore()
+  const { userStore: { user }, drawerStore } = useStore()
   return (
         <Navbar className='sticky inset-0 z-10 h-20 max-w-full shadow-transparent
               rounded-none pb-0 pt-0 pr-16
@@ -18,7 +19,7 @@ export default observer(function NavBarComponent () {
                                   text-base bg-gray-900 w-full font-poppins border-2 border-transparent
                                   hover:bg-blue-900 transition duration-500
                                   focus:bg-blue-900 focus:border-white focus:border-2'
-                                  onClick={() => { console.log('click...') }}>
+                                  onClick={() => { drawerStore.openDrawer(<NotImplementedComponent />) }}>
               <span className='mr-3'>
                 \{user?.userName}
               </span>

@@ -14,8 +14,6 @@ export default observer(function CompanyComponent () {
 
   useEffect(() => {
     void loadCompany(id)
-    // void loadCompany('0be8fd79-6626-4945-7c3d-08db66c7faaa')
-
     return () => { clearSelectedCompany() }
   }, [id, loadCompany, clearSelectedCompany])
 
@@ -29,6 +27,7 @@ export default observer(function CompanyComponent () {
             <div className='border-t mt-4'/>
             <CompanyFormsSection />
             <div className='border-t mt-4'/>
+
         </div>
     </>
   )

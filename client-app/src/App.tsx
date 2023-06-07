@@ -6,6 +6,7 @@ import { useStore } from './app/stores/store'
 import MainPage from './app/master/MainPage'
 import ModalComponent from './app/master/components/ModalComponent'
 import 'typeface-poppins'
+import DrawerComponent from './app/master/components/DrawerComponent'
 
 function App () {
   const { commonStore, userStore } = useStore()
@@ -21,6 +22,7 @@ function App () {
       <ToastContainer position='bottom-right' theme='colored' hideProgressBar />
       {!userStore.isLoggedIn && !commonStore.token ? <Login /> : <MainPage/>}
       <ModalComponent />
+      <DrawerComponent />
     </>
   )
 }
