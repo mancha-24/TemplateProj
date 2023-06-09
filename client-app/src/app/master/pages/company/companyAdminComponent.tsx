@@ -1,16 +1,17 @@
 import { observer } from 'mobx-react-lite'
 
 import HeaderModule from '../common/headerModule'
-import { ChevronUpDownIcon, FaceFrownIcon } from '@heroicons/react/24/outline'
+import { ChevronUpDownIcon, FaceFrownIcon, PencilIcon } from '@heroicons/react/24/outline'
 import { useStore } from '../../../stores/store'
 import { Fragment, useEffect } from 'react'
-import { Chip } from '@material-tailwind/react'
+import { Chip, IconButton, Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react'
 import { format } from 'date-fns'
 import { DotSpinner } from '@uiball/loaders'
 import PaginationComponent from '../../components/table/PaginationComponent'
+import NotImplementedComponent from '../common/notImplementedComponent'
 
 export default observer(function CompanyAdminComponent () {
-  const { companyStore } = useStore()
+  const { companyStore, drawerStore, modalStore } = useStore()
   const { companyRegistry, loadCompanies, groupedCompanies, loadingScreen } = companyStore
 
   useEffect(() => {
@@ -90,7 +91,7 @@ export default observer(function CompanyAdminComponent () {
                                     <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
                                 </div>
                             </th>
-                            <th className='cursor-pointer bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50'>
+                            <th className='cursor-default bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50'>
                                 <span className='mr-3 font-poppins'>
                                     Actions
                                 </span>
@@ -132,7 +133,22 @@ export default observer(function CompanyAdminComponent () {
                                             </div>
                                         </td>
                                         <td className='p-4 border-b border-blue-gray-50 font-poppins'>
-                                            -
+                                            <Menu placement='left-start'>
+                                                <MenuHandler>
+                                                    <IconButton variant="text" color="blue-gray">
+                                                        <PencilIcon className="h-4 w-4" />
+                                                    </IconButton>
+                                                </MenuHandler>
+                                                <MenuList className='min-w-[120px]'>
+                                                    <MenuItem className='flex justify-center' onClick={() => { drawerStore.openDrawer(<NotImplementedComponent />) }}>
+                                                        <span className='font-poppins text-black'>Manage</span>
+                                                    </MenuItem>
+                                                    {!company.isActive &&
+                                                    <MenuItem className='flex justify-center' onClick={() => { modalStore.openModal(<NotImplementedComponent />, 'xs') }}>
+                                                        <span className='font-poppins text-black'>Activate</span>
+                                                    </MenuItem>}
+                                                </MenuList>
+                                            </Menu>
                                         </td>
                                     </tr>
                                 ))
