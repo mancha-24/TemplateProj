@@ -15,6 +15,8 @@ namespace Domain.Authorization
         public const string Pages_Administration_Users_Edit = "Pages.Administration.Users.Edit";
         public const string Pages_Administration_Users_Delete = "Pages.Administration.Users.Delete";
 
+        public const string Pages_Administration_Company = "Pages.Administration.Company";
+
         public const string Pages_Company = "Pages.Company";
         public const string Pages_Company_Create = "Pages.Company.Create";
         public const string Pages_Company_Edit = "Pages.Company.Edit";

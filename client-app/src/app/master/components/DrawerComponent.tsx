@@ -5,10 +5,6 @@ import { observer } from 'mobx-react-lite'
 
 export default observer(function DrawerComponent () {
   const { drawerStore } = useStore()
-  //   const [openRight, setOpenRight] = useState(false)
-  //   const openDrawerRight = () => { setOpenRight(true) }
-  //   const closeDrawerRight = () => { setOpenRight(false) }
-
   return (
     <>
         <Drawer

@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default observer(function MenuComponent ({ menuItems }: Props) {
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(false)
   const componentRef = useRef<HTMLDivElement | null>(null)
 
   const [selectedMenu, setSelectedMenu] = useState<number | null>(null)
@@ -34,7 +34,7 @@ export default observer(function MenuComponent ({ menuItems }: Props) {
         <div className={`${open ? 'z-[9999]' : ''} flex absolute top-0 left-0 w-full h-full`}>
             <div className={`${open ? 'w-72' : 'w-24'} duration-300 h-screen p-5 bg-gray-900 relative`} ref={componentRef}>
               <div className={`${open ? 'flex' : 'hidden'} flex justify-center cursor-pointer`}>
-                <img src={logo} className='object-contain h-28 w-28'/>
+                <img src={logo} className='object-contain h-24 w-24'/>
               </div>
 
                 <div className={`flex ${open ? 'justify-end' : 'justify-center'} mt-4`}>
@@ -43,7 +43,7 @@ export default observer(function MenuComponent ({ menuItems }: Props) {
                                     border-2 border-dark-purple ${!open && 'rotate-180'}`}
                         onClick={() => { setOpen(!open) }}/>
                 </div>
-                  <ul className={`${!open && 'pt-28'}`}>
+                  <ul className={`${!open && 'pt-24'}`}>
                       {menuItems.map((menu, index) => (
                           <Link to={menu.action} key={index}>
                             <li key={index} className={`text-gray-300 text-lg flex justify-normal items-center gap-x-4 cursor-pointer p-2 rounded-md h-12

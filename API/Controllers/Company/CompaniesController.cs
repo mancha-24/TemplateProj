@@ -18,7 +18,8 @@ namespace API.Controllers.Company
         {
             _userManager = userManager;
         }
-
+        
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> CreateAccount(CompanyUser company)
         {

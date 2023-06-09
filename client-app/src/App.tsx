@@ -10,12 +10,6 @@ import DrawerComponent from './app/master/components/DrawerComponent'
 
 function App () {
   const { commonStore, userStore } = useStore()
-  // useEffect(() => {
-  //   if (commonStore.token != null) {
-  //     void userStore.getUser()
-  //   }
-  // }, [])
-
   return (
     <>
 

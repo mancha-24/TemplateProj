@@ -43,19 +43,19 @@ namespace Persistence.Migrations.Seed
                     await context.SaveChangesAsync();
                 }
 
-                var hasUserDPLRole = context.UserRoles.Any(r => r.RoleId == userDPLRole.Id);
-                if (!hasUserDPLRole)
-                {
-                    context.UserRoles.Add(new IdentityUserRole<string> { RoleId = userDPLRole.Id, UserId = admin.Id});
-                    await context.SaveChangesAsync();
-                }
+                // var hasUserDPLRole = context.UserRoles.Any(r => r.RoleId == userDPLRole.Id);
+                // if (!hasUserDPLRole)
+                // {
+                //     context.UserRoles.Add(new IdentityUserRole<string> { RoleId = userDPLRole.Id, UserId = admin.Id});
+                //     await context.SaveChangesAsync();
+                // }
 
-                var hasCompanyRole = context.UserRoles.Any(r => r.RoleId == companyRole.Id);
-                if (!hasCompanyRole)
-                {
-                    context.UserRoles.Add(new IdentityUserRole<string> { RoleId = companyRole.Id, UserId = admin.Id});
-                    await context.SaveChangesAsync();
-                }
+                // var hasCompanyRole = context.UserRoles.Any(r => r.RoleId == companyRole.Id);
+                // if (!hasCompanyRole)
+                // {
+                //     context.UserRoles.Add(new IdentityUserRole<string> { RoleId = companyRole.Id, UserId = admin.Id});
+                //     await context.SaveChangesAsync();
+                // }
             }
 
             //Permissions Role Admin
@@ -199,12 +199,26 @@ namespace Persistence.Migrations.Seed
                 await context.SaveChangesAsync();
             }
             
+            var adminAdministrationCompanyPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Administration_Company && p.IdRole == adminRole.Id);
+            if (adminAdministrationCompanyPermission == null)
+            {
+                adminAdministrationCompanyPermission = new AppPermission
+                {
+                    IsGranted = true,
+                    Name = AppPermissions.Pages_Administration_Company,
+                    IdRole = adminRole.Id
+                };
+
+                context.Permissions.Add(adminAdministrationCompanyPermission);
+                await context.SaveChangesAsync();
+            }
+
             var adminCompanyPagesPermission = context.Permissions.FirstOrDefault(p => p.Name == AppPermissions.Pages_Company && p.IdRole == adminRole.Id);
             if (adminCompanyPagesPermission == null)
             {
                 adminCompanyPagesPermission = new AppPermission
                 {
-                    IsGranted = true,
+                    IsGranted = false,
                     Name = AppPermissions.Pages_Company,
                     IdRole = adminRole.Id
                 };

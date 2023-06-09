@@ -16,7 +16,6 @@ export default class DrawerStore {
   }
 
   openDrawer = (content: JSX.Element) => {
-    console.log('paso')
     this.drawer.open = true
     this.drawer.body = content
   }

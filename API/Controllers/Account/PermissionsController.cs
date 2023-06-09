@@ -30,7 +30,7 @@ namespace API.Controllers.Account
 
             var permissions = await (from permission in _context.Permissions.AsNoTracking()
                                         join userRole in _context.UserRoles.AsNoTracking() on permission.IdRole equals userRole.RoleId
-                                        where userRole.UserId == user.Id 
+                                        where userRole.UserId == user.Id && permission.IsGranted
                                         group permission by permission.Name into permissionGroup
                                         select new PermissionDto { PermissionName = permissionGroup.Key }
                                     ).ToListAsync();

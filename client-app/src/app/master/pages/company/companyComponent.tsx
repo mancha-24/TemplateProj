@@ -17,7 +17,7 @@ export default observer(function CompanyComponent () {
     return () => { clearSelectedCompany() }
   }, [id, loadCompany, clearSelectedCompany])
 
-  if (loadingScreen || !company) return <LoadingComponent inverted content='Loading company..'/>
+  if (loadingScreen || !company) return <LoadingComponent inverted/>
 
   return (
     <>
@@ -27,7 +27,6 @@ export default observer(function CompanyComponent () {
             <div className='border-t mt-4'/>
             <CompanyFormsSection />
             <div className='border-t mt-4'/>
-
         </div>
     </>
   )

@@ -48,11 +48,11 @@ export default class CommonStore {
           // }
           // this.menuItems.push(menuUsers)
           break
-        case 'Pages.Administration':
+        case 'Pages.Administration.Company':
           const menuAdmin: MenuItems = {
             action: '/companyAdmin',
             gap: false,
-            title: 'Company Users',
+            title: 'Company Admin',
             src: 'Setting'
           }
           this.menuItems.push(menuAdmin)
