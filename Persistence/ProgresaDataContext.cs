@@ -31,6 +31,10 @@ namespace Persistence
                 .HasOne(u => u.Company)
                 .WithOne(c => c.User)
                 .HasForeignKey<AppUser>(u => u.IdCompany);
+
+            builder.Entity<CompanyUser>()
+                .Property(c => c.CreationDate)
+                .HasDefaultValue(DateTime.Now);
         }
     }
 }

@@ -12,5 +12,7 @@ namespace Application.DTOs
         public string EmailCompany { get; set; }
         public string SvbNumber { get; set; }
         public string Sector { get; set; }
+        public DateTime CreationDate { get; set; }
+        public bool IsActive { get; set; }
     }
 }

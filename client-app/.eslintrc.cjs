@@ -26,6 +26,7 @@ module.exports = {
     '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/restrict-template-expressions': 'off',
     'no-case-declarations': 'off',
-    '@typescript-eslint/no-extraneous-class': 'off'
+    '@typescript-eslint/no-extraneous-class': 'off',
+    '@typescript-eslint/no-non-null-assertion': 'off'
   }
 }

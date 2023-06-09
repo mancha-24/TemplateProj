@@ -28,8 +28,8 @@ namespace Application.Companies
             public async Task<Result<CompanyDto>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var company = await _context.CompanyUsers
-                .ProjectTo<CompanyDto>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(x => x.Id == request.Id);
+                    .ProjectTo<CompanyDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync(x => x.Id == request.Id);
 
                 return Result<CompanyDto>.Success(company);
             }

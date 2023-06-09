@@ -9,6 +9,8 @@ export interface Company {
   emailCompany: string
   svbNumber: string
   sector: string
+  creationDate: Date | null
+  isActive: boolean
 }
 
 export class Company implements Company {

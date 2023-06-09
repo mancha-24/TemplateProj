@@ -28,7 +28,7 @@ namespace Application.Companies
             public async Task<Result<PagedList<CompanyDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var query = _context.CompanyUsers
-                            .WhereIf(request.Params.Id != null, c => c.Id == request.Params.Id)
+                            .WhereIf(request.Params.Id != Guid.Empty, c => c.Id == request.Params.Id)
                                 .ProjectTo<CompanyDto>(_mapper.ConfigurationProvider)
                                     .AsQueryable();
 

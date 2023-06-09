@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { store } from '../stores/store'
 import { type Permissions } from '../master/models/permissions'
 import { type Company, type CompanyFormValues } from '../master/models/company'
+import { PaginatedResult } from '../master/models/pagination'
 
 const sleep = async (delay: number) => {
   return await new Promise((resolve) => {
@@ -20,11 +21,13 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(async response => {
   // if (process.env.NODE_ENV === 'development')
-  // await sleep(1000)
-  //   const pagination = response.headers['pagination']
-  //   if (pagination) {
+  await sleep(1000)
+  const pagination = response.headers.pagination
+  if (pagination) {
+    response.data = new PaginatedResult(response.data, JSON.parse(pagination))
+    return response as AxiosResponse<PaginatedResult<any>>
+  }
 
-  //   }
   return response
 }, (error: AxiosError) => {
   const { status } = error.response as AxiosResponse
@@ -57,7 +60,8 @@ const Permission = {
 const CompanyService = {
   create: async (company: CompanyFormValues) => await requests.post('/companies', company),
   details: async (id: string) => await requests.get<Company>(`/companies/${id}`),
-  current: async () => await requests.get<Company>('/companies')
+  current: async () => await requests.get<Company>('/companies'),
+  list: async (params: URLSearchParams) => await axios.get<PaginatedResult<Company[]>>('companies/all', { params }).then(responseBody)
 }
 
 const requests = {
