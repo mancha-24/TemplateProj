@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using Application.Companies;
 using Application.DTOs;
+using Application.Parameters;
 using Domain.Entities;
 using Domain.Entities.Account;
 using Microsoft.AspNetCore.Authorization;
@@ -18,6 +19,21 @@ namespace API.Controllers.Company
         {
             _userManager = userManager;
         }
+
+        [HttpGet]
+        public async Task<ActionResult<CompanyDto>> GetCompanies()
+        {
+             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
+
+             return HandleResult(await Mediator.Send(new Details.Query{Id = user.IdCompany ?? Guid.Empty}));
+        }
+
+        [HttpGet]
+        [Route("all")]
+        public async Task<ActionResult<CompanyDto>> GetCurrentCompany([FromQuery]CompanyParams param)
+        {
+             return HandlePagedResult(await Mediator.Send(new List.Query{Params = param}));
+        }
         
         [AllowAnonymous]
         [HttpPost]
@@ -32,12 +48,6 @@ namespace API.Controllers.Company
             return HandleResult(await Mediator.Send(new Details.Query{Id = id}));
         }
 
-        [HttpGet]
-        public async Task<ActionResult<CompanyDto>> GetCurrentCompany()
-        {
-             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
-             return HandleResult(await Mediator.Send(new Details.Query{Id = user.IdCompany ?? Guid.Empty}));
-        }
     }
 }
