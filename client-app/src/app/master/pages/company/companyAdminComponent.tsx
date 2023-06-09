@@ -17,7 +17,6 @@ export default observer(function CompanyAdminComponent () {
   useEffect(() => {
     if (companyRegistry.size <= 1) void companyStore.loadCompanies()
   }, [loadCompanies])
-
   return (
     <>
         <HeaderModule title='Company administration' subtitle='Administration' />
@@ -104,7 +103,8 @@ export default observer(function CompanyAdminComponent () {
                             <Fragment key={group}>
                             {
                                 companies.map(company => (
-                                    <tr key={company.id} className='hover:bg-blue-gray-50 cursor-pointer'>
+                                    <tr key={company.id} className='hover:bg-blue-gray-50 cursor-pointer'
+                                    onClick={company.isActive ? () => { drawerStore.openDrawer(<NotImplementedComponent />) } : () => {}}>
                                         <td className='p-4 border-b border-blue-gray-50 font-poppins text-left'>
                                             {company.id}
                                         </td>
