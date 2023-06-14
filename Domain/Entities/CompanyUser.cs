@@ -16,8 +16,9 @@ namespace Domain.Entities
         public string EmailCompany { get; set; }
         public string SvbNumber { get; set; }
         public DateTime CreationDate { get; set; }
-        public int? SectorId { get; set; }
         public Sector Sector { get; set; }
+        public int SectorId { get; set; }
+
         [NotMapped]
         public string Email { get; set; }
         [NotMapped]

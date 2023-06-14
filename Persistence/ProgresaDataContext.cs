@@ -41,10 +41,15 @@ namespace Persistence
             builder.Entity<CompanyUser>()
                 .Property(c => c.CreationDate)
                 .HasDefaultValue(DateTime.Now);
+
+            builder.Entity<Function>()
+                .HasOne(f => f.Sector)
+                .WithMany(s => s.Functions)
+                .HasForeignKey(f => f.SectorId);
             
             builder.Entity<CompanyUser>()
                 .HasOne(cu => cu.Sector)
-                .WithMany()
+                .WithMany(s => s.Companies)
                 .HasForeignKey(cu => cu.SectorId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

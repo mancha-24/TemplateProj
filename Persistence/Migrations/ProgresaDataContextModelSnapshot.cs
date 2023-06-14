@@ -133,7 +133,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 13, 19, 5, 23, 276, DateTimeKind.Local).AddTicks(8651));
+                        .HasDefaultValue(new DateTime(2023, 6, 14, 17, 30, 0, 692, DateTimeKind.Local).AddTicks(1426));
 
                     b.Property<string>("Director")
                         .HasColumnType("nvarchar(max)");
@@ -150,10 +150,7 @@ namespace Persistence.Migrations
                     b.Property<string>("RegName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SectorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SectorId1")
+                    b.Property<int>("SectorId")
                         .HasColumnType("int");
 
                     b.Property<string>("SvbNumber")
@@ -165,8 +162,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("SectorId");
-
-                    b.HasIndex("SectorId1");
 
                     b.ToTable("CompanyUsers");
                 });
@@ -478,13 +473,10 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.CompanyUser", b =>
                 {
                     b.HasOne("Domain.Entities.Sector", "Sector")
-                        .WithMany()
-                        .HasForeignKey("SectorId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.Entities.Sector", null)
                         .WithMany("Companies")
-                        .HasForeignKey("SectorId1");
+                        .HasForeignKey("SectorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Sector");
                 });
