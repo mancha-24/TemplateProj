@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ProgresaDataContext))]
-    partial class ProgresaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20230613225838_Functions_tables_delete")]
+    partial class Functions_tables_delete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,7 +136,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 13, 19, 5, 23, 276, DateTimeKind.Local).AddTicks(8651));
+                        .HasDefaultValue(new DateTime(2023, 6, 13, 17, 58, 38, 305, DateTimeKind.Local).AddTicks(3708));
 
                     b.Property<string>("Director")
                         .HasColumnType("nvarchar(max)");
@@ -150,11 +153,8 @@ namespace Persistence.Migrations
                     b.Property<string>("RegName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SectorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SectorId1")
-                        .HasColumnType("int");
+                    b.Property<string>("Sector")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SvbNumber")
                         .HasColumnType("nvarchar(max)");
@@ -163,10 +163,6 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SectorId");
-
-                    b.HasIndex("SectorId1");
 
                     b.ToTable("CompanyUsers");
                 });
@@ -224,7 +220,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("SectorId");
 
-                    b.ToTable("Functions");
+                    b.ToTable("Function");
                 });
 
             modelBuilder.Entity("Domain.Entities.FunctionType", b =>
@@ -240,7 +236,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FunctionTypes");
+                    b.ToTable("FunctionType");
                 });
 
             modelBuilder.Entity("Domain.Entities.Sector", b =>
@@ -475,20 +471,6 @@ namespace Persistence.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CompanyUser", b =>
-                {
-                    b.HasOne("Domain.Entities.Sector", "Sector")
-                        .WithMany()
-                        .HasForeignKey("SectorId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("Domain.Entities.Sector", null)
-                        .WithMany("Companies")
-                        .HasForeignKey("SectorId1");
-
-                    b.Navigation("Sector");
-                });
-
             modelBuilder.Entity("Domain.Entities.CurrentStaff", b =>
                 {
                     b.HasOne("Domain.Entities.CompanyUser", "Company")
@@ -624,8 +606,6 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Sector", b =>
                 {
-                    b.Navigation("Companies");
-
                     b.Navigation("Functions");
                 });
 

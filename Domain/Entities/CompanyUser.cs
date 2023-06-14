@@ -16,7 +16,8 @@ namespace Domain.Entities
         public string EmailCompany { get; set; }
         public string SvbNumber { get; set; }
         public DateTime CreationDate { get; set; }
-        public string Sector { get; set; }
+        public int? SectorId { get; set; }
+        public Sector Sector { get; set; }
         [NotMapped]
         public string Email { get; set; }
         [NotMapped]
@@ -24,5 +25,7 @@ namespace Domain.Entities
 
         [JsonIgnore]
         public AppUser User { get; set; }
+        public ICollection<CurrentStaff> CurrentStaff { get; set; }
+        public ICollection<StaffData> StaffData { get; set; }
     }
 }
