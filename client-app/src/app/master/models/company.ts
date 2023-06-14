@@ -8,7 +8,7 @@ export interface Company {
   phone: string
   emailCompany: string
   svbNumber: string
-  sector: string
+  sectorId: number
   creationDate: Date | null
   isActive: boolean
 }
@@ -29,7 +29,7 @@ export class CompanyFormValues {
   phone: string = ''
   emailCompany: string = ''
   svbNumber: string = ''
-  sector: string = ''
+  sectorId: number = 0
   email: string = ''
   password: string = ''
   kvkDoc: string = ''
@@ -52,7 +52,7 @@ export class CompanyFormValues {
       this.phone = company.phone
       this.emailCompany = company.emailCompany
       this.svbNumber = company.svbNumber
-      this.sector = company.sector
+      this.sectorId = company.sectorId
       this.email = company.email
       this.password = company.password
       this.kvkDoc = company.kvkDoc

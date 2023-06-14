@@ -70,7 +70,7 @@ export default observer(function CreateCompanyComponent () {
                     <TextInputCustom placeholder='Email *' name='emailCompany' type='text'/>
                     <TextInputCustom placeholder='SVB # *' name='svbNumber' type='text'/>
 
-                    <DropdownComponent options={sectorOptions} placeholder='Sector' name='sector'/>
+                    <DropdownComponent options={sectorOptions} placeholder='Sector' name='sectorId'/>
                     <div className='col-start-1 col-end-2'>
                         <FileUploadComponent name='kvkDoc' id='kvkDoc' type='file' label='KvK document'/>
                     </div>
