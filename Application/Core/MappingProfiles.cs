@@ -9,7 +9,8 @@ namespace Application.Core
         public MappingProfiles()
         {
             CreateMap<CompanyUser, CompanyDto>()
-                .ForMember(d => d.IsActive, o => o.MapFrom(u => u.User.LockoutEnd == null));
+                .ForMember(d => d.IsActive, o => o.MapFrom(u => u.User.LockoutEnd == null))
+                .ForMember(d => d.Sector, o => o.MapFrom(u => u.Sector.SectorName));
         }
     }
 }

@@ -28,6 +28,7 @@ namespace Application.Companies
             public async Task<Result<CompanyDto>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var company = await _context.CompanyUsers
+                    .Include(s => s.Sector)
                     .ProjectTo<CompanyDto>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync(x => x.Id == request.Id);
 

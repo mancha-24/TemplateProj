@@ -9,6 +9,7 @@ export interface Company {
   emailCompany: string
   svbNumber: string
   sectorId: number
+  sector: string
   creationDate: Date | null
   isActive: boolean
 }

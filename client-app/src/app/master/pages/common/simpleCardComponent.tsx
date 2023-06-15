@@ -22,7 +22,7 @@ export default function SimpleCardComponent (props: Props) {
             </CardBody>
             <CardFooter className='pt-0 mt-5'>
                 <div className='absolute bottom-0 left-0 m-6'>
-                    <ButtonComponent content={props.isPending ? 'Fill' : 'Edit'}
+                    <ButtonComponent content={props.isPending ? 'View' : 'Edit'}
                         buttonAction={props.buttonAction}
                         primary={props.isPending}/>
                 </div>
