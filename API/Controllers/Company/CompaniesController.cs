@@ -21,7 +21,7 @@ namespace API.Controllers.Company
         }
 
         [HttpGet]
-        public async Task<ActionResult<CompanyDto>> GetCompanies()
+        public async Task<ActionResult<CompanyDto>> GetCurrentCompany()
         {
              var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
 
@@ -30,7 +30,7 @@ namespace API.Controllers.Company
 
         [HttpGet]
         [Route("all")]
-        public async Task<ActionResult<CompanyDto>> GetCurrentCompany([FromQuery]CompanyParams param)
+        public async Task<ActionResult<CompanyDto>> GetCompanies([FromQuery]CompanyParams param)
         {
              return HandlePagedResult(await Mediator.Send(new List.Query{Params = param}));
         }

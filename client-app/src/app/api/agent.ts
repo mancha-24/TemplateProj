@@ -5,6 +5,7 @@ import { store } from '../stores/store'
 import { type Permissions } from '../master/models/permissions'
 import { type Company, type CompanyFormValues } from '../master/models/company'
 import { PaginatedResult } from '../master/models/pagination'
+import { type CompanyFunction } from '../master/models/companyFunction'
 
 const sleep = async (delay: number) => {
   return await new Promise((resolve) => {
@@ -64,6 +65,10 @@ const CompanyService = {
   list: async (params: URLSearchParams) => await axios.get<PaginatedResult<Company[]>>('companies/all', { params }).then(responseBody)
 }
 
+const Function = {
+  list: async () => await requests.get<CompanyFunction[]>('/functions')
+}
+
 const requests = {
   // get: async <T> (url: string) => await axios.get<T>(url).then(responseBody),
   get: async<T> (url: string): Promise<T> => {
@@ -84,6 +89,7 @@ const agent = {
   Account,
   Permission,
   CompanyService,
+  Function,
   sleep
 }
 

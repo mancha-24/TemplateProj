@@ -5,6 +5,7 @@ import PermissionStore from './permissionStore'
 import ModalStore from './modalStore'
 import CompanyStore from './companyStore'
 import DrawerStore from './drawerStore'
+import MasterDataStore from './masterDataStore'
 
 interface Store {
   userStore: UserStore
@@ -13,6 +14,7 @@ interface Store {
   modalStore: ModalStore
   drawerStore: DrawerStore
   companyStore: CompanyStore
+  masterDataStore: MasterDataStore
 }
 
 export const store: Store = {
@@ -21,7 +23,8 @@ export const store: Store = {
   permissionsStore: new PermissionStore(),
   modalStore: new ModalStore(),
   drawerStore: new DrawerStore(),
-  companyStore: new CompanyStore()
+  companyStore: new CompanyStore(),
+  masterDataStore: new MasterDataStore()
 }
 
 export const StoreContext = createContext(store)
