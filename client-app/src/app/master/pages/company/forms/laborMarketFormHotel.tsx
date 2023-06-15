@@ -1,59 +1,43 @@
-import { Input, List, ListItem } from '@material-tailwind/react'
+import { Input } from '@material-tailwind/react'
 import { Form, Formik } from 'formik'
 import { observer } from 'mobx-react-lite'
-import { useState, type ChangeEvent } from 'react'
-
-const randomStrings = [
-  'prueba',
-  'test',
-  'manuel',
-  'ortega',
-  'francisco'
-]
+import { useState, useEffect } from 'react'
+import ButtonComponent from '../../../components/customInputs/ButtonComponent'
+import { useStore } from '../../../../stores/store'
+import * as Yup from 'yup'
+import AutoComplete from '../../../components/customInputs/AutoComplete'
 
 export default observer(function LaborMarketFormHotel () {
-  const [searchText, setSearchText] = useState('')
-  const [suggestions, setSuggestions] = useState<string[]>([])
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const text = event.target.value
-    if (text) {
-      const filtered = randomStrings.filter(s => s.includes(text))
-      setSuggestions(filtered)
-    } else {
-      setSuggestions([])
-    }
-    setSearchText(text)
-  }
-  const handleSuggestionClick = (suggestion: string) => {
-    setSearchText(suggestion)
-    setSuggestions([]) // Clear suggestions when selecting one
-  }
+  const { masterDataStore } = useStore()
+  const { functions } = masterDataStore
+  const [functionList, setFunctionList] = useState<string[]>([])
+  useEffect(() => {
+    void masterDataStore.loadFunctionsDropdown()
+    setFunctionList(functions.map((f) => f.name))
+  }, [functions])
 
   return (
         <Formik
             onSubmit={async (values) => {
               console.log(values)
             } }
-        enableReinitialize
-        initialValues={{ input1: '', input2: '', error: null }}
+            initialValues={{ function: '' }}
+            enableReinitialize
+            validationSchema={Yup.object({
+              function: Yup.string().required()
+            })}
         >
-            {({ handleSubmit }) => (
+            {({ handleSubmit, isSubmitting, isValid }) => (
                 <Form onSubmit={handleSubmit} autoComplete='off' className='p-8 pt-0'>
-                    <h2 className='font-poppins font-semibold text-black text-3xl text-left mb-5'>Labor Market Registration </h2>
-                    <div className='w-1 p-8 font-poppins'>
-                      <Input label='Function' onChange={handleInputChange} variant='standard' value={searchText}/>
-                      <List className='z-[9999]'>
-                        {suggestions.map((suggestion, index) => (
-                        <ListItem key={index} onClick={() => { handleSuggestionClick(suggestion) }}>
-                          {suggestion}
-                        </ListItem>
-                        ))}
-                      </List>
+                    <h2 className='font-poppins font-semibold text-black text-3xl text-left mb-7'>Labor Market Registration </h2>
+                    <span className='col-span-4 font-poppins text-black text-xl my-1 p-8'>Functies </span>
+                    <div className='w-96 p-8 font-poppins shadow-sm mb-2'>
+                        <AutoComplete items={functionList} name='function' label='Function' type='text' />
                     </div>
                     <div className='grid grid-cols-4 gap-4 h-full w-full border-2 border-gray-200 rounded-lg shadow-lg p-8 font-poppins'>
                       <span className='col-span-4 font-poppins text-black text-xl mb-2'>Niet-Toelatingsplichtig</span>
                       <div className='w-1'>
-                        <Input label='Sub A' variant='standard' type='number' max={5} min={0} />
+                        <Input label='Sub A' variant='standard' type='number' max={5} min={0} style={{ fontFamily: 'Poppins, sans-serif' }} />
                       </div>
                       <div className='w-1'>
                         <Input label='Sub B' variant='standard' type='number' max={5} min={0} />
@@ -81,17 +65,20 @@ export default observer(function LaborMarketFormHotel () {
                     <div className='mt-4 grid grid-cols-4 gap-4 h-full w-full border-2 border-gray-200 rounded-lg shadow-lg p-8 font-poppins'>
                       <span className='col-span-4 font-poppins text-black text-xl mb-2'>Voor Huidig en Toekomstige Personeel 2023</span>
                       <div className='w-1'>
-                        <Input label='Opleiding' variant='standard' type='number' max={5} min={0} />
+                        <Input label='Opleiding' variant='standard' type='text' style={{ fontFamily: 'Poppins, sans-serif' }}/>
                       </div>
                       <div className='w-1'>
-                        <Input label='Bruto salaris per maand' variant='standard' type='number' max={5} min={0} />
+                        <Input label='Bruto salaris per maand' variant='standard' type='number' min={0} />
                       </div>
                       <div className='w-1'>
-                        <Input label='Arbeids dagen per week' variant='standard' type='number' max={5} min={0} />
+                        <Input label='Arbeids dagen per week' variant='standard' type='number' min={0} />
                       </div>
                       <div className='w-1'>
-                        <Input label='Arbeids uren per week' variant='standard' type='number' max={5} min={0} />
+                        <Input label='Arbeids uren per week' variant='standard' type='number' min={0} />
                       </div>
+                    </div>
+                    <div className='flex justify-end mt-8'>
+                        <ButtonComponent primary disabled={!isValid} buttonAction={() => handleSubmit} isSubmitting={isSubmitting}/>
                     </div>
                 </Form>
             )}
