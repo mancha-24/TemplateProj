@@ -12,10 +12,10 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Controllers.Formularies
 {
     [Authorize]
-    public class LaboraMarketController : BaseApiController
+    public class LaborMarketController : BaseApiController
     {
         private readonly UserManager<AppUser> _userManager;
-        public LaboraMarketController(UserManager<AppUser> userManager)
+        public LaborMarketController(UserManager<AppUser> userManager)
         {
             _userManager = userManager;
         }
@@ -35,7 +35,7 @@ namespace API.Controllers.Formularies
         }
 
         [HttpGet]
-        public async Task<ActionResult<CompanyDto>> GetLaboraMarketRecords([FromQuery]LaboraMarketParams param)
+        public async Task<ActionResult<LaborMarketDto>> GetLaboraMarketRecords([FromQuery]LaborMarketParams param)
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
             return HandlePagedResult(await Mediator.Send(new List.Query{Params = param, CompanyId = user.IdCompany ?? Guid.Empty}));

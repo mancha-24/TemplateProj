@@ -1,6 +1,6 @@
 namespace Application.Parameters
 {
-    public class LaboraMarketParams : PagingParams
+    public class LaborMarketParams : PagingParams
     {
         public string FunctionName { get; set; }
     }

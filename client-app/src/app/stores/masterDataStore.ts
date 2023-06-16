@@ -4,6 +4,7 @@ import agent from '../api/agent'
 
 export default class MasterDataStore {
   functions: CompanyFunction[] = []
+  functionToDropDown: Array<{ value: string, text: string }> = []
   loading = false
   constructor () {
     makeAutoObservable(this)
@@ -12,7 +13,13 @@ export default class MasterDataStore {
   loadFunctionsDropdown = async () => {
     try {
       const functions = await agent.Function.list()
-      runInAction(() => this.functions = functions)
+      runInAction(() => {
+        this.functions = functions
+        this.functionToDropDown = functions.map((f) => ({
+          value: f.id,
+          text: f.name
+        }))
+      })
     } catch (error) {
       console.log(error)
     }

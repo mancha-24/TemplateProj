@@ -12,7 +12,7 @@ interface Props {
 
 export default function AutoComplete (props: Props) {
   const [field, meta, helpers] = useField(props.name)
-  const [suggestions, setSuggestions] = useState<Array<{ value: string, text: string }>>(props.items)
+  const [suggestions, setSuggestions] = useState<Array<{ value: string, text: string }>>([])
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     helpers.setTouched(true)

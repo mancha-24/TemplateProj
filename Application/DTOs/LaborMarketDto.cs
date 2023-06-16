@@ -1,6 +1,6 @@
 namespace Application.DTOs
 {
-    public class LaboraMarketDto
+    public class LaborMarketDto
     {
         public Guid? Id { get; set; }
         public Guid FunctionId { get; set; }
@@ -16,5 +16,7 @@ namespace Application.DTOs
         public decimal SalaryMonth { get; set; }
         public double DaysWeek { get; set; }
         public double HoursWeek { get; set; }
+        public DateTime CreationDate { get; set; }
+        public int Quantity { get; set; }
     }
 }

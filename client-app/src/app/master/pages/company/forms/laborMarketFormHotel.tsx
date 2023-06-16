@@ -10,27 +10,22 @@ import InputCustom from '../../../components/customInputs/InputCustom'
 
 export default observer(function LaborMarketFormHotel () {
   const { masterDataStore, companyFormsStore, modalStore } = useStore()
-  const { functions } = masterDataStore
-  const [functionList, setFunctionList] = useState<Array<{ value: string, text: string }>>([])
+  const { functionToDropDown } = masterDataStore
   const [laborMarket] = useState<LaborMarketFormValues>(new LaborMarketFormValues())
   useEffect(() => {
     void masterDataStore.loadFunctionsDropdown()
-    const functList: Array<{ value: string, text: string }> = functions.map((f) => ({
-      value: f.id,
-      text: f.name
-    }))
-    setFunctionList(functList)
   }, [])
 
   return (
         <Formik
             onSubmit={async (values) => {
-              const functSelected = functionList.find(item => item.text === values.functionName)
+              const functSelected = functionToDropDown.find(item => item.text === values.functionName)
               if (functSelected) {
                 values.functionId = functSelected?.value
                 // todo: validate function id exists
                 await companyFormsStore.createLaboraMarket(values)
                   .then(() => { modalStore.closeModal() })
+                  .then(() => { companyFormsStore.clearLaborMarketRecordsRegistry() })
                   .catch(() => { })
               }
             }}
@@ -43,7 +38,7 @@ export default observer(function LaborMarketFormHotel () {
                     <h2 className='font-poppins font-semibold text-black text-3xl text-left mb-7'>Labor Market Registration </h2>
                     <span className='col-span-4 font-poppins text-black text-xl my-1 p-8'>Functies </span>
                     <div className='w-96 p-8 font-poppins shadow-sm mb-2'>
-                        <AutoComplete items={functionList} name='functionName' label='*Function' type='text' />
+                        <AutoComplete items={functionToDropDown} name='functionName' label='*Function' type='text' />
                     </div>
                     <div className='grid grid-cols-4 gap-4 h-full w-full border-2 border-gray-200 rounded-lg shadow-lg p-8 font-poppins'>
                       <span className='col-span-4 font-poppins text-black text-xl mb-2'>Niet-Toelatingsplichtig</span>

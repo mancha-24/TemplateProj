@@ -6,7 +6,7 @@ import { type Permissions } from '../master/models/permissions'
 import { type Company, type CompanyFormValues } from '../master/models/company'
 import { PaginatedResult } from '../master/models/pagination'
 import { type CompanyFunction } from '../master/models/companyFunction'
-import { type LaborMarketFormValues } from '../master/models/laborMarket'
+import { type LaborMarket, type LaborMarketFormValues } from '../master/models/laborMarket'
 
 const sleep = async (delay: number) => {
   return await new Promise((resolve) => {
@@ -64,7 +64,8 @@ const CompanyService = {
   details: async (id: string) => await requests.get<Company>(`/companies/${id}`),
   current: async () => await requests.get<Company>('/companies'),
   list: async (params: URLSearchParams) => await axios.get<PaginatedResult<Company[]>>('companies/all', { params }).then(responseBody),
-  createLaboraMarket: async (laboraMarket: LaborMarketFormValues) => await requests.post('laboraMarket', laboraMarket)
+  createLaboraMarket: async (laboraMarket: LaborMarketFormValues) => await requests.post('/laborMarket', laboraMarket),
+  listLaboraMarket: async (params: URLSearchParams) => await axios.get<PaginatedResult<LaborMarket[]>>('/laborMarket', { params }).then(responseBody)
 }
 
 const Function = {

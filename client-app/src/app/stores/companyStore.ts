@@ -56,7 +56,6 @@ export default class CompanyStore {
     this.setLoadingScreen(true)
     try {
       const result = await agent.CompanyService.list(this.axiosParams)
-      console.log('result', result)
       result.data.forEach(company => {
         this.setCompany(company)
       })
