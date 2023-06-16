@@ -6,6 +6,7 @@ import HomePage from '../master/pages/HomePage'
 import MainPage from '../master/MainPage'
 import CompanyAdminComponent from '../master/pages/company/companyAdminComponent'
 import CompanyComponent from '../master/pages/company/companyComponent'
+import LaborMarketPage from '../master/pages/company/laborMarketPage'
 
 export const routes: RouteObject[] = [
   {
@@ -18,7 +19,8 @@ export const routes: RouteObject[] = [
           { path: 'main', element: <MainPage /> },
           { path: 'home', element: <HomePage /> },
           { path: 'companyAdmin', element: <CompanyAdminComponent /> },
-          { path: 'company', element: <CompanyComponent /> }
+          { path: 'company', element: <CompanyComponent /> },
+          { path: 'laborMarket', element: <LaborMarketPage /> }
         ]
       },
       { path: 'login', element: <Login /> }
