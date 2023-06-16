@@ -6,6 +6,7 @@ import ModalStore from './modalStore'
 import CompanyStore from './companyStore'
 import DrawerStore from './drawerStore'
 import MasterDataStore from './masterDataStore'
+import CompanyFormsStore from './companyFormsStore'
 
 interface Store {
   userStore: UserStore
@@ -14,6 +15,7 @@ interface Store {
   modalStore: ModalStore
   drawerStore: DrawerStore
   companyStore: CompanyStore
+  companyFormsStore: CompanyFormsStore
   masterDataStore: MasterDataStore
 }
 
@@ -24,6 +26,7 @@ export const store: Store = {
   modalStore: new ModalStore(),
   drawerStore: new DrawerStore(),
   companyStore: new CompanyStore(),
+  companyFormsStore: new CompanyFormsStore(),
   masterDataStore: new MasterDataStore()
 }
 

@@ -13,7 +13,9 @@ export default observer(function ModalComponent () {
       animate={{
         mount: { scale: 1, y: 0 },
         unmount: { scale: 0.9, y: -100 }
-      }}>
+      }}
+      className='max-h-96 overflow-y-auto'
+      style={{ maxHeight: '900px' }}>
         <DialogHeader className='justify-end'>
           <IconButton
               color="blue-gray"

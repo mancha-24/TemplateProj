@@ -7,19 +7,18 @@ interface Props {
   name: string
   label?: string
   type?: string
-  items: string[]
+  items: Array<{ value: string, text: string }>
 }
 
-export default function autoComplete (props: Props) {
+export default function AutoComplete (props: Props) {
   const [field, meta, helpers] = useField(props.name)
-  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [suggestions, setSuggestions] = useState<Array<{ value: string, text: string }>>(props.items)
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     helpers.setTouched(true)
     const text = event.target.value
     if (text) {
-      const filtered = props.items.filter(s => s.toLowerCase().includes(text.toLowerCase()))
-
+      const filtered = props.items.filter(s => s.text.toLowerCase().includes(text.toLowerCase()))
       setSuggestions(filtered)
       helpers.setValue(text)
     } else {
@@ -28,15 +27,17 @@ export default function autoComplete (props: Props) {
     }
   }
 
-  const handleSuggestionClick = (suggestion: string) => {
+  const handleSuggestionClick = (suggestion: { value: string, text: string }) => {
     setSuggestions([])
-    helpers.setValue(suggestion)
+    helpers.setValue(suggestion.text)
+    helpers.setTouched(true)
   }
 
   return (
     <>
         <Input {...field} {...props}
             error={meta.touched && !!meta.error}
+            id={props.name}
             variant='outlined'
             size='lg'
             color='teal'
@@ -45,9 +46,9 @@ export default function autoComplete (props: Props) {
             onBlur={() => { helpers.setTouched(true) }}
             onChange={handleInputChange}/>
             <List className={`max-h-40 overflow-y-auto font-poppins ${suggestions.length < 1 && 'hidden'}`}>
-                {props.items.map((suggestion, index) => (
+                {suggestions.map((suggestion, index) => (
                     <ListItem key={index} onClick={() => { handleSuggestionClick(suggestion) }} >
-                        {suggestion}
+                        {suggestion.text}
                     </ListItem>
                 ))}
             </List>

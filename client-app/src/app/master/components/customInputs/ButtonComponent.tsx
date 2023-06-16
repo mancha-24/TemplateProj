@@ -10,7 +10,7 @@ interface Props {
 
 export default function ButtonComponent ({ primary = false, content = 'Send', buttonAction, disabled = false, isSubmitting = false }: Props) {
   return (
-    <button
+    <button type='submit'
         className={`
             ${
               disabled

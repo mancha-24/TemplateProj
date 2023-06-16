@@ -17,7 +17,7 @@ namespace Persistence
         public DbSet<CompanyUser> CompanyUsers { get; set; }
         public DbSet<Sector> Sectors { get; set; }
         public DbSet<Function> Functions { get; set; }
-        public DbSet<CurrentStaff> CurrentStaff { get; set; }
+        // public DbSet<CurrentStaff> CurrentStaff { get; set; }
         public DbSet<StaffType> StaffTypes { get; set; }
         public DbSet<StaffData> StaffData { get; set; }
         public DbSet<FunctionType> FunctionTypes { get; set; }
