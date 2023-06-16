@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import SimpleCardComponent from '../common/simpleCardComponent'
 import { useStore } from '../../../stores/store'
-import LaborMarketFormHotel from './forms/laborMarketFormHotel'
 import NotImplementedComponent from '../common/notImplementedComponent'
 import { useNavigate } from 'react-router-dom'
 
@@ -18,7 +17,7 @@ export default observer(function CompanyFormsSection () {
 
             <SimpleCardComponent title='Project Overview Form' isPending
                 desc='This form should be used to provide an overview of ongoing projects.'
-                buttonAction={() => { modalStore.openModal(<LaborMarketFormHotel />) }} />
+                buttonAction={() => { modalStore.openModal(<NotImplementedComponent />, 'sm') }} />
 
             <SimpleCardComponent title='Copy of Building Permit' isPending
                 desc='This form should be used to provide an overview of ongoing projects and to provide a copy of the building permit.'

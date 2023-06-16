@@ -19,13 +19,21 @@ export default observer(function LaborMarketPage () {
   useEffect(() => {
     void loadCompany(undefined)
     return () => { clearSelectedCompany() }
-  }, [])
+  }, [clearSelectedCompany])
 
   if (loadingScreen || !company) return <LoadingComponent inverted/>
   return (
         <>
             <HeaderModule title='Labora market data' subtitle='Administration' />
-            <div className='static my-5 mx-4 bg-white rounded-md shadow-md'>
+            <div className='static my-5 mx-4 bg-white rounded-md overflow-y-auto scroll-smooth shadow-sm'
+                 style={{ maxHeight: '760px', height: '760px' }}>
+                <div className='p-4'>
+                    <button onClick={() => { navigate('/company') }}
+                        className='flex items-center p-3 rounded-lg hover:text-blue-gray-200 transition duration-200 font-poppins'>
+                        <ArrowLongLeftIcon strokeWidth={2} className="h-5 w-5 mr-2" />
+                        Back
+                    </button>
+                </div>
                 <CompanyDataSection company={company} />
                 <div className='border-t mt-4'/>
 
@@ -86,19 +94,11 @@ export default observer(function LaborMarketPage () {
                     }
                 </div>
                 {!loadingScreen &&
-                    <div className='shadow-lg flex justify-center p-8 pt-4'>
+                    <div className='flex justify-center p-8 pt-4'>
                         <PaginationComponent />
                     </div>
                 }
                 <div className='border-t mt-4'/>
-
-                <div className='p-4'>
-                    <button onClick={() => { navigate('/company') }}
-                        className='flex items-center p-3 rounded-lg hover:text-blue-gray-200 transition duration-200 font-poppins'>
-                        <ArrowLongLeftIcon strokeWidth={2} className="h-5 w-5 mr-2" />
-                        Back
-                    </button>
-                </div>
             </div>
         </>
   )
