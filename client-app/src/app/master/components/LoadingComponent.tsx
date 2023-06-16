@@ -1,14 +1,14 @@
-import { Dimmer, Loader } from 'semantic-ui-react'
+import { LeapFrog } from '@uiball/loaders'
+import { Dimmer } from 'semantic-ui-react'
 
 interface Props {
   inverted?: boolean
-  content?: string
 }
 
-export default function LoadingComponent ({ inverted = false, content = 'Loading...' }: Props) {
+export default function LoadingComponent ({ inverted = false }: Props) {
   return (
         <Dimmer active={true} inverted={inverted}>
-            <Loader content={content} size='massive'/>
+            <LeapFrog size={60} speed={2.5} color='black'/>
         </Dimmer>
   )
 }

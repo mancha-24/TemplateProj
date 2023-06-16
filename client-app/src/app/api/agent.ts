@@ -3,7 +3,10 @@ import { type User, type UserFormValues } from '../master/models/user'
 import { toast } from 'react-toastify'
 import { store } from '../stores/store'
 import { type Permissions } from '../master/models/permissions'
-import { type CompanyFormValues } from '../master/models/company'
+import { type Company, type CompanyFormValues } from '../master/models/company'
+import { PaginatedResult } from '../master/models/pagination'
+import { type CompanyFunction } from '../master/models/companyFunction'
+import { type LaborMarketFormValues } from '../master/models/laborMarket'
 
 const sleep = async (delay: number) => {
   return await new Promise((resolve) => {
@@ -20,11 +23,13 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(async response => {
   // if (process.env.NODE_ENV === 'development')
-  await sleep(1000)
-  //   const pagination = response.headers['pagination']
-  //   if (pagination) {
+  // await sleep(1000)
+  const pagination = response.headers.pagination
+  if (pagination) {
+    response.data = new PaginatedResult(response.data, JSON.parse(pagination))
+    return response as AxiosResponse<PaginatedResult<any>>
+  }
 
-  //   }
   return response
 }, (error: AxiosError) => {
   const { status } = error.response as AxiosResponse
@@ -54,12 +59,29 @@ const Permission = {
   permissions: async () => await requests.get<Permissions[]>('/permissions')
 }
 
-const Company = {
-  create: async (company: CompanyFormValues) => await requests.post('/companies', company)
+const CompanyService = {
+  create: async (company: CompanyFormValues) => await requests.post('/companies', company),
+  details: async (id: string) => await requests.get<Company>(`/companies/${id}`),
+  current: async () => await requests.get<Company>('/companies'),
+  list: async (params: URLSearchParams) => await axios.get<PaginatedResult<Company[]>>('companies/all', { params }).then(responseBody),
+  createLaboraMarket: async (laboraMarket: LaborMarketFormValues) => await requests.post('laboraMarket', laboraMarket)
+}
+
+const Function = {
+  list: async () => await requests.get<CompanyFunction[]>('/functions')
 }
 
 const requests = {
-  get: async <T> (url: string) => await axios.get<T>(url).then(responseBody),
+  // get: async <T> (url: string) => await axios.get<T>(url).then(responseBody),
+  get: async<T> (url: string): Promise<T> => {
+    try {
+      const response = await axios.get<T>(url)
+      return response.data
+    } catch (error) {
+      console.log('error: ', error)
+      throw error
+    }
+  },
   post: async <T> (url: string, body: {}) => await axios.post<T>(url, body).then(responseBody)
   // put: async <T> (url: string, body: {}) => await axios.put<T>(url, body).then(responseBody),
   // del: async <T> (url: string) => await axios.delete<T>(url).then(responseBody)
@@ -68,7 +90,9 @@ const requests = {
 const agent = {
   Account,
   Permission,
-  Company
+  CompanyService,
+  Function,
+  sleep
 }
 
 export default agent

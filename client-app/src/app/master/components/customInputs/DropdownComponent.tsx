@@ -1,11 +1,6 @@
 import { useField } from 'formik'
 import { Dropdown, Form, Label } from 'semantic-ui-react'
 
-// const options = [
-//   { key: 1, text: 'Choice 1', value: 1 },
-//   { key: 2, text: 'Choice 2', value: 2 },
-//   { key: 3, text: 'Choice 3', value: 3 }
-// ]
 interface Props {
   placeholder: string
   name: string
@@ -19,7 +14,7 @@ export default function DropdownComponent (props: Props) {
     <Form.Field error={meta.touched && !!meta.error}>
         <label>{props.label}</label>
         <Dropdown
-        className='mt-2 p-5'
+        className='mt-5 p-5 font-poppins w-full'
             clearable
             options={props.options}
             value={field.value || null}
@@ -31,7 +26,7 @@ export default function DropdownComponent (props: Props) {
             />
         { meta.touched && meta.error
           ? (
-                <Label pointing prompt>{meta.error} </Label>
+                <Label pointing prompt className='font-poppins'>{meta.error} </Label>
             )
           : null }
     </Form.Field>

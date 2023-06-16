@@ -15,7 +15,13 @@ namespace Persistence
         public DbSet<AppPermission> Permissions { get; set; }
         public DbSet<AppRole> AppRoles { get; set; }
         public DbSet<CompanyUser> CompanyUsers { get; set; }
-
+        public DbSet<Sector> Sectors { get; set; }
+        public DbSet<Function> Functions { get; set; }
+        // public DbSet<CurrentStaff> CurrentStaff { get; set; }
+        public DbSet<StaffType> StaffTypes { get; set; }
+        public DbSet<StaffData> StaffData { get; set; }
+        public DbSet<FunctionType> FunctionTypes { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -31,6 +37,21 @@ namespace Persistence
                 .HasOne(u => u.Company)
                 .WithOne(c => c.User)
                 .HasForeignKey<AppUser>(u => u.IdCompany);
+
+            builder.Entity<CompanyUser>()
+                .Property(c => c.CreationDate)
+                .HasDefaultValue(DateTime.Now);
+
+            builder.Entity<Function>()
+                .HasOne(f => f.Sector)
+                .WithMany(s => s.Functions)
+                .HasForeignKey(f => f.SectorId);
+            
+            builder.Entity<CompanyUser>()
+                .HasOne(cu => cu.Sector)
+                .WithMany(s => s.Companies)
+                .HasForeignKey(cu => cu.SectorId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -1,47 +1,26 @@
 import { observer } from 'mobx-react-lite'
-import TextInputCustom from '../../master/components/customInputs/TextInputBasic'
+import TextInputCustom from '../../components/customInputs/TextInputBasic'
 import { Form, Formik } from 'formik'
-import { Button } from 'semantic-ui-react'
-import * as Yup from 'yup'
-import FileUploadComponent from '../../master/components/customInputs/FileInputComponent'
-import DropdownComponent from '../../master/components/customInputs/DropdownComponent'
-import { sectorOptions } from '../../master/common/options/sectorOptions'
-import { Alert, Collapse, Switch } from '@material-tailwind/react'
+import FileUploadComponent from '../../components/customInputs/FileInputComponent'
+import DropdownComponent from '../../components/customInputs/DropdownComponent'
+import { sectorOptions } from '../../common/options/sectorOptions'
+import { Alert } from '@material-tailwind/react'
 import { useState } from 'react'
-import { CompanyFormValues } from '../../master/models/company'
-import { useStore } from '../../stores/store'
+import { CompanyFormValues } from '../../models/company'
+import { useStore } from '../../../stores/store'
+import { Ring } from '@uiball/loaders'
+import { companyValidationSchema } from '../../common/validations/companyValidationSchema'
 
-export default observer(function RequestCompanyComponent () {
+export default observer(function CreateCompanyComponent () {
   const { companyStore } = useStore()
   const [company] = useState<CompanyFormValues>(new CompanyFormValues())
 
-  const [isConsultancy, setIsConsultancy] = useState(false)
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
 
-  const consultancyOpen = () => { setIsConsultancy(cur => !cur) }
-
-  const validationSchema = Yup.object({
-    trade: Yup.string().required('Handels naam is required'),
-    regName: Yup.string().required('Registratie naam is required'),
-    kvkNumber: Yup.string().required('# Kvk is required'),
-    director: Yup.string().required('Naar directeur is required'),
-    address: Yup.string().required('Adres is required'),
-    phone: Yup.string().required('Telefoon is required'),
-    emailCompany: Yup.string().required('Email is required').email('Incorrect Format'),
-    svbNumber: Yup.string().required('# SVB is required'),
-    kvkDoc: Yup.string().required('KvK document is required'),
-    ownerDoc: Yup.string().required('ID van eigenaar is required'),
-    sector: Yup.string().required('Sector is required'),
-    email: Yup.string().required('Email is required').email('Incorrect Format'),
-    password: Yup.string().required('Password is required').min(3, 'must be at least 3 characters long')
-      .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-        'Password must be at least 6 characters long and contain at least one letter and one number')
-  })
-
   return (
     <Formik
-    validationSchema={validationSchema}
+    validationSchema={companyValidationSchema}
         onSubmit={async (values) => {
           await companyStore.create(values)
             .then(() => { setSuccess(true) })
@@ -51,8 +30,8 @@ export default observer(function RequestCompanyComponent () {
     initialValues={company}
     >
         {({ handleSubmit, isSubmitting }) => (
-            <Form onSubmit={handleSubmit} autoComplete='off' className='p-8'>
-                <h2 className="text-3xl dark:text-black font-semibold text-left">Request company account</h2>
+            <Form onSubmit={handleSubmit} autoComplete='off' className='p-8 pt-0'>
+                <h2 className='font-poppins font-semibold text-3xl text-left'>Request company account</h2>
                 <Alert open={error}
                         onClose={() => { setError(false) }}
                         animate={{
@@ -61,7 +40,7 @@ export default observer(function RequestCompanyComponent () {
                         }}
                         color="red"
                         variant="gradient"
-                        className='mb-7'>
+                        className='mb-7 font-poppins'>
                     <span>An error occurred while creating the account. Please contact your administrator.</span>
                 </Alert>
                 <Alert open={success}
@@ -72,7 +51,7 @@ export default observer(function RequestCompanyComponent () {
                         }}
                         color="green"
                         variant="gradient"
-                        className='mb-7'>
+                        className='mb-7 font-poppins'>
                     <span>Your request has been registered. An administrator will review your account and activate it.</span>
                 </Alert>
                 {/* <AlertComponent color='red'
@@ -80,7 +59,8 @@ export default observer(function RequestCompanyComponent () {
                                 text='An error occurred while creating the account. Please contact your administrator.'
 
                                     /> */}
-                <div className='grid grid-cols-3 gap-4 h-full w-full'>
+                <div className='grid grid-cols-4 gap-4 h-full w-full'>
+
                     <TextInputCustom placeholder='Handels naam *' name='trade' type='text'/>
                     <TextInputCustom placeholder='Registratie naam *' name='regName' type='text'/>
                     <TextInputCustom placeholder='KvK # *' name='kvkNumber' type='text'/>
@@ -89,14 +69,23 @@ export default observer(function RequestCompanyComponent () {
                     <TextInputCustom placeholder='Telefoon *' name='phone' type='text'/>
                     <TextInputCustom placeholder='Email *' name='emailCompany' type='text'/>
                     <TextInputCustom placeholder='SVB # *' name='svbNumber' type='text'/>
-                    <DropdownComponent options={sectorOptions} placeholder='Sector' name='sector'/>
+
+                    <DropdownComponent options={sectorOptions} placeholder='Sector' name='sectorId'/>
                     <div className='col-start-1 col-end-2'>
-                        <FileUploadComponent name='kvkDoc' type='file' title='kvk'/>
+                        <FileUploadComponent name='kvkDoc' id='kvkDoc' type='file' label='KvK document'/>
                     </div>
-                    <div className='col-start-2 col-end-3'>
-                        <FileUploadComponent name='ownerDoc' type='file' title='Id van eigenaar'/>
-                    </div>
-                    <div className='col-span-3 mt-5 mb-3'>
+
+                    <FileUploadComponent name='ownerDoc' id='ownerDoc' type='file' label='Id van eigenaar'/>
+                    <FileUploadComponent name='validExtractCoC' id='validExtractCoC' type='file' label='Valid extract Chamber of Commerce'/>
+
+                    <FileUploadComponent name='copyOfMinisterialPermitDEZHI' id='copyOfMinisterialPermitDEZHI' type='file' label='Ministerial Decree or Establishment Permit DEZHI'/>
+                    <FileUploadComponent name='copyOfDirectorPermit' id='copyOfDirectorPermit' type='file' label='Copy of Director/Executive Permit'/>
+                    <FileUploadComponent name='copyOfResidencePermitDirector' id='copyOfResidencePermitDirector' type='file' label='Copy of Residence Permit for Director'/>
+
+                    <FileUploadComponent name='copyOfIDDirector' id='copyOfIDDirector' type='file' label='Copy of ID (Director)'/>
+                    <FileUploadComponent name='copyOfValidContractsProjects' id='copyOfValidContractsProjects' type='file' label='Copy of valid contracts and/or projects'/>
+
+                    {/* <div className='col-span-3 mt-5 mb-3 font-poppins'>
                         <Switch color="amber" label='Consultancy' id="auto-update" onChange={consultancyOpen}/>
                         <Collapse open={isConsultancy} className='col-start-1 col-end-3'>
                             <div className='grid grid-cols-3 gap-2 h-full w-full'>
@@ -108,16 +97,28 @@ export default observer(function RequestCompanyComponent () {
                                 </div>
                             </div>
                         </Collapse>
+                    </div> */}
+
+                    <h2 className='col-span-3 text-xl mt-5 font-poppins font-semibold'>Account data</h2>
+                    <div className='col-start-1 col-end-2'>
+                        <TextInputCustom placeholder='Email *' name='email' type='text'/>
+                    </div>
+                    <div className='col-start-2 col-end-3'>
+                        <TextInputCustom placeholder='Password *' name='password' type='password'/>
                     </div>
 
-                    <h2 className="col-span-3 text-xl dark:text-black font-semibold my-0">Account data</h2>
-                    <TextInputCustom placeholder='Email *' name='email' type='text'/>
-                    <TextInputCustom placeholder='Password *' name='password' type='password'/>
-
                     <div className='col-start-1 col-end-2 text-center mt-8'>
-                        <Button loading={isSubmitting}
-                                content='Send'
-                                type="submit" fluid color='orange' style={{ borderRadius: '0.5rem' }}/>
+                        <button type='submit' className='flex items-center justify-center rounded-lg px-6 pb-[6px] pt-2 h-12
+                                                                text-base bg-red-500 text-white w-full border-2 font-poppins
+                                                                hover:bg-opacity-70 hover:border-red-300 hover:border-2 transition duration-300'>
+                            {!isSubmitting
+                              ? 'Send'
+                              : <Ring
+                                    size={25}
+                                    lineWeight={7}
+                                    speed={3}
+                                    color="white"/>}
+                        </button>
                     </div>
                 </div>
             </Form>

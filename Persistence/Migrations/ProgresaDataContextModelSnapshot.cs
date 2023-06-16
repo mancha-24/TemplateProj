@@ -130,6 +130,11 @@ namespace Persistence.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreationDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(2023, 6, 16, 13, 6, 3, 181, DateTimeKind.Local).AddTicks(8367));
+
                     b.Property<string>("Director")
                         .HasColumnType("nvarchar(max)");
 
@@ -145,8 +150,8 @@ namespace Persistence.Migrations
                     b.Property<string>("RegName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Sector")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SectorId")
+                        .HasColumnType("int");
 
                     b.Property<string>("SvbNumber")
                         .HasColumnType("nvarchar(max)");
@@ -156,7 +161,168 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SectorId");
+
                     b.ToTable("CompanyUsers");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CurrentStaff", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FunctionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("StaffTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("FunctionId");
+
+                    b.HasIndex("StaffTypeId");
+
+                    b.ToTable("CurrentStaff");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Function", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int?>("FunctionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IscoCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SectorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FunctionTypeId");
+
+                    b.HasIndex("SectorId");
+
+                    b.ToTable("Functions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FunctionType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("TypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FunctionTypes");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Sector", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("SectorName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sectors");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StaffData", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AutoAdmissionQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("DaysWeek")
+                        .HasColumnType("float");
+
+                    b.Property<Guid>("FunctionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("HoursWeek")
+                        .HasColumnType("float");
+
+                    b.Property<decimal>("SalaryMonth")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("SubAquantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubBquantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubCquantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubDquantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Training")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("VtvQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VvQuantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.HasIndex("FunctionId");
+
+                    b.ToTable("StaffData");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StaffType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsAdmissionMandatory")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TypeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StaffTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -325,6 +491,80 @@ namespace Persistence.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("Domain.Entities.CompanyUser", b =>
+                {
+                    b.HasOne("Domain.Entities.Sector", "Sector")
+                        .WithMany("Companies")
+                        .HasForeignKey("SectorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Sector");
+                });
+
+            modelBuilder.Entity("Domain.Entities.CurrentStaff", b =>
+                {
+                    b.HasOne("Domain.Entities.CompanyUser", "Company")
+                        .WithMany("CurrentStaff")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Function", "Function")
+                        .WithMany("CurrentStaff")
+                        .HasForeignKey("FunctionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.StaffType", "StaffType")
+                        .WithMany()
+                        .HasForeignKey("StaffTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Function");
+
+                    b.Navigation("StaffType");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Function", b =>
+                {
+                    b.HasOne("Domain.Entities.FunctionType", "FunctionType")
+                        .WithMany("Functions")
+                        .HasForeignKey("FunctionTypeId");
+
+                    b.HasOne("Domain.Entities.Sector", "Sector")
+                        .WithMany("Functions")
+                        .HasForeignKey("SectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FunctionType");
+
+                    b.Navigation("Sector");
+                });
+
+            modelBuilder.Entity("Domain.Entities.StaffData", b =>
+                {
+                    b.HasOne("Domain.Entities.CompanyUser", "Company")
+                        .WithMany("StaffData")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Function", "Function")
+                        .WithMany()
+                        .HasForeignKey("FunctionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
+
+                    b.Navigation("Function");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -378,7 +618,28 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.CompanyUser", b =>
                 {
+                    b.Navigation("CurrentStaff");
+
+                    b.Navigation("StaffData");
+
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Function", b =>
+                {
+                    b.Navigation("CurrentStaff");
+                });
+
+            modelBuilder.Entity("Domain.Entities.FunctionType", b =>
+                {
+                    b.Navigation("Functions");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Sector", b =>
+                {
+                    b.Navigation("Companies");
+
+                    b.Navigation("Functions");
                 });
 
             modelBuilder.Entity("Domain.Entities.Account.AppRole", b =>

@@ -1,20 +1,23 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { observer } from 'mobx-react-lite'
-import { Button, Label } from 'semantic-ui-react'
+import { Label } from 'semantic-ui-react'
 import { useStore } from '../../stores/store'
 // import loginImg from '../../../assets/dpl_main.jpg'
-import RequestCompanyComponent from '../../main/components/RequestCompanyComponent'
 import { ArrowLongRightIcon } from '@heroicons/react/20/solid'
 import { Checkbox } from '@material-tailwind/react'
+import { Ring } from '@uiball/loaders'
+import logo from '../../../../public/assets/plants-sitting.svg'
+import CreateCompanyComponent from '../pages/company/createCompanyComponent'
 
 export default observer(function Login () {
   const { userStore, modalStore } = useStore()
   return (
         <div className="grid grid-cols-1 sm:grid-cols-3 h-screen w-full">
-            <div className="hidden sm:block bg-gray-800">
-                {/* <img className='w-full h-full' src={loginImg} alt='' /> */}
+            <div className='hidden sm:flex items-center justify-center flex-col bg-gray-900 h-screen'>
+                <div className='flex-grow'></div>
+                <img src={logo} className='object-contain w-full'/>
             </div>
-            <div className="bg-gray-100 flex flex-col justify-center col-span-2">
+            <div className='bg-gray-200 flex flex-col justify-center col-span-2'>
                 <Formik
                     initialValues={{ email: '', password: '', error: null }}
                     onSubmit={async (values, { setErrors }) => {
@@ -24,43 +27,56 @@ export default observer(function Login () {
                         })
                     } }>
                         {({ handleSubmit, isSubmitting, errors }) => (
-                            <Form className="max-w-[400px] w-full mx-auto bg-gray-100 p-8 px-8 rounded-lg" onSubmit={handleSubmit} autoComplete="off">
-                                <h2 className="text-3xl dark:text-black font-semibold text-left">Log In</h2>
+                            <Form className='max-w-[450px] w-full mx-auto bg-gray-100 p-10 px-12 rounded-lg shadow-lg' onSubmit={handleSubmit} autoComplete="off">
+                                <h2 className='font-poppins text-3xl dark:text-black text-left'>Log in</h2>
                                 <ErrorMessage
                                         name='error'
                                         render={() =>
-                                        <Label style={{ marginBottom: 10 }} basic color='red' content={errors.error}/>
+                                        <Label className='font-poppins' style={{ marginBottom: 10 }} basic color='red' content={errors.error}/>
                                         }/>
                                 <div className="flex flex-col text-gray-400 py-2 mt-5">
                                     {/* <label>User Name</label> */}
-                                    <Field placeholder="Email *" className="text-gray-400 font-light rounded-lg
-                                            bg-light-gray mt-2 p-5 focus:border-orange-600
+                                    <Field placeholder="Email *" className="text-gray-400 font-poppins font-light rounded-lg
+                                            bg-gray-200 mt-2 p-5 focus:border-orange-600
                                             focus:border-2 focus:outline-none focus:bg-gray-100 h-14" name="email" type="text"/>
                                 </div>
                                 <div className="flex flex-col text-gray-400 py-2">
-                                    <Field placeholder="Password *" className="text-gray-400 font-light rounded-lg
-                                            bg-light-gray mt-2 p-5 focus:border-orange-600
+                                    <Field placeholder="Password *" className="text-gray-400 font-poppins font-light rounded-lg
+                                            bg-gray-200 mt-2 p-5 focus:border-orange-600
                                             focus:border-2 focus:outline-none focus:bg-gray-100 h-14" name="password" type="password" />
                                 </div>
-                                <div className="flex justify-between text-gray-400 py-2">
+                                <div className="flex justify-between items-center text-gray-400 py-2">
                                     {/* <p className="flex intems-center"><input className="mr-2" type="checkbox"/> Remember Me</p> */}
                                     <Checkbox label='Remember Me' color='teal' />
-                                    <p>Forgot Password</p>
+                                    <p className='font-poppins'>Forgot Password</p>
                                 </div>
-                                <Button loading={isSubmitting}
+                                {/* <Button loading={isSubmitting}
                                         content='Sign In'
-                                        type="submit" fluid color='orange' style={{ borderRadius: '0.5rem' }}/>
+                                        type="submit" fluid color='orange' style={{ borderRadius: '0.5rem' }}/> */}
+
+                                <button type='submit' className='flex items-center justify-center rounded-lg px-6 pb-[6px] pt-2 h-12
+                                                                text-base bg-red-500 text-white w-full border-2 font-poppins
+                                                                hover:bg-opacity-70 hover:border-red-300 hover:border-2 transition duration-300'>
+                                        {!isSubmitting
+                                          ? 'Sign In'
+                                          : <Ring
+                                                size={25}
+                                                lineWeight={7}
+                                                speed={3}
+                                                color="white"/>}
+
+                                </button>
 
                                 <div className='flex items-center justify-between mt-10'>
-                                    <p className='mb-0 mr-2 text-gray-400 cursor-default'>Is it a company?</p>
+                                    <p className='mb-0 mr-2 text-gray-500 cursor-default font-poppins'>Is it a company?</p>
                                     <button type='button'
-                                        className='flex items-center gap-2 rounded-lg px-6 pb-[6px] pt-2
+                                        className='flex items-center gap-2 rounded-lg px-6 pb-[6px] pt-2 font-poppins
                                                 text-sm font-semibold bg-teal-200 text-white border-2 border-white
-                                                transition duration-150 ease-in-out
-                                                 hover:border-orange-600 hover:bg-opacity-10 hover:text-orange-600
-                                                 focus:border-orange-600 focus:text-orange-600 focus:bg-opacity-10
-                                                 active:border-orange-600 active:text-orange-600' onClick={() => { modalStore.openModal(<RequestCompanyComponent />) }}>
-                                        Request Account
+                                                transition duration-300
+                                                 hover:border-red-500 hover:bg-opacity-10 hover:text-red-500
+                                                 active:border-red-500 active:text-red-500'
+                                                 onClick={() => { modalStore.openModal(<CreateCompanyComponent />) }}>
+                                            Request Account
                                         <ArrowLongRightIcon strokeWidth={2} className="h-5 w-5" />
                                     </button>
                                     {/* https://tailwind-elements.com/docs/standard/forms/login-form/ */}

@@ -17,6 +17,7 @@ namespace Persistence.Migrations.Seed
         {
             await InitialUserManagerCreator.Create(_userManager);
             await InitialUserRolesCreator.Create(_context);
+            await InitialMasterData.Create(_context);
         }
     }
 }

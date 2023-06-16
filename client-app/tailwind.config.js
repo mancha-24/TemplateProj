@@ -11,10 +11,16 @@ module.exports = withMT({
         'dark-purple': '#081A51',
         'light-gray': '#d1d5db',
         'dark-gray': '#4b5563'
+      },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif']
+      },
+      fontWeight: {
+        poppins: ['400']
       }
+    },
+    fonts: {
+      poppins: ['url("src/assets/fonts/Poppins-Regular.ttf")']
     }
-  },
-  plugins: [
-    require('@material-tailwind/react/utils/withMT')
-  ]
+  }
 })

@@ -32,7 +32,7 @@ export default class CommonStore {
     const dashboardMenu: MenuItems = {
       action: '/home',
       gap: false,
-      title: 'Dashboard',
+      title: 'Home',
       src: 'Chart_fill'
     }
     this.menuItems.push(dashboardMenu)
@@ -40,22 +40,31 @@ export default class CommonStore {
     permissions?.forEach((item) => {
       switch (item.permissionName) {
         case 'Pages.Administration.Users':
-          const menuUsers: MenuItems = {
-            action: '/user-page',
-            gap: false,
-            title: 'Accounts',
-            src: 'User'
-          }
-          this.menuItems.push(menuUsers)
+          // const menuUsers: MenuItems = {
+          //   action: '/user-page',
+          //   gap: false,
+          //   title: 'Accounts',
+          //   src: 'User'
+          // }
+          // this.menuItems.push(menuUsers)
           break
-        case 'Pages.Administration':
+        case 'Pages.Administration.Company':
           const menuAdmin: MenuItems = {
-            action: '/user-page',
-            gap: true,
-            title: 'Administration',
+            action: '/companyAdmin',
+            gap: false,
+            title: 'Company Admin',
             src: 'Setting'
           }
           this.menuItems.push(menuAdmin)
+          break
+        case 'Pages.Company':
+          const menuCompany: MenuItems = {
+            action: '/company',
+            gap: false,
+            title: 'Company',
+            src: 'Folder'
+          }
+          this.menuItems.push(menuCompany)
           break
         default:
           break

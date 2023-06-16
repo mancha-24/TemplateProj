@@ -24,7 +24,7 @@ export default observer(function MainPage () {
     commonStore.setAppLoaded()
   }
 
-  if (!commonStore.appLoaded) return <LoadingComponent content='Loading Progresa'/>
+  if (!commonStore.appLoaded) return <LoadingComponent inverted/>
   if (location.pathname === '/') return <Navigate to='/home' state={{ from: location }} />
   return (
         <>

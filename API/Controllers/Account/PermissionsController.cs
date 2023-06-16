@@ -25,14 +25,15 @@ namespace API.Controllers.Account
         public async Task<ActionResult<List<PermissionDto>>> GetPermissions()
         {
             var user = await _userManager.GetUserAsync(User);
+            var roleId = _context.UserRoles.Where(r => r.UserId == user.Id).Select(r => r.RoleId).FirstOrDefault();
             if (user == null) return NotFound();
 
             var permissions = await (from permission in _context.Permissions.AsNoTracking()
-                        join userRole in _context.UserRoles.AsNoTracking() on permission.IdRole equals userRole.RoleId
-                        where userRole.UserId == user.Id
-                        select new PermissionDto { PermissionName = permission.Name }
-                            )
-                            .ToListAsync();
+                                        join userRole in _context.UserRoles.AsNoTracking() on permission.IdRole equals userRole.RoleId
+                                        where userRole.UserId == user.Id && permission.IsGranted
+                                        group permission by permission.Name into permissionGroup
+                                        select new PermissionDto { PermissionName = permissionGroup.Key }
+                                    ).ToListAsync();
                             
             if (permissions.Count < 1) return NotFound();
 
