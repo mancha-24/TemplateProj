@@ -13,6 +13,8 @@ export interface LaborMarket {
   salaryMonth: number
   daysWeek: number
   hoursWeek: number
+  creationDate: Date | null
+  quantity: number
 }
 
 export class LaborMarket implements LaborMarket {

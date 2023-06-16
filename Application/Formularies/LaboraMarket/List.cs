@@ -11,13 +11,13 @@ namespace Application.Formularies.LaboraMarket
 {
     public class List
     {
-        public class Query : IRequest<Result<PagedList<LaboraMarketDto>>> 
+        public class Query : IRequest<Result<PagedList<LaborMarketDto>>> 
         { 
-            public LaboraMarketParams Params { get; set; }
+            public LaborMarketParams Params { get; set; }
             public Guid CompanyId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Result<PagedList<LaboraMarketDto>>>
+        public class Handler : IRequestHandler<Query, Result<PagedList<LaborMarketDto>>>
         {
             private readonly ProgresaDataContext _context;
             private readonly IMapper _mapper;
@@ -26,17 +26,17 @@ namespace Application.Formularies.LaboraMarket
                 _mapper = mapper;
                 _context = context;
             }
-            public async Task<Result<PagedList<LaboraMarketDto>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<PagedList<LaborMarketDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var query = _context.StaffData
                             .Include(s => s.Function)
                             .Where(s => s.CompanyId == request.CompanyId)
                             .WhereIf(!string.IsNullOrWhiteSpace(request.Params.FunctionName), s => s.Function.Name == request.Params.FunctionName)
-                            .ProjectTo<LaboraMarketDto>(_mapper.ConfigurationProvider)
+                            .ProjectTo<LaborMarketDto>(_mapper.ConfigurationProvider)
                             .AsQueryable();
 
-                return Result<PagedList<LaboraMarketDto>>.Success(
-                    await PagedList<LaboraMarketDto>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize)
+                return Result<PagedList<LaborMarketDto>>.Success(
+                    await PagedList<LaborMarketDto>.CreateAsync(query, request.Params.PageNumber, request.Params.PageSize)
                 );
             }
         }

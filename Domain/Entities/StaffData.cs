@@ -15,6 +15,7 @@ namespace Domain.Entities
         public int AutoAdmissionQuantity { get; set; }
         public int VtvQuantity { get; set; }
         public int VvQuantity { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public Guid CompanyId { get; set; }
         public CompanyUser Company { get; set; }

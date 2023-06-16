@@ -15,7 +15,9 @@ namespace Application.Core
             CreateMap<Function, FunctionsToDropDownDto>()
                 .ForMember(d => d.FunctionType, o => o.MapFrom(f => f.FunctionType.TypeName));
             
-            CreateMap<StaffData, LaboraMarketDto>();
+            CreateMap<StaffData, LaborMarketDto>()
+                .ForMember(d => d.Quantity, o => o.MapFrom(f => f.SubAquantity + f.SubBquantity + f.SubCquantity + f.SubDquantity + 
+                                                            f.AutoAdmissionQuantity + f.VtvQuantity + f.VvQuantity));
                 
         }
     }

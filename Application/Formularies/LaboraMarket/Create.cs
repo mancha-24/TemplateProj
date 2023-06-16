@@ -27,6 +27,7 @@ namespace Application.Formularies.LaboraMarket
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
+                request.LaboraMarket.CreationDate = DateTime.Now;
                 _context.StaffData.Add(request.LaboraMarket);
 
                 var result = await _context.SaveChangesAsync() > 0;
