@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction } from 'mobx'
+import { makeAutoObservable, reaction, runInAction } from 'mobx'
 import { type LaborMarket, type LaborMarketFormValues } from '../master/models/laborMarket'
 import agent from '../api/agent'
 import { type Pagination, PagingParams } from '../master/models/pagination'
@@ -46,6 +46,18 @@ export default class CompanyFormsStore {
     }
   }
 
+  loadMarketRecord = async (id: string) => {
+    const record = this.getLaborMarketRecord(id)
+    if (record) {
+      this.selectedLaboraMarketRecord = record
+      return record
+    }
+  }
+
+  getLaborMarketRecord = (id: string) => {
+    return this.laborMarketRecordsRegistry.get(id)
+  }
+
   setLoadingScreen = (state: boolean) => {
     this.loadingScreen = state
   }
@@ -89,5 +101,21 @@ export default class CompanyFormsStore {
 
   clearLaborMarketRecordsRegistry = () => {
     this.laborMarketRecordsRegistry = new Map<string, LaborMarket>()
+  }
+
+  deleteLaborMarket = async (id: string) => {
+    this.loadingScreen = true
+    try {
+      await agent.CompanyService.deleteLaboraMarket(id)
+      runInAction(() => {
+        this.laborMarketRecordsRegistry.delete(id)
+        this.loadingScreen = false
+      })
+    } catch (error) {
+      console.log(error)
+      runInAction(() => {
+        this.loadingScreen = false
+      })
+    }
   }
 }

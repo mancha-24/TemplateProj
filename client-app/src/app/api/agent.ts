@@ -65,7 +65,8 @@ const CompanyService = {
   current: async () => await requests.get<Company>('/companies'),
   list: async (params: URLSearchParams) => await axios.get<PaginatedResult<Company[]>>('companies/all', { params }).then(responseBody),
   createLaboraMarket: async (laboraMarket: LaborMarketFormValues) => await requests.post('/laborMarket', laboraMarket),
-  listLaboraMarket: async (params: URLSearchParams) => await axios.get<PaginatedResult<LaborMarket[]>>('/laborMarket', { params }).then(responseBody)
+  listLaboraMarket: async (params: URLSearchParams) => await axios.get<PaginatedResult<LaborMarket[]>>('/laborMarket', { params }).then(responseBody),
+  deleteLaboraMarket: async (id: string) => await requests.del(`/laborMarket/${id}`)
 }
 
 const Function = {
@@ -83,9 +84,9 @@ const requests = {
       throw error
     }
   },
-  post: async <T> (url: string, body: {}) => await axios.post<T>(url, body).then(responseBody)
+  post: async <T> (url: string, body: {}) => await axios.post<T>(url, body).then(responseBody),
   // put: async <T> (url: string, body: {}) => await axios.put<T>(url, body).then(responseBody),
-  // del: async <T> (url: string) => await axios.delete<T>(url).then(responseBody)
+  del: async <T> (url: string) => await axios.delete<T>(url).then(responseBody)
 }
 
 const agent = {

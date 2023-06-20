@@ -8,12 +8,18 @@ import { LaborMarketFormValues } from '../../../models/laborMarket'
 import { laborMarketValidationSchema } from '../../../common/validations/laborMarketValidationSchema'
 import InputCustom from '../../../components/customInputs/InputCustom'
 
-export default observer(function LaborMarketFormHotel () {
+interface Props {
+  id?: string
+}
+
+export default observer(function LaborMarketFormHotel ({ id = '' }: Props) {
   const { masterDataStore, companyFormsStore, modalStore } = useStore()
   const { functionToDropDown } = masterDataStore
-  const [laborMarket] = useState<LaborMarketFormValues>(new LaborMarketFormValues())
+  const [laborMarket, setLaborMarket] = useState<LaborMarketFormValues>(new LaborMarketFormValues())
   useEffect(() => {
+    if (id) void companyFormsStore.loadMarketRecord(id).then(record => { setLaborMarket(new LaborMarketFormValues(record)) })
     void masterDataStore.loadFunctionsDropdown()
+    return () => { companyFormsStore.clearLaborMarketRecordsRegistry() }
   }, [])
 
   return (
@@ -84,7 +90,7 @@ export default observer(function LaborMarketFormHotel () {
                       </div>
                     </div>
                     <div className='flex justify-end mt-8'>
-                        <ButtonComponent primary disabled={!isValid} buttonAction={() => handleSubmit} isSubmitting={isSubmitting}/>
+                        <ButtonComponent primary disabled={!isValid} buttonAction={() => handleSubmit} isSubmitting={isSubmitting} content={id ? 'Edit' : 'Create'}/>
                     </div>
                 </Form>
             )}

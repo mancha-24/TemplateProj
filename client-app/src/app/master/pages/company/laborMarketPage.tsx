@@ -5,20 +5,20 @@ import { useStore } from '../../../stores/store'
 import { Fragment, useEffect } from 'react'
 import LoadingComponent from '../../components/LoadingComponent'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLongLeftIcon, ChevronUpDownIcon, FaceFrownIcon, PencilIcon } from '@heroicons/react/24/outline'
+import { ArrowLongLeftIcon, ChevronUpDownIcon, FaceFrownIcon, PencilIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import SpinnerComponent from '../../components/SpinnerComponent'
 import PaginationComponent from '../../components/table/PaginationComponent'
 import LaborMarketFormHotel from './forms/laborMarketFormHotel'
 import ButtonComponent from '../../components/customInputs/ButtonComponent'
 import { columnsLaborMarket } from '../../common/tables/columnsLaborMarketTable'
 import { IconButton, Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react'
-import NotImplementedComponent from '../common/notImplementedComponent'
+import ConfirmationDialog from '../common/ConfirmationDialog'
 
 export default observer(function LaborMarketPage () {
-  const { companyStore, modalStore, drawerStore, companyFormsStore } = useStore()
+  const { companyStore, modalStore, companyFormsStore } = useStore()
   const navigate = useNavigate()
   const { selectedCompany: company, loadCompany, loadingScreen: loadingCompany, clearSelectedCompany } = companyStore
-  const { laborMarketRecordsRegistry, groupedLaborMarketRecords, loadingScreen: loadingMarket } = companyFormsStore
+  const { laborMarketRecordsRegistry, groupedLaborMarketRecords, loadingScreen: loadingMarket, deleteLaborMarket } = companyFormsStore
   useEffect(() => {
     void loadCompany(undefined)
     return () => { clearSelectedCompany() }
@@ -27,6 +27,10 @@ export default observer(function LaborMarketPage () {
   useEffect(() => {
     if (laborMarketRecordsRegistry.size <= 1) void companyFormsStore.loadMarketRecords()
   }, [laborMarketRecordsRegistry])
+
+  function HandleDeleteRecord (id: string) {
+    modalStore.openModal(<ConfirmationDialog onClick={() => { void deleteLaborMarket(id) }} />, 'xs')
+  }
 
   if (loadingCompany || !company) return <LoadingComponent inverted/>
   return (
@@ -97,12 +101,17 @@ export default observer(function LaborMarketPage () {
                                             <Menu placement='left-start'>
                                                 <MenuHandler>
                                                     <IconButton variant="text" color="blue-gray">
-                                                        <PencilIcon className="h-4 w-4" />
+                                                        <PencilSquareIcon className="h-4 w-4" />
                                                     </IconButton>
                                                 </MenuHandler>
-                                                <MenuList className='min-w-[120px]'>
-                                                    <MenuItem className='flex justify-center' onClick={() => { drawerStore.openDrawer(<NotImplementedComponent />) }}>
-                                                        <span className='font-poppins text-black'>Manage</span>
+                                                <MenuList className='min-w-[100px]'>
+                                                    <MenuItem className='flex justify-between' onClick={() => { modalStore.openModal(<LaborMarketFormHotel id={record.id} />) }}>
+                                                        <span className='font-poppins text-black mr-2'>Edit</span>
+                                                        <PencilIcon className="h-4 w-4" />
+                                                    </MenuItem>
+                                                    <MenuItem className='flex justify-between' onClick={() => { HandleDeleteRecord(record.id) }}>
+                                                        <span className='font-poppins text-black mr-2'>Delete</span>
+                                                        <TrashIcon className="h-5 w-5" />
                                                     </MenuItem>
                                                 </MenuList>
                                             </Menu>
