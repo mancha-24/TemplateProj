@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ProgresaDataContext))]
-    partial class ProgresaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20230621162248_AddSubcontractor_Table")]
+    partial class AddSubcontractor_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,7 +136,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 21, 13, 2, 59, 258, DateTimeKind.Local).AddTicks(9374));
+                        .HasDefaultValue(new DateTime(2023, 6, 21, 11, 22, 47, 910, DateTimeKind.Local).AddTicks(4230));
 
                     b.Property<string>("Director")
                         .HasColumnType("nvarchar(max)");
@@ -336,9 +339,6 @@ namespace Persistence.Migrations
 
                     b.Property<Guid>("CompanyId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("EmployeesNumber")
                         .HasColumnType("int");

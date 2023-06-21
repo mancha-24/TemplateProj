@@ -7,6 +7,7 @@ import { type Company, type CompanyFormValues } from '../master/models/company'
 import { PaginatedResult } from '../master/models/pagination'
 import { type CompanyFunction } from '../master/models/companyFunction'
 import { type LaborMarket, type LaborMarketFormValues } from '../master/models/laborMarket'
+import { type SubContractorFormValues, type SubContractor } from '../master/models/subContractor'
 
 const sleep = async (delay: number) => {
   return await new Promise((resolve) => {
@@ -64,13 +65,19 @@ const CompanyService = {
   details: async (id: string) => await requests.get<Company>(`/companies/${id}`),
   current: async () => await requests.get<Company>('/companies'),
   list: async (params: URLSearchParams) => await axios.get<PaginatedResult<Company[]>>('companies/all', { params }).then(responseBody),
-  createLaboraMarket: async (laboraMarket: LaborMarketFormValues) => await requests.post('/laborMarket', laboraMarket),
+  createLaborMarket: async (laborMarket: LaborMarketFormValues) => await requests.post('/laborMarket', laborMarket),
+  updateLaborMarket: async (laborMarket: LaborMarketFormValues) => await requests.put(`/laborMarket/${laborMarket.id}`, laborMarket),
   listLaboraMarket: async (params: URLSearchParams) => await axios.get<PaginatedResult<LaborMarket[]>>('/laborMarket', { params }).then(responseBody),
-  deleteLaboraMarket: async (id: string) => await requests.del(`/laborMarket/${id}`)
+  deleteLaboraMarket: async (id: string) => await requests.del(`/laborMarket/${id}`),
+  listSubContractors: async (params: URLSearchParams) => await axios.get<PaginatedResult<SubContractor[]>>('/subcontractor', { params }).then(responseBody),
+  createSubContractor: async (subContractor: SubContractorFormValues) => await requests.post('/subcontractor', subContractor),
+  updateSubContractor: async (subContractor: SubContractorFormValues) => await requests.put(`/subcontractor/${subContractor.id}`, subContractor),
+  deleteSubContractor: async (id: string) => await requests.del(`/subcontractor/${id}`)
 }
 
 const Function = {
-  list: async () => await requests.get<CompanyFunction[]>('/functions')
+  list: async () => await requests.get<CompanyFunction[]>('/functions'),
+  listByCompany: async () => await requests.get<CompanyFunction[]>('/functions/company')
 }
 
 const requests = {
@@ -85,7 +92,7 @@ const requests = {
     }
   },
   post: async <T> (url: string, body: {}) => await axios.post<T>(url, body).then(responseBody),
-  // put: async <T> (url: string, body: {}) => await axios.put<T>(url, body).then(responseBody),
+  put: async <T> (url: string, body: {}) => await axios.put<T>(url, body).then(responseBody),
   del: async <T> (url: string) => await axios.delete<T>(url).then(responseBody)
 }
 

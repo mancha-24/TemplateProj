@@ -28,5 +28,6 @@ namespace Domain.Entities
         public AppUser User { get; set; }
         public ICollection<CurrentStaff> CurrentStaff { get; set; }
         public ICollection<StaffData> StaffData { get; set; }
+        public ICollection<SubContractor> SubContractors { get; set; }
     }
 }

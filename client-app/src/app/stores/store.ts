@@ -6,7 +6,8 @@ import ModalStore from './modalStore'
 import CompanyStore from './companyStore'
 import DrawerStore from './drawerStore'
 import MasterDataStore from './masterDataStore'
-import CompanyFormsStore from './companyFormsStore'
+import LaborMarketFormsStore from './laborMarketFormsStore'
+import SubContractorFormStore from './subContractorFormStore'
 
 interface Store {
   userStore: UserStore
@@ -15,7 +16,8 @@ interface Store {
   modalStore: ModalStore
   drawerStore: DrawerStore
   companyStore: CompanyStore
-  companyFormsStore: CompanyFormsStore
+  laborMarketFormsStore: LaborMarketFormsStore
+  subContractorFormStore: SubContractorFormStore
   masterDataStore: MasterDataStore
 }
 
@@ -26,8 +28,9 @@ export const store: Store = {
   modalStore: new ModalStore(),
   drawerStore: new DrawerStore(),
   companyStore: new CompanyStore(),
-  companyFormsStore: new CompanyFormsStore(),
-  masterDataStore: new MasterDataStore()
+  laborMarketFormsStore: new LaborMarketFormsStore(),
+  masterDataStore: new MasterDataStore(),
+  subContractorFormStore: new SubContractorFormStore()
 }
 
 export const StoreContext = createContext(store)

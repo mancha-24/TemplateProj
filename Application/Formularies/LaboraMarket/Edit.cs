@@ -1,37 +1,39 @@
 using Application.Core;
+using AutoMapper;
 using Domain.Entities;
-using Domain.Entities.Account;
 using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Persistence;
 
 namespace Application.Formularies.LaboraMarket
 {
-    public class Create
+    public class Edit
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public StaffData LaboraMarket { get; set; }
+            public StaffData LaborMarket { get; set; }
+            
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly ProgresaDataContext _context;
-            private readonly UserManager<AppUser> _userManager;
-            public Handler(ProgresaDataContext context, UserManager<AppUser> userManager)
+            private readonly IMapper _mapper;
+            public Handler(ProgresaDataContext context, IMapper mapper)
             {
-                _userManager = userManager;
+                _mapper = mapper;
                 _context = context;
             }
-
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                request.LaboraMarket.CreationDate = DateTime.Now;
-                _context.StaffData.Add(request.LaboraMarket);
+                var record = await _context.StaffData.FindAsync(request.LaborMarket.Id);
+                if (record == null) return null;
+                
+                request.LaborMarket.CompanyId = record.CompanyId;
+                _mapper.Map(request.LaborMarket, record);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Failed to create staff data");
+                if(!result) return Result<Unit>.Failure("Failed to update labor market");
 
                 return Result<Unit>.Success(Unit.Value);
             }

@@ -47,5 +47,12 @@ namespace API.Controllers.Formularies
             return HandleResult(await Mediator.Send(new Delete.Command{Id = id}));
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditLaboraMarketRecord(Guid id, StaffData record)
+        {
+            record.Id = id;
+            return HandleResult(await Mediator.Send(new Edit.Command {LaborMarket = record}));
+        }
+
     }
 }

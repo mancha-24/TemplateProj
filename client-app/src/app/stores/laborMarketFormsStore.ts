@@ -4,9 +4,10 @@ import agent from '../api/agent'
 import { type Pagination, PagingParams } from '../master/models/pagination'
 import { format } from 'date-fns'
 
-export default class CompanyFormsStore {
+export default class LaborMarketFormsStore {
   laborMarketRecords: LaborMarket[] = []
   laborMarketRecordsRegistry = new Map<string, LaborMarket>()
+  laborMarketRecordTotals = new Map<string, number>()
   selectedLaboraMarketRecord: LaborMarket | undefined = undefined
   loadingScreen = false
   pagingParams = new PagingParams()
@@ -23,11 +24,33 @@ export default class CompanyFormsStore {
     )
   }
 
-  createLaboraMarket = async (laboraMarket: LaborMarketFormValues) => {
+  createLaborMarket = async (laborMarket: LaborMarketFormValues) => {
     try {
-      await agent.CompanyService.createLaboraMarket(laboraMarket)
+      this.setLoadingScreen(true)
+      await agent.CompanyService.createLaborMarket(laborMarket)
+      this.setLaboraMarketTotals()
     } catch (error) {
-      throw error
+      console.log(error)
+      runInAction(() => {
+        this.setLoadingScreen(false)
+      })
+    }
+  }
+
+  updateLaborMarket = async (laborMarket: LaborMarketFormValues) => {
+    try {
+      this.setLoadingScreen(true)
+      await agent.CompanyService.updateLaborMarket(laborMarket)
+      if (laborMarket.id) {
+        const updatedLaborMarket = { ...this.getLaborMarketRecord(laborMarket.id), ...laborMarket }
+        this.laborMarketRecordsRegistry.set(laborMarket.id, updatedLaborMarket as LaborMarket)
+        this.setLaboraMarketTotals()
+      }
+    } catch (error) {
+      console.log(error)
+      runInAction(() => {
+        this.setLoadingScreen(false)
+      })
     }
   }
 
@@ -37,6 +60,7 @@ export default class CompanyFormsStore {
       const result = await agent.CompanyService.listLaboraMarket(this.axiosParams)
       result.data.forEach(laborMarket => {
         this.setLaborMarket(laborMarket)
+        this.setLaboraMarketTotals()
       })
       this.setPagination(result.pagination)
       this.setLoadingScreen(false)
@@ -109,6 +133,7 @@ export default class CompanyFormsStore {
       await agent.CompanyService.deleteLaboraMarket(id)
       runInAction(() => {
         this.laborMarketRecordsRegistry.delete(id)
+        this.setLaboraMarketTotals()
         this.loadingScreen = false
       })
     } catch (error) {
@@ -118,4 +143,16 @@ export default class CompanyFormsStore {
       })
     }
   }
+
+  setLaboraMarketTotals = () => {
+    this.laborMarketRecordTotals.set('Sub A', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.subAquantity, 0))
+    this.laborMarketRecordTotals.set('Sub B', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.subBquantity, 0))
+    this.laborMarketRecordTotals.set('Sub C', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.subCquantity, 0))
+    this.laborMarketRecordTotals.set('Sub D', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.subDquantity, 0))
+    this.laborMarketRecordTotals.set('VTV', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.vtvQuantity, 0))
+    this.laborMarketRecordTotals.set('VV', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.vvQuantity, 0))
+    this.laborMarketRecordTotals.set('AutoAdmission', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.autoAdmissionQuantity, 0))
+  }
+
+  // Project Overview
 }

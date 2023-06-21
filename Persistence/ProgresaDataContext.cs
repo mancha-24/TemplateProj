@@ -21,6 +21,7 @@ namespace Persistence
         public DbSet<StaffType> StaffTypes { get; set; }
         public DbSet<StaffData> StaffData { get; set; }
         public DbSet<FunctionType> FunctionTypes { get; set; }
+        public DbSet<SubContractor> SubContractors { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)
         {
