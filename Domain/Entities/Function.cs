@@ -10,5 +10,6 @@ namespace Domain.Entities
         public int SectorId { get; set; }
         public Sector Sector { get; set; }
         public ICollection<CurrentStaff> CurrentStaff { get; set; }
+        public ICollection<SubContractor> SubContractor { get; set; }
     }
 }

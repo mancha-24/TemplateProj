@@ -8,26 +8,43 @@ import { LaborMarketFormValues } from '../../../models/laborMarket'
 import { laborMarketValidationSchema } from '../../../common/validations/laborMarketValidationSchema'
 import InputCustom from '../../../components/customInputs/InputCustom'
 
-export default observer(function LaborMarketFormHotel () {
-  const { masterDataStore, companyFormsStore, modalStore } = useStore()
+interface Props {
+  id?: string
+}
+
+export default observer(function LaborMarketFormHotel ({ id = '' }: Props) {
+  const { masterDataStore, laborMarketFormsStore, modalStore } = useStore()
   const { functionToDropDown } = masterDataStore
-  const [laborMarket] = useState<LaborMarketFormValues>(new LaborMarketFormValues())
+  const [laborMarket, setLaborMarket] = useState<LaborMarketFormValues>(new LaborMarketFormValues())
   useEffect(() => {
+    if (id) void laborMarketFormsStore.loadMarketRecord(id).then(record => { setLaborMarket(new LaborMarketFormValues(record)) })
     void masterDataStore.loadFunctionsDropdown()
+    return () => { laborMarketFormsStore.clearLaborMarketRecordsRegistry() }
   }, [])
 
+  function handleFormSubmit (record: LaborMarketFormValues) {
+    const functSelected = functionToDropDown.find(item => item.text === record.functionName)
+    if (functSelected) {
+      record.functionId = functSelected?.value
+      if (!record.id) {
+        laborMarketFormsStore.createLaborMarket(record)
+          .then(() => { modalStore.closeModal() })
+          .then(() => { laborMarketFormsStore.clearLaborMarketRecordsRegistry() })
+          .catch(() => { })
+      } else {
+        laborMarketFormsStore.updateLaborMarket(record)
+          .then(() => { modalStore.closeModal() })
+          .then(() => { laborMarketFormsStore.clearLaborMarketRecordsRegistry() })
+          .catch(() => { })
+      }
+
+      // todo: validate function id exists
+    }
+  }
   return (
         <Formik
             onSubmit={async (values) => {
-              const functSelected = functionToDropDown.find(item => item.text === values.functionName)
-              if (functSelected) {
-                values.functionId = functSelected?.value
-                // todo: validate function id exists
-                await companyFormsStore.createLaboraMarket(values)
-                  .then(() => { modalStore.closeModal() })
-                  .then(() => { companyFormsStore.clearLaborMarketRecordsRegistry() })
-                  .catch(() => { })
-              }
+              handleFormSubmit(values)
             }}
             initialValues={laborMarket}
             enableReinitialize
@@ -84,7 +101,7 @@ export default observer(function LaborMarketFormHotel () {
                       </div>
                     </div>
                     <div className='flex justify-end mt-8'>
-                        <ButtonComponent primary disabled={!isValid} buttonAction={() => handleSubmit} isSubmitting={isSubmitting}/>
+                        <ButtonComponent primary disabled={!isValid} buttonAction={() => handleSubmit} isSubmitting={isSubmitting} content={id ? 'Edit' : 'Create'}/>
                     </div>
                 </Form>
             )}

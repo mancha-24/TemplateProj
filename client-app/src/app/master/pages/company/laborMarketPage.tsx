@@ -5,28 +5,32 @@ import { useStore } from '../../../stores/store'
 import { Fragment, useEffect } from 'react'
 import LoadingComponent from '../../components/LoadingComponent'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLongLeftIcon, ChevronUpDownIcon, FaceFrownIcon, PencilIcon } from '@heroicons/react/24/outline'
+import { ArrowLongLeftIcon, ChevronUpDownIcon, FaceFrownIcon, PencilIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import SpinnerComponent from '../../components/SpinnerComponent'
 import PaginationComponent from '../../components/table/PaginationComponent'
 import LaborMarketFormHotel from './forms/laborMarketFormHotel'
 import ButtonComponent from '../../components/customInputs/ButtonComponent'
 import { columnsLaborMarket } from '../../common/tables/columnsLaborMarketTable'
 import { IconButton, Menu, MenuHandler, MenuItem, MenuList } from '@material-tailwind/react'
-import NotImplementedComponent from '../common/notImplementedComponent'
+import ConfirmationDialog from '../common/ConfirmationDialog'
 
 export default observer(function LaborMarketPage () {
-  const { companyStore, modalStore, drawerStore, companyFormsStore } = useStore()
+  const { companyStore, modalStore, laborMarketFormsStore } = useStore()
   const navigate = useNavigate()
   const { selectedCompany: company, loadCompany, loadingScreen: loadingCompany, clearSelectedCompany } = companyStore
-  const { laborMarketRecordsRegistry, groupedLaborMarketRecords, loadingScreen: loadingMarket } = companyFormsStore
+  const { laborMarketRecordsRegistry, groupedLaborMarketRecords, loadingScreen: loadingMarket, deleteLaborMarket } = laborMarketFormsStore
   useEffect(() => {
     void loadCompany(undefined)
     return () => { clearSelectedCompany() }
   }, [clearSelectedCompany])
 
   useEffect(() => {
-    if (laborMarketRecordsRegistry.size <= 1) void companyFormsStore.loadMarketRecords()
+    if (laborMarketRecordsRegistry.size <= 1) void laborMarketFormsStore.loadMarketRecords()
   }, [laborMarketRecordsRegistry])
+
+  function HandleDeleteRecord (id: string) {
+    modalStore.openModal(<ConfirmationDialog onClick={() => { void deleteLaborMarket(id) }} />, 'xs')
+  }
 
   if (loadingCompany || !company) return <LoadingComponent inverted/>
   return (
@@ -64,7 +68,7 @@ export default observer(function LaborMarketPage () {
                                             </div>
                                         </th>
                                     ))}
-                                    <th className='cursor-default bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50'>
+                                    <th className='cursor-default bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50 font-poppins'>
                                         Actions
                                     </th>
                                 </tr>
@@ -97,12 +101,17 @@ export default observer(function LaborMarketPage () {
                                             <Menu placement='left-start'>
                                                 <MenuHandler>
                                                     <IconButton variant="text" color="blue-gray">
-                                                        <PencilIcon className="h-4 w-4" />
+                                                        <PencilSquareIcon className="h-4 w-4" />
                                                     </IconButton>
                                                 </MenuHandler>
-                                                <MenuList className='min-w-[120px]'>
-                                                    <MenuItem className='flex justify-center' onClick={() => { drawerStore.openDrawer(<NotImplementedComponent />) }}>
-                                                        <span className='font-poppins text-black'>Manage</span>
+                                                <MenuList className='min-w-[100px]'>
+                                                    <MenuItem className='flex justify-between' onClick={() => { modalStore.openModal(<LaborMarketFormHotel id={record.id} />) }}>
+                                                        <span className='font-poppins text-black mr-2'>Edit</span>
+                                                        <PencilIcon className="h-4 w-4" />
+                                                    </MenuItem>
+                                                    <MenuItem className='flex justify-between' onClick={() => { HandleDeleteRecord(record.id) }}>
+                                                        <span className='font-poppins text-black mr-2'>Delete</span>
+                                                        <TrashIcon className="h-5 w-5" />
                                                     </MenuItem>
                                                 </MenuList>
                                             </Menu>
@@ -113,7 +122,7 @@ export default observer(function LaborMarketPage () {
                                     </Fragment>
                               ))
                               : <tr className='hover:bg-blue-gray-50'>
-                                    <td className='cursor-pointer p-4 border-b border-blue-gray-50 font-poppins text-center' colSpan={6}>
+                                    <td className='cursor-pointer p-4 border-b border-blue-gray-50 font-poppins text-center' colSpan={7}>
                                         <div className='flex flex-col items-center'>
                                             <span className='font-poppins'>
                                                 No data found
@@ -127,12 +136,24 @@ export default observer(function LaborMarketPage () {
                         </table>
                     }
                 </div>
-                {!loadingMarket &&
+                {!loadingMarket && laborMarketRecordsRegistry.size > 0 &&
                     <div className='flex justify-center p-8 pt-4'>
                         <PaginationComponent />
                     </div>
                 }
                 <div className='border-t mt-4'/>
+                {laborMarketRecordsRegistry.size > 0 &&
+                <div className='px-16 pt-6 pb-2 mb-4'>
+                    <p className='font-poppins text-2xl font-bold'>Total staff:</p>
+                    <div className='grid grid-cols-7 gap-4 rounded-lg justify-center items-center hover:bg-gray-100 duration-100 cursor-pointer p-4'>
+                        {Array.from(laborMarketFormsStore.laborMarketRecordTotals).map(([key, value]) => (
+                            <div key={key}>
+                                <p className='font-poppins text-base font-bold text-center'>{key}</p>
+                                <p className='font-poppins text-base font-bold text-center'>{value}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>}
             </div>
         </>
   )

@@ -19,13 +19,24 @@ namespace API.Controllers.Formularies
         }
         
         [HttpGet]
-        public async Task<ActionResult<List<FunctionsToDropDownDto>>> GetFunctions()
+        public async Task<ActionResult<List<FunctionsToDropDownDto>>> GetFunctionsBySector()
         {
             var user = await _userManager.Users
                                 .Include(c => c.Company)
                                 .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
             
             return HandleResult(await Mediator.Send(new List.Query{SectorId = user.Company.SectorId}));
+        }
+
+        [HttpGet]
+        [Route("company")]
+        public async Task<ActionResult<List<FunctionsToDropDownDto>>> GetFunctionsCompany()
+        {
+            var user = await _userManager.Users
+                                .Include(c => c.Company)
+                                .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
+            
+            return HandleResult(await Mediator.Send(new ListByCompany.Query{CompanyId = user.IdCompany ?? Guid.Empty }));
         }
     }
 }

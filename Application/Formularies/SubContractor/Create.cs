@@ -1,17 +1,16 @@
 using Application.Core;
-using Domain.Entities;
 using Domain.Entities.Account;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Persistence;
 
-namespace Application.Formularies.LaboraMarket
+namespace Application.Formularies.SubContractor
 {
     public class Create
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public StaffData LaboraMarket { get; set; }
+            public Domain.Entities.SubContractor SubContractor { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
@@ -23,15 +22,14 @@ namespace Application.Formularies.LaboraMarket
                 _userManager = userManager;
                 _context = context;
             }
-
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                request.LaboraMarket.CreationDate = DateTime.Now;
-                _context.StaffData.Add(request.LaboraMarket);
+                request.SubContractor.CreationDate = DateTime.Now;
+                _context.SubContractors.Add(request.SubContractor);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Failed to create staff data");
+                if (!result) return Result<Unit>.Failure("Failed to create subcontractor data");
 
                 return Result<Unit>.Success(Unit.Value);
             }

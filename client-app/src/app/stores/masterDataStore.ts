@@ -24,4 +24,19 @@ export default class MasterDataStore {
       console.log(error)
     }
   }
+
+  loadFunctionsCompanyDropdown = async () => {
+    try {
+      const functions = await agent.Function.listByCompany()
+      runInAction(() => {
+        this.functions = functions
+        this.functionToDropDown = functions.map((f) => ({
+          value: f.id,
+          text: f.name
+        }))
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
