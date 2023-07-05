@@ -1,10 +1,12 @@
 import { makeAutoObservable, reaction } from 'mobx'
 import { store } from './store'
 import { type MenuItems } from '../master/types/menuItems'
+import { type FormItems } from '../master/types/formItems'
 
 export default class CommonStore {
   token: string | null = localStorage.getItem('jwt')
   menuItems: MenuItems[] = []
+  companyForms: FormItems[] = []
   appLoaded = false
   constructor () {
     makeAutoObservable(this)
@@ -66,6 +68,45 @@ export default class CommonStore {
           }
           this.menuItems.push(menuCompany)
           break
+        default:
+          break
+      }
+    })
+  }
+
+  loadCompanyForms = () => {
+    this.companyForms = []
+    const forms = store.companyStore.companyForms
+    forms?.forEach((item) => {
+      switch (item.name) {
+        case 'StaffForm':
+          const formStaff: FormItems = {
+            action: '/laborMarket',
+            name: item.name,
+            title: item.title,
+            description: item.description
+          }
+          this.companyForms.push(formStaff)
+          break
+        case 'SubContractorForm':
+          const formSubContractor: FormItems = {
+            action: '/subContractor',
+            name: item.name,
+            title: item.title,
+            description: item.description
+          }
+          this.companyForms.push(formSubContractor)
+          break
+        case 'ProjectOverviewForm':
+          const formProjectOverview: FormItems = {
+            action: '/projectOverview',
+            name: item.name,
+            title: item.title,
+            description: item.description
+          }
+          this.companyForms.push(formProjectOverview)
+          break
+
         default:
           break
       }

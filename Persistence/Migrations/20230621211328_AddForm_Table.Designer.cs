@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ProgresaDataContext))]
-    partial class ProgresaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20230621211328_AddForm_Table")]
+    partial class AddForm_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,7 +136,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 6, 21, 18, 50, 42, 557, DateTimeKind.Local).AddTicks(169));
+                        .HasDefaultValue(new DateTime(2023, 6, 21, 16, 13, 28, 178, DateTimeKind.Local).AddTicks(1151));
 
                     b.Property<string>("Director")
                         .HasColumnType("nvarchar(max)");
@@ -263,46 +266,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("FunctionTypes");
-                });
-
-            modelBuilder.Entity("Domain.Entities.ProjectOverview", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Client")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NatureProject")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Personnel")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ProjectLocation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProjectName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.ToTable("ProjectOverviews");
                 });
 
             modelBuilder.Entity("Domain.Entities.Sector", b =>
@@ -660,17 +623,6 @@ namespace Persistence.Migrations
                     b.Navigation("Sector");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ProjectOverview", b =>
-                {
-                    b.HasOne("Domain.Entities.CompanyUser", "Company")
-                        .WithMany("ProjectOverviews")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-                });
-
             modelBuilder.Entity("Domain.Entities.StaffData", b =>
                 {
                     b.HasOne("Domain.Entities.CompanyUser", "Company")
@@ -763,8 +715,6 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.CompanyUser", b =>
                 {
                     b.Navigation("CurrentStaff");
-
-                    b.Navigation("ProjectOverviews");
 
                     b.Navigation("StaffData");
 

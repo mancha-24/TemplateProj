@@ -8,6 +8,7 @@ import DrawerStore from './drawerStore'
 import MasterDataStore from './masterDataStore'
 import LaborMarketFormsStore from './laborMarketFormsStore'
 import SubContractorFormStore from './subContractorFormStore'
+import ProjectOverviewFormStore from './projectOverviewFormStore'
 
 interface Store {
   userStore: UserStore
@@ -18,6 +19,7 @@ interface Store {
   companyStore: CompanyStore
   laborMarketFormsStore: LaborMarketFormsStore
   subContractorFormStore: SubContractorFormStore
+  projectOverviewFormStore: ProjectOverviewFormStore
   masterDataStore: MasterDataStore
 }
 
@@ -30,7 +32,8 @@ export const store: Store = {
   companyStore: new CompanyStore(),
   laborMarketFormsStore: new LaborMarketFormsStore(),
   masterDataStore: new MasterDataStore(),
-  subContractorFormStore: new SubContractorFormStore()
+  subContractorFormStore: new SubContractorFormStore(),
+  projectOverviewFormStore: new ProjectOverviewFormStore()
 }
 
 export const StoreContext = createContext(store)

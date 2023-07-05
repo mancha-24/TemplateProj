@@ -8,6 +8,8 @@ import { PaginatedResult } from '../master/models/pagination'
 import { type CompanyFunction } from '../master/models/companyFunction'
 import { type LaborMarket, type LaborMarketFormValues } from '../master/models/laborMarket'
 import { type SubContractorFormValues, type SubContractor } from '../master/models/subContractor'
+import { type FormItems } from '../master/types/formItems'
+import { type ProjectOverviewFormValues, type ProjectOverview } from '../master/models/projectOverview'
 
 const sleep = async (delay: number) => {
   return await new Promise((resolve) => {
@@ -72,7 +74,12 @@ const CompanyService = {
   listSubContractors: async (params: URLSearchParams) => await axios.get<PaginatedResult<SubContractor[]>>('/subcontractor', { params }).then(responseBody),
   createSubContractor: async (subContractor: SubContractorFormValues) => await requests.post('/subcontractor', subContractor),
   updateSubContractor: async (subContractor: SubContractorFormValues) => await requests.put(`/subcontractor/${subContractor.id}`, subContractor),
-  deleteSubContractor: async (id: string) => await requests.del(`/subcontractor/${id}`)
+  deleteSubContractor: async (id: string) => await requests.del(`/subcontractor/${id}`),
+  listProjectOverviews: async (params: URLSearchParams) => await axios.get<PaginatedResult<ProjectOverview[]>>('/projectoverview', { params }).then(responseBody),
+  createProjectOverview: async (projectOverview: ProjectOverviewFormValues) => await requests.post('/projectoverview', projectOverview),
+  deleteProjectOverview: async (id: string) => await requests.del(`/projectoverview/${id}`),
+  updateProjectOverview: async (projectOverview: ProjectOverviewFormValues) => await requests.put(`/projectoverview/${projectOverview.id}`, projectOverview),
+  listCompanyForms: async () => await requests.get<FormItems[]>('/form')
 }
 
 const Function = {

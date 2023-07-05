@@ -20,8 +20,13 @@ namespace Application.Core
                 .ForMember(d => d.Quantity, o => o.MapFrom(f => f.SubAquantity + f.SubBquantity + f.SubCquantity + f.SubDquantity + 
                                                             f.AutoAdmissionQuantity + f.VtvQuantity + f.VvQuantity));
                 
-             CreateMap<SubContractor, SubContractorDto>();
-             CreateMap<SubContractor, SubContractor>();
+            CreateMap<SubContractor, SubContractorDto>();
+            CreateMap<SubContractor, SubContractor>();
+
+            CreateMap<Form, FormDto>();
+
+            CreateMap<ProjectOverview, ProjectOverviewDto>();
+            CreateMap<ProjectOverview, ProjectOverview>();
         }
     }
 }

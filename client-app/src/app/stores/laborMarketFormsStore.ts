@@ -151,7 +151,7 @@ export default class LaborMarketFormsStore {
     this.laborMarketRecordTotals.set('Sub D', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.subDquantity, 0))
     this.laborMarketRecordTotals.set('VTV', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.vtvQuantity, 0))
     this.laborMarketRecordTotals.set('VV', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.vvQuantity, 0))
-    this.laborMarketRecordTotals.set('AutoAdmission', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.autoAdmissionQuantity, 0))
+    this.laborMarketRecordTotals.set('Toelating van rechtswege', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.autoAdmissionQuantity, 0))
   }
 
   // Project Overview

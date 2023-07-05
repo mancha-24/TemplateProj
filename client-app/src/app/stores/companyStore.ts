@@ -3,8 +3,10 @@ import { type Company, type CompanyFormValues } from '../master/models/company'
 import agent from '../api/agent'
 import { type Pagination, PagingParams } from '../master/models/pagination'
 import { format } from 'date-fns'
+import { type FormItems } from '../master/types/formItems'
 
 export default class CompanyStore {
+  companyForms: FormItems[] = []
   companies: Company[] = []
   companyRegistry = new Map<string, Company>()
   selectedCompany: Company | undefined = undefined
@@ -110,5 +112,14 @@ export default class CompanyStore {
 
   get companiesByDate () {
     return Array.from(this.companyRegistry.values()).sort((a, b) => b.creationDate!.getTime() - a.creationDate!.getTime())
+  }
+
+  getCompanyForms = async () => {
+    try {
+      const forms = await agent.CompanyService.listCompanyForms()
+      runInAction(() => this.companyForms = forms)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

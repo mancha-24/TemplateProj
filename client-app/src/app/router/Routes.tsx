@@ -8,6 +8,7 @@ import CompanyAdminComponent from '../master/pages/company/companyAdminComponent
 import CompanyComponent from '../master/pages/company/companyComponent'
 import LaborMarketPage from '../master/pages/company/laborMarketPage'
 import SubContractorPage from '../master/pages/company/subContractorPage'
+import ProjectOverviewPage from '../master/pages/company/projectOverviewPage'
 
 export const routes: RouteObject[] = [
   {
@@ -22,7 +23,8 @@ export const routes: RouteObject[] = [
           { path: 'companyAdmin', element: <CompanyAdminComponent /> },
           { path: 'company', element: <CompanyComponent /> },
           { path: 'laborMarket', element: <LaborMarketPage /> },
-          { path: 'projectOverview', element: <SubContractorPage /> }
+          { path: 'subContractor', element: <SubContractorPage /> },
+          { path: 'projectOverview', element: <ProjectOverviewPage /> }
         ]
       },
       { path: 'login', element: <Login /> }

@@ -6,5 +6,6 @@ namespace Domain.Entities
         public string SectorName { get; set; }
         public ICollection<Function> Functions { get; set; }
         public ICollection<CompanyUser> Companies { get; set; }
+        public ICollection<Form> Forms { get; set; }
     }
 }

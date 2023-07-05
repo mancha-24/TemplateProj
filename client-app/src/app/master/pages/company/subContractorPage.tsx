@@ -17,7 +17,7 @@ export default observer(function SubContractorPage () {
   const navigate = useNavigate()
   const { companyStore, modalStore, subContractorFormStore } = useStore()
   const { loadCompany, clearSelectedCompany, loadingScreen: loadingCompany, selectedCompany: company } = companyStore
-  const { loadingScreen: loadingProject, subContractorRegistry, groupedSubContractors, deleteSubContractor } = subContractorFormStore
+  const { loadingScreen: loadingSubcontractor, subContractorRegistry, groupedSubContractors, deleteSubContractor } = subContractorFormStore
   useEffect(() => {
     void loadCompany(undefined)
     return () => { clearSelectedCompany() }
@@ -34,7 +34,7 @@ export default observer(function SubContractorPage () {
   if (loadingCompany || !company) return <LoadingComponent inverted/>
   return (
     <>
-        <HeaderModule title='Project Overview' subtitle='Administration' />
+        <HeaderModule title='Sub contractor' subtitle='Administration' />
         <div className='static my-5 mx-4 bg-white rounded-md overflow-y-auto scroll-smooth shadow-sm'
                  style={{ maxHeight: '760px', height: '760px' }}>
             <div className='p-4'>
@@ -48,11 +48,11 @@ export default observer(function SubContractorPage () {
             <div className='border-t mt-4'/>
 
             <div className='flex justify-between px-16 pt-6 pb-2'>
-                <p className='font-poppins text-2xl font-bold'>Project Overview</p>
+                <p className='font-poppins text-2xl font-bold'>Sub Contractor</p>
                 <ButtonComponent content='create' buttonAction={() => { modalStore.openModal(<SubContractorForm />) }}/>
             </div>
             <div className='px-16 pt-0 pb-10 grow'>
-            {loadingProject
+            {loadingSubcontractor
               ? <SpinnerComponent content='Loading data...' />
               : <table className='mt-4 w-full table-auto text-center shadow-md'>
                     <thead>

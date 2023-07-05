@@ -58,10 +58,10 @@ export default observer(function SubContractorForm ({ id = '' }: Props) {
                 </div>
                 <div className='grid grid-cols-3 gap-4 h-full w-full border-2 border-gray-200 rounded-lg shadow-lg p-8 font-poppins'>
                   <div className='w-1'>
-                    <InputCustom name='name' variant='standard' type='text' max={5} label='Name of subcontractors*' />
+                    <InputCustom name='name' variant='standard' type='text' label='Name of subcontractors*' />
                   </div>
                   <div className='w-1'>
-                    <InputCustom name='since' variant='standard' type='text' max={5} label='Contract since*' />
+                    <InputCustom name='since' variant='standard' type='text' label='Contract since*' />
                   </div>
                   <div className='w-1'>
                     <InputCustom name='employeesNumber' variant='standard' type='number' label='Number of employees*' />

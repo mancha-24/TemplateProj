@@ -11,7 +11,7 @@ interface Props {
 export default function SimpleCardComponent (props: Props) {
   return (
     <>
-        <Card className='w-96 cursor-pointer shadow-lg shadow-blue-gray-200 mr-5'>
+        <Card className='w-96 cursor-pointer shadow-lg shadow-blue-gray-200 mr-5 h-64'>
             {/* <BadgeComponent content={`${props.isPending ? '!' : ''}`} pending={props.isPending}/> */}
             <CardBody>
                 <h1 className='font-poppins text-2xl text-black'>{props.title}</h1>

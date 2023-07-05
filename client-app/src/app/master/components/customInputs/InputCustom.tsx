@@ -24,6 +24,7 @@ export default function InputCustom (props: Props) {
             style={{ fontFamily: 'Poppins, sans-serif' }}
             onBlur={() => { helpers.setTouched(true) }}
             onChange={(e) => { helpers.setValue(e.target.value) }}
+            value={undefined}
         />
         { meta.touched && meta.error
           ? <Label pointing prompt className='font-poppins w-52'>{meta.error} </Label>
