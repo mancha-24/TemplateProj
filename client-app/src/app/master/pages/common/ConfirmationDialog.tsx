@@ -5,9 +5,15 @@ import { useStore } from '../../../stores/store'
 
 interface Props {
   onClick: () => void
+  title?: string
+  desc?: string
 }
 
-export default observer(function ConfirmationDialog ({ onClick }: Props) {
+export default observer(function ConfirmationDialog ({
+  onClick,
+  title = 'Confirmation Delete',
+  desc = 'Are you sure you want to delete this record? This action cannot be undone.'
+}: Props) {
   const { modalStore } = useStore()
   function HandleConfirm () {
     onClick()
@@ -17,10 +23,10 @@ export default observer(function ConfirmationDialog ({ onClick }: Props) {
     <>
         <div className='p-8 pt-0'>
             <h2 className='font-poppins font-semibold text-red-300 text-3xl text-left mb-7'>
-                Confirmation Delete
+                {title}
             </h2>
             <div className='flex flex-col mt-4 font-poppins text-black text-sm'>
-                Are you sure you want to delete this record? This action cannot be undone.
+                {desc}
                 <FaceFrownIcon strokeWidth={2} className='self-center h-14 w-14' />
             </div>
             <div className='border-t mt-4'/>

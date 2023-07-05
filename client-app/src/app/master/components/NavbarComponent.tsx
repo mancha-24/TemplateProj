@@ -2,7 +2,7 @@ import { useStore } from '../../stores/store'
 import { observer } from 'mobx-react-lite'
 import { Navbar } from '@material-tailwind/react'
 import { UserIcon } from '@heroicons/react/24/outline'
-import NotImplementedComponent from '../pages/common/notImplementedComponent'
+import UserCard from './UserCard'
 
 export default observer(function NavBarComponent () {
   const { userStore: { user }, drawerStore } = useStore()
@@ -19,7 +19,7 @@ export default observer(function NavBarComponent () {
                                   text-base bg-gray-900 w-full font-poppins border-2 border-transparent
                                   hover:bg-blue-900 transition duration-500
                                   focus:bg-blue-900 focus:border-white focus:border-2'
-                                  onClick={() => { drawerStore.openDrawer(<NotImplementedComponent />) }}>
+                                  onClick={() => { drawerStore.openDrawer(<UserCard />) }}>
               <span className='mr-3'>
                 \{user?.userName}
               </span>

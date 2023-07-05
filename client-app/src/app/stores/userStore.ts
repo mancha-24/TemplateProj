@@ -33,4 +33,10 @@ export default class UserStore {
       console.log(error)
     }
   }
+
+  logout = () => {
+    store.commonStore.setToken(null)
+    this.user = null
+    void router.navigate('/')
+  }
 }

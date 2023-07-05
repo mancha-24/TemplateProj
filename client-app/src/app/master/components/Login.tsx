@@ -2,12 +2,12 @@ import { ErrorMessage, Field, Form, Formik } from 'formik'
 import { observer } from 'mobx-react-lite'
 import { Label } from 'semantic-ui-react'
 import { useStore } from '../../stores/store'
-// import loginImg from '../../../assets/dpl_main.jpg'
 import { ArrowLongRightIcon } from '@heroicons/react/20/solid'
 import { Checkbox } from '@material-tailwind/react'
 import { Ring } from '@uiball/loaders'
 import logo from '../../../../public/assets/plants-sitting.svg'
 import CreateCompanyComponent from '../pages/company/createCompanyComponent'
+import * as Yup from 'yup'
 
 export default observer(function Login () {
   const { userStore, modalStore } = useStore()
@@ -25,8 +25,12 @@ export default observer(function Login () {
                         .catch(() => {
                           setErrors({ error: 'Invalid email or password' })
                         })
-                    } }>
-                        {({ handleSubmit, isSubmitting, errors }) => (
+                    } }
+                    validationSchema={Yup.object({
+                      email: Yup.string().required().email('Incorrect Format'),
+                      password: Yup.string().required()
+                    })}>
+                        {({ handleSubmit, isSubmitting, isValid, errors }) => (
                             <Form className='max-w-[450px] w-full mx-auto bg-gray-100 p-10 px-12 rounded-lg shadow-lg' onSubmit={handleSubmit} autoComplete="off">
                                 <h2 className='font-poppins text-3xl dark:text-black text-left'>Log in</h2>
                                 <ErrorMessage
@@ -54,9 +58,13 @@ export default observer(function Login () {
                                         content='Sign In'
                                         type="submit" fluid color='orange' style={{ borderRadius: '0.5rem' }}/> */}
 
-                                <button type='submit' className='flex items-center justify-center rounded-lg px-6 pb-[6px] pt-2 h-12
+                                <button type='submit' className={`flex items-center justify-center rounded-lg px-6 pb-[6px] pt-2 h-12
                                                                 text-base bg-red-500 text-white w-full border-2 font-poppins
-                                                                hover:bg-opacity-70 hover:border-red-300 hover:border-2 transition duration-300'>
+                                                                ${!isValid
+                                                                ? 'opacity-10 cursor-default'
+                                                                : 'hover:bg-opacity-70 hover:border-red-300 hover:border-2 transition duration-300'}
+                                                                `}
+                                                                disabled={!isValid}>
                                         {!isSubmitting
                                           ? 'Sign In'
                                           : <Ring

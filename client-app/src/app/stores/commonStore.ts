@@ -31,6 +31,7 @@ export default class CommonStore {
   }
 
   loadMenuItems = () => {
+    this.menuItems = []
     const dashboardMenu: MenuItems = {
       action: '/home',
       gap: false,
