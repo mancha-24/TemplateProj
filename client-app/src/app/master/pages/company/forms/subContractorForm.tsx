@@ -54,17 +54,17 @@ export default observer(function SubContractorForm ({ id = '' }: Props) {
 
                 <span className='col-span-4 font-poppins text-black text-xl my-1 p-8'>Functies </span>
                 <div className='w-96 p-8 font-poppins shadow-sm mb-2'>
-                    <AutoComplete items={functionToDropDown} name='functionName' label='Function*' type='text' />
+                    <AutoComplete items={functionToDropDown} name='functionName' label='Functie*' type='text' />
                 </div>
                 <div className='grid grid-cols-3 gap-4 h-full w-full border-2 border-gray-200 rounded-lg shadow-lg p-8 font-poppins'>
                   <div className='w-1'>
-                    <InputCustom name='name' variant='standard' type='text' label='Name of subcontractors*' />
+                    <InputCustom name='name' variant='standard' type='text' label='Naam sub-contractor*' />
                   </div>
                   <div className='w-1'>
-                    <InputCustom name='since' variant='standard' type='text' label='Contract since*' />
+                    <InputCustom name='since' variant='standard' type='text' label='Contract sedert*' />
                   </div>
                   <div className='w-1'>
-                    <InputCustom name='employeesNumber' variant='standard' type='number' label='Number of employees*' />
+                    <InputCustom name='employeesNumber' variant='standard' type='number' label='Aantal werknemers*' />
                   </div>
                 </div>
                 <div className='flex justify-end mt-8'>

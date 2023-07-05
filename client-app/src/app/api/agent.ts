@@ -54,7 +54,8 @@ const responseBody = <T> (response: AxiosResponse<T>) => response.data
 
 const Account = {
   current: async () => await requests.get<User>('/account'),
-  login: async (user: UserFormValues) => await requests.post<User>('/account/login', user)
+  login: async (user: UserFormValues) => await requests.post<User>('/account/login', user),
+  activate: async (id: string) => { await requests.post(`/account/${id}/activate`, {}) }
   // register: (user: UserFormValues) => requests.post<User>('/account/register', user)
 }
 

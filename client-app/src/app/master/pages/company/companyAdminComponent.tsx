@@ -9,14 +9,15 @@ import { format } from 'date-fns'
 import { DotSpinner } from '@uiball/loaders'
 import PaginationComponent from '../../components/table/PaginationComponent'
 import NotImplementedComponent from '../common/notImplementedComponent'
+import ConfirmationDialog from '../common/ConfirmationDialog'
 
 export default observer(function CompanyAdminComponent () {
-  const { companyStore, drawerStore, modalStore } = useStore()
-  const { companyRegistry, loadCompanies, groupedCompanies, loadingScreen } = companyStore
+  const { companyStore, drawerStore, modalStore, userStore } = useStore()
+  const { companyRegistry, groupedCompanies, loadingScreen } = companyStore
 
   useEffect(() => {
     if (companyRegistry.size <= 1) void companyStore.loadCompanies()
-  }, [loadCompanies])
+  }, [companyRegistry])
   return (
     <>
         <HeaderModule title='Company administration' subtitle='Administration' />
@@ -144,7 +145,16 @@ export default observer(function CompanyAdminComponent () {
                                                         <span className='font-poppins text-black'>Manage</span>
                                                     </MenuItem>
                                                     {!company.isActive &&
-                                                    <MenuItem className='flex justify-center' onClick={() => { modalStore.openModal(<NotImplementedComponent />, 'xs') }}>
+                                                    <MenuItem className='flex justify-center' onClick={() => {
+                                                      modalStore.openModal(
+                                                      <ConfirmationDialog
+                                                        onClick={() => { void userStore.activateAccount(company.id) }}
+                                                        title='Activate Account'
+                                                        desc='You are about to activate this company account. By clicking confirm, you will gain access to the features and functionalities.'
+                                                        defaultIcon={false}/>
+                                                      , 'xs')
+                                                    }}
+                                                        >
                                                         <span className='font-poppins text-black'>Activate</span>
                                                     </MenuItem>}
                                                 </MenuList>

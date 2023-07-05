@@ -1,4 +1,4 @@
-import { FaceFrownIcon } from '@heroicons/react/24/outline'
+import { FaceFrownIcon, FaceSmileIcon } from '@heroicons/react/24/outline'
 import { observer } from 'mobx-react-lite'
 import ButtonComponent from '../../components/customInputs/ButtonComponent'
 import { useStore } from '../../../stores/store'
@@ -7,12 +7,14 @@ interface Props {
   onClick: () => void
   title?: string
   desc?: string
+  defaultIcon?: boolean
 }
 
 export default observer(function ConfirmationDialog ({
   onClick,
   title = 'Confirmation Delete',
-  desc = 'Are you sure you want to delete this record? This action cannot be undone.'
+  desc = 'Are you sure you want to delete this record? This action cannot be undone.',
+  defaultIcon = true
 }: Props) {
   const { modalStore } = useStore()
   function HandleConfirm () {
@@ -27,7 +29,11 @@ export default observer(function ConfirmationDialog ({
             </h2>
             <div className='flex flex-col mt-4 font-poppins text-black text-sm'>
                 {desc}
-                <FaceFrownIcon strokeWidth={2} className='self-center h-14 w-14' />
+                {defaultIcon
+                  ? <FaceFrownIcon strokeWidth={2} className='self-center h-14 w-14' />
+                  : <FaceSmileIcon strokeWidth={2} className='self-center h-14 w-14' />
+                }
+
             </div>
             <div className='border-t mt-4'/>
             <div className='flex justify-end mt-4 items-center'>

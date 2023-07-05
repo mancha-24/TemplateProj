@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using API.Services;
+using Application.Companies;
 using Application.DTOs;
 using Domain.Entities.Account;
 using Microsoft.AspNetCore.Authorization;
@@ -12,7 +13,7 @@ namespace API.Controllers.Account
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccountController : ControllerBase
+    public class AccountController : BaseApiController
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly TokenService _tokenService;
@@ -74,7 +75,7 @@ namespace API.Controllers.Account
             
             if (user == null) return Unauthorized();
             
-            //if (await _userManager.IsLockedOutAsync(user)) return Unauthorized();
+            if (await _userManager.IsLockedOutAsync(user)) return Unauthorized();
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
 
@@ -90,6 +91,13 @@ namespace API.Controllers.Account
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
 
             return CreateUserObject(user);
+        }
+
+        [Authorize]
+        [HttpPost("{id}/activate")]
+        public async Task<IActionResult> ActivateAccount(Guid id)
+        {
+            return HandleResult(await Mediator.Send(new Activate.Command{Id = id}));
         }
 
         private UserDto CreateUserObject(AppUser user)

@@ -3,6 +3,7 @@ import { type UserFormValues, type User } from '../master/models/user'
 import agent from '../api/agent'
 import { router } from '../router/Routes'
 import { store } from './store'
+import { type Company } from '../master/models/company'
 
 export default class UserStore {
   user: User | null = null
@@ -38,5 +39,16 @@ export default class UserStore {
     store.commonStore.setToken(null)
     this.user = null
     void router.navigate('/')
+  }
+
+  activateAccount = async (id: string) => {
+    try {
+      await agent.Account.activate(id)
+      runInAction(() => {
+        store.companyStore.companyRegistry = new Map<string, Company>()
+      })
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

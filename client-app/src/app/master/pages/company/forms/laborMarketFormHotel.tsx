@@ -55,7 +55,7 @@ export default observer(function LaborMarketFormHotel ({ id = '' }: Props) {
                     <h2 className='font-poppins font-semibold text-black text-3xl text-left mb-7'>Labor Market Registration </h2>
                     <span className='col-span-4 font-poppins text-black text-xl my-1 p-8'>Functies </span>
                     <div className='w-96 p-8 font-poppins shadow-sm mb-2'>
-                        <AutoComplete items={functionToDropDown} name='functionName' label='*Function' type='text' />
+                        <AutoComplete items={functionToDropDown} name='functionName' label='*Functies' type='text' />
                     </div>
                     <div className='grid grid-cols-4 gap-4 h-full w-full border-2 border-gray-200 rounded-lg shadow-lg p-8 font-poppins'>
                       <span className='col-span-4 font-poppins text-black text-xl mb-2'>Niet-Toelatingsplichtig</span>

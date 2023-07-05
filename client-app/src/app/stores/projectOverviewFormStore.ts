@@ -31,7 +31,6 @@ export default class ProjectOverviewFormStore {
         this.setProjectOverview(projectOverview)
       })
       this.setPagination(result.pagination)
-      console.log('pasa')
       this.setLoadingScreen(false)
     } catch (error) {
       this.setLoadingScreen(false)

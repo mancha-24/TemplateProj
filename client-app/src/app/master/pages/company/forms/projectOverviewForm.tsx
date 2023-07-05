@@ -16,9 +16,13 @@ export default observer(function ProjectOverviewForm ({ id = '' }: Props) {
   const [projectOverview, setProjectOverview] = useState<ProjectOverviewFormValues>(new ProjectOverviewFormValues())
 
   useEffect(() => {
-    if (id) void projectOverviewFormStore.loadProjectOverview(id).then(record => { setProjectOverview(new ProjectOverviewFormValues(record)) })
+    if (id) {
+      void projectOverviewFormStore.loadProjectOverview(id).then(record => {
+        setProjectOverview(new ProjectOverviewFormValues(record))
+      })
+    }
     return () => { projectOverviewFormStore.clearProjectOverviewRegistry() }
-  }, [])
+  }, [id])
 
   function handleFormSubmit (record: ProjectOverviewFormValues) {
     if (!record.id) {
@@ -48,13 +52,13 @@ export default observer(function ProjectOverviewForm ({ id = '' }: Props) {
 
                 <div className='grid grid-cols-3 gap-4 h-full w-full border-2 border-gray-200 rounded-lg shadow-lg p-8 font-poppins'>
                     <div className='w-1 p-4'>
-                        <InputCustom name='projectName' variant='standard' type='text' label='Project Name*' />
+                        <InputCustom name='projectName' variant='standard' type='text' label='Project (naam vermelden)*' />
                     </div>
                     <div className='w-1 p-4'>
-                        <InputCustom name='projectLocation' variant='standard' type='text' label='Project Location*' />
+                        <InputCustom name='projectLocation' variant='standard' type='text' label='Vestiging project (adres)*' />
                     </div>
                     <div className='w-1 p-4'>
-                        <InputCustom name='natureProject' variant='standard' type='text' label='Nature of Project*' />
+                        <InputCustom name='natureProject' variant='standard' type='text' label='Aard project (zie toelichting)*' />
                     </div>
                     <div className='w-1 p-4'>
                         {/* <DatePickerInput placeholderText='Start Date*'
@@ -62,16 +66,16 @@ export default observer(function ProjectOverviewForm ({ id = '' }: Props) {
                             name='startDate'
                             timeCaption='time'
                             dateFormat='MMMM d, yyyy h:mm aa'/> */}
-                        <InputCustom name='startDate' variant='standard' type='date' label='Start Date*' />
+                        <InputCustom name='startDate' variant='standard' type='date' label='Duur: begindatum project*' />
                     </div>
                     <div className='w-1 p-4'>
-                        <InputCustom name='endDate' variant='standard' type='date' label='End Date*' />
+                        <InputCustom name='endDate' variant='standard' type='date' label='Duur: einddatum project*' />
                     </div>
                     <div className='w-1 p-4'>
-                        <InputCustom name='client' variant='standard' type='text' label='Client*' />
+                        <InputCustom name='client' variant='standard' type='text' label='Opdrachtgever*' />
                     </div>
                     <div className='w-1 p-4'>
-                        <InputCustom name='personnel' variant='standard' type='number' label='Personnel*' />
+                        <InputCustom name='personnel' variant='standard' type='number' label='Nodig personeel voor dit project*' />
                     </div>
                 </div>
                 <div className='flex justify-end mt-5'>
