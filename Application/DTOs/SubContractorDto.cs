@@ -6,8 +6,9 @@ namespace Application.DTOs
         public Guid FunctionId { get; set; }
         public string FunctionName { get; set; }
         public string Name { get; set; }
-        public string Since { get; set; }
+        // public string Since { get; set; }
         public int EmployeesNumber { get; set; }
         public DateTime CreationDate { get; set; }
+        public bool NeedEmployees { get; set; }
     }
 }

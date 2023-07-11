@@ -7,6 +7,7 @@ import { subContractorValidationSchema } from '../../../common/validations/subCo
 import AutoComplete from '../../../components/customInputs/AutoComplete'
 import InputCustom from '../../../components/customInputs/InputCustom'
 import ButtonComponent from '../../../components/customInputs/ButtonComponent'
+import { Switch } from '@material-tailwind/react'
 
 interface Props {
   id?: string
@@ -17,8 +18,16 @@ export default observer(function SubContractorForm ({ id = '' }: Props) {
   const { functionToDropDown } = masterDataStore
   const [subContractor, setSubContractor] = useState<SubContractorFormValues>(new SubContractorFormValues())
 
+  const [needEmployees, setNeedEmployees] = useState(false)
+
   useEffect(() => {
-    if (id) void subContractorFormStore.loadSubContractor(id).then(record => { setSubContractor(new SubContractorFormValues(record)) })
+    if (id) {
+      void subContractorFormStore.loadSubContractor(id).then(record => {
+        setSubContractor(new SubContractorFormValues(record))
+        setNeedEmployees(record?.needEmployees ?? false)
+      })
+    }
+
     void masterDataStore.loadFunctionsCompanyDropdown()
     return () => { subContractorFormStore.clearSubContractorRegistry() }
   }, [])
@@ -27,6 +36,7 @@ export default observer(function SubContractorForm ({ id = '' }: Props) {
     const functSelected = functionToDropDown.find(item => item.text === record.functionName)
     if (functSelected) {
       record.functionId = functSelected?.value
+      record.needEmployees = needEmployees
       if (!record.id) {
         subContractorFormStore.createSubContractor(record)
           .then(() => { modalStore.closeModal() })
@@ -60,11 +70,14 @@ export default observer(function SubContractorForm ({ id = '' }: Props) {
                   <div className='w-1'>
                     <InputCustom name='name' variant='standard' type='text' label='Naam sub-contractor*' />
                   </div>
-                  <div className='w-1'>
+                  {/* <div className='w-1'>
                     <InputCustom name='since' variant='standard' type='text' label='Contract sedert*' />
-                  </div>
+                  </div> */}
                   <div className='w-1'>
                     <InputCustom name='employeesNumber' variant='standard' type='number' label='Aantal werknemers*' />
+                  </div>
+                  <div className='w-full mt-4'>
+                    <Switch color='amber' label='Need more employees' id='auto-update' name='needEmployees' checked={needEmployees} onChange={() => { setNeedEmployees(!needEmployees) }}/>
                   </div>
                 </div>
                 <div className='flex justify-end mt-8'>

@@ -59,7 +59,7 @@ export default observer(function SubContractorPage () {
                         <tr>
                             {columnsSubContractor.map((column) => (
                             <th key={column.id} className='cursor-pointer bg-blue-gray-50/50 p-4 transition-colors hover:bg-blue-gray-50'>
-                                <div className='flex justify-normal items-center'>
+                                <div className='flex justify-center items-center'>
                                     <span className='mr-3 font-poppins'>
                                         {column.text}
                                     </span>
@@ -78,17 +78,20 @@ export default observer(function SubContractorPage () {
                                 <Fragment key={group}>
                                 { records.map(record => (
                                     <tr key={record.id} className='hover:bg-blue-gray-50 cursor-pointer'>
-                                        <td className='p-4 border-b border-blue-gray-50 font-poppins text-left'>
-                                            {record.functionName}
-                                        </td>
-                                        <td className='p-4 border-b border-blue-gray-50 font-poppins text-left'>
+                                        <td className='p-4 border-b border-blue-gray-50 font-poppins text-center'>
                                             {record.name}
                                         </td>
-                                        <td className='p-4 border-b border-blue-gray-50 font-poppins text-left'>
-                                            {record.since}
+                                        <td className='p-4 border-b border-blue-gray-50 font-poppins text-center'>
+                                            {record.functionName}
                                         </td>
-                                        <td className='p-4 border-b border-blue-gray-50 font-poppins text-left'>
+                                        {/* <td className='p-4 border-b border-blue-gray-50 font-poppins text-left'>
+                                            {record.since}
+                                        </td> */}
+                                        <td className='p-4 border-b border-blue-gray-50 font-poppins text-center'>
                                             {record.employeesNumber}
+                                        </td>
+                                        <td className='p-4 border-b border-blue-gray-50 font-poppins text-center'>
+                                            {record.needEmployees ? 'Yes' : 'No'}
                                         </td>
                                         <td className='p-4 border-b border-blue-gray-50 font-poppins'>
                                         <Menu placement='left-start'>

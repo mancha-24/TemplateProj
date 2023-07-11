@@ -3,9 +3,10 @@ export interface SubContractor {
   functionId: string
   functionName: string
   name: string
-  since: string
+  // since: string
   employeesNumber: number
   creationDate: Date | null
+  needEmployees: boolean
 }
 
 export class SubContractor implements SubContractor {
@@ -19,8 +20,9 @@ export class SubContractorFormValues {
   functionId?: string = undefined
   functionName: string = ''
   name: string = ''
-  since: string = ''
+  // since: string = ''
   employeesNumber: number = 0
+  needEmployees: boolean = false
 
   constructor (subContractor?: SubContractorFormValues) {
     if (subContractor) {
@@ -28,8 +30,9 @@ export class SubContractorFormValues {
       this.functionId = subContractor.functionId
       this.functionName = subContractor.functionName
       this.name = subContractor.name
-      this.since = subContractor.since
+      // this.since = subContractor.since
       this.employeesNumber = subContractor.employeesNumber
+      this.needEmployees = subContractor.needEmployees
     }
   }
 }

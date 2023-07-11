@@ -6,8 +6,9 @@
 // ]
 
 export const columnsSubContractor = [
-  { text: 'Functie', id: '1' },
-  { text: 'Naam sub-contractor', id: '2' },
-  { text: 'Contract sedert', id: '3' },
-  { text: 'Aantal werknemers', id: '4' }
+  { text: 'Naam sub-contractor', id: '1' },
+  { text: 'Functie', id: '2' },
+  // { text: 'Contract sedert', id: '3' },
+  { text: 'QTY Current Employees (Aantal werknemers)', id: '3' },
+  { text: 'In need of more employees', id: '4' }
 ]

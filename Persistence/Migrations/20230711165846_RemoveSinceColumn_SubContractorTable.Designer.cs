@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ProgresaDataContext))]
-    partial class ProgresaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20230711165846_RemoveSinceColumn_SubContractorTable")]
+    partial class RemoveSinceColumn_SubContractorTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,7 +136,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 7, 11, 12, 19, 27, 461, DateTimeKind.Local).AddTicks(293));
+                        .HasDefaultValue(new DateTime(2023, 7, 11, 11, 58, 46, 411, DateTimeKind.Local).AddTicks(1084));
 
                     b.Property<string>("Director")
                         .HasColumnType("nvarchar(max)");
@@ -439,9 +442,6 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("NeedEmployees")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
