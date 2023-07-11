@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
@@ -11,9 +12,11 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(ProgresaDataContext))]
-    partial class ProgresaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20230710213722_StaffData_NeedCountColumns")]
+    partial class StaffData_NeedCountColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -133,7 +136,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 7, 10, 19, 34, 33, 38, DateTimeKind.Local).AddTicks(3549));
+                        .HasDefaultValue(new DateTime(2023, 7, 10, 16, 37, 22, 646, DateTimeKind.Local).AddTicks(7424));
 
                     b.Property<string>("Director")
                         .HasColumnType("nvarchar(max)");
@@ -374,12 +377,6 @@ namespace Persistence.Migrations
 
                     b.Property<int>("SubDquantity")
                         .HasColumnType("int");
-
-                    b.Property<string>("TimeDetail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TimeDetailFuture")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Training")
                         .HasColumnType("nvarchar(max)");

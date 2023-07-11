@@ -49,7 +49,7 @@ export default observer(function LaborMarketPage () {
                 <div className='border-t mt-4'/>
 
                 <div className='flex justify-between px-16 pt-6 pb-2'>
-                    <p className='font-poppins text-2xl font-bold'>Market data</p>
+                    <p className='font-poppins text-2xl font-bold'>Huidig Personeel</p>
                     <ButtonComponent content='create' buttonAction={() => { modalStore.openModal(<LaborMarketFormHotel />) }}/>
                 </div>
                 <div className='px-16 pt-0 pb-10 grow'>
@@ -86,7 +86,7 @@ export default observer(function LaborMarketPage () {
                                                 {record.training}
                                             </td>
                                             <td className='p-4 border-b border-blue-gray-50 font-poppins text-left'>
-                                                {record.salaryMonth}
+                                                {record.functionName === 'Directeur' ? 'N.V.T' : record.salaryMonth}
                                             </td>
                                             <td className='p-4 border-b border-blue-gray-50 font-poppins text-left'>
                                                 {record.daysWeek}
@@ -144,8 +144,8 @@ export default observer(function LaborMarketPage () {
                 <div className='border-t mt-4'/>
                 {laborMarketRecordsRegistry.size > 0 &&
                 <div className='px-16 pt-6 pb-2 mb-4'>
-                    <p className='font-poppins text-2xl font-bold'>Total staff:</p>
-                    <div className='grid grid-cols-7 gap-4 rounded-lg justify-center items-center hover:bg-gray-100 duration-100 cursor-pointer p-4'>
+                    <p className='font-poppins text-2xl font-bold'>Toekomstige PERSONEEL:</p>
+                    <div className='grid grid-cols-8 gap-4 rounded-lg justify-center items-center hover:bg-gray-100 duration-100 cursor-pointer p-4'>
                         {Array.from(laborMarketFormsStore.laborMarketRecordTotals).map(([key, value]) => (
                             <div key={key}>
                                 <p className='font-poppins text-base font-bold text-center'>{key}</p>

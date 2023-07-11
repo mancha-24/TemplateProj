@@ -3,6 +3,7 @@ import { type LaborMarket, type LaborMarketFormValues } from '../master/models/l
 import agent from '../api/agent'
 import { type Pagination, PagingParams } from '../master/models/pagination'
 import { format } from 'date-fns'
+import { getDayAndHourBySelection } from '../master/common/utilities'
 
 export default class LaborMarketFormsStore {
   laborMarketRecords: LaborMarket[] = []
@@ -59,6 +60,19 @@ export default class LaborMarketFormsStore {
     try {
       const result = await agent.CompanyService.listLaboraMarket(this.axiosParams)
       result.data.forEach(laborMarket => {
+        runInAction(() => {
+          if (laborMarket.timeDetail && laborMarket.timeDetail !== '0') {
+            const result = getDayAndHourBySelection(laborMarket.timeDetail)
+            laborMarket.daysWeek = result.days!
+            laborMarket.hoursWeek = result.hours!
+          }
+          if (laborMarket.timeDetailFuture && laborMarket.timeDetailFuture !== '0') {
+            const resultFuture = getDayAndHourBySelection(laborMarket.timeDetailFuture)
+            laborMarket.daysWeekFuture = resultFuture.days!
+            laborMarket.hoursWeekFuture = resultFuture.hours!
+          }
+        })
+
         this.setLaborMarket(laborMarket)
         this.setLaboraMarketTotals()
       })
@@ -149,10 +163,9 @@ export default class LaborMarketFormsStore {
     this.laborMarketRecordTotals.set('Sub B', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.subBquantity, 0))
     this.laborMarketRecordTotals.set('Sub C', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.subCquantity, 0))
     this.laborMarketRecordTotals.set('Sub D', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.subDquantity, 0))
+    this.laborMarketRecordTotals.set('Toelating van rechtswege', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.autoAdmissionQuantity, 0))
     this.laborMarketRecordTotals.set('VTV', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.vtvQuantity, 0))
     this.laborMarketRecordTotals.set('VV', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.vvQuantity, 0))
-    this.laborMarketRecordTotals.set('Toelating van rechtswege', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.autoAdmissionQuantity, 0))
+    this.laborMarketRecordTotals.set('Aantal behoefte', Array.from(this.laborMarketRecordsRegistry.values()).reduce((accumulator, laborMarket) => accumulator + laborMarket.needCount + laborMarket.needCountFuture, 0))
   }
-
-  // Project Overview
 }

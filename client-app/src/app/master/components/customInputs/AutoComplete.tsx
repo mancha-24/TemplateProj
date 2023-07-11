@@ -8,6 +8,7 @@ interface Props {
   label?: string
   type?: string
   items: Array<{ value: string, text: string }>
+  onChange?: (value: string) => void
 }
 
 export default function AutoComplete (props: Props) {
@@ -31,6 +32,9 @@ export default function AutoComplete (props: Props) {
     setSuggestions([])
     helpers.setValue(suggestion.text)
     helpers.setTouched(true)
+    if (props.onChange) {
+      props.onChange(suggestion.text)
+    }
   }
 
   return (

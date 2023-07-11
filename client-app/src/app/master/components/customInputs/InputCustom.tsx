@@ -10,6 +10,7 @@ interface Props {
   max?: number
   variant?: variant
   step?: string
+  disabled?: boolean
 }
 
 export default function InputCustom (props: Props) {

@@ -13,6 +13,14 @@ export interface LaborMarket {
   salaryMonth: number
   daysWeek: number
   hoursWeek: number
+  timeDetail: string
+  needCount: number
+  trainingFuture: string
+  salaryMonthFuture: number
+  daysWeekFuture: number
+  hoursWeekFuture: number
+  timeDetailFuture: string
+  needCountFuture: number
   creationDate: Date | null
   quantity: number
 }
@@ -35,9 +43,17 @@ export class LaborMarketFormValues {
   vtvQuantity: number = 0
   vvQuantity: number = 0
   training: string = ''
-  salaryMonth: number = 0
+  salaryMonth: number = 1
   daysWeek: number = 0
   hoursWeek: number = 0
+  timeDetail: string = ''
+  needCount: number = 0
+  trainingFuture: string = ''
+  salaryMonthFuture: number = 1
+  daysWeekFuture: number = 0
+  hoursWeekFuture: number = 0
+  timeDetailFuture: string = ''
+  needCountFuture: number = 0
 
   constructor (laborMarket?: LaborMarketFormValues) {
     if (laborMarket) {
@@ -55,6 +71,14 @@ export class LaborMarketFormValues {
       this.salaryMonth = laborMarket.salaryMonth
       this.daysWeek = laborMarket.daysWeek
       this.hoursWeek = laborMarket.hoursWeek
+      this.timeDetail = laborMarket.timeDetail
+      this.needCount = laborMarket.needCount
+      this.trainingFuture = laborMarket.trainingFuture
+      this.salaryMonthFuture = laborMarket.salaryMonthFuture
+      this.daysWeekFuture = laborMarket.daysWeekFuture
+      this.hoursWeekFuture = laborMarket.hoursWeekFuture
+      this.timeDetailFuture = laborMarket.timeDetailFuture
+      this.needCountFuture = laborMarket.needCountFuture
     }
   }
 }

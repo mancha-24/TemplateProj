@@ -25,3 +25,9 @@
       transform: translateY(0);
     }
   }
+
+.tooltip-container {
+  z-index: 9999;
+  position: absolute;
+  /* Agrega cualquier otro estilo necesario para la tooltip */
+}

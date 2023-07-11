@@ -12,13 +12,16 @@ export default observer(function CompanyDataSection ({ company }: Props) {
             <h1 className='font-poppins text-2xl font-bold'>{company.trade}</h1>
         </div>
         <div className='ml-5 font-poppins'>
-            <span className='font-poppins text-lg'>RegName: {company.regName}</span>
+            <span className='font-poppins text-lg'>Registratie Naam: {company.regName}</span>
         </div>
         <div className='ml-5 font-poppins'>
             <h1 className='font-poppins text-lg'>Kvk: {company.kvkNumber}</h1>
         </div>
         <div className='ml-5 font-poppins'>
             <h1 className='font-poppins text-lg'>Director: {company.director}</h1>
+        </div>
+        <div className='ml-5 font-poppins'>
+            <span className='font-poppins text-lg'>Handelsnaam: {company.trade}</span>
         </div>
         <div className='ml-5 font-poppins'>
             <h1 className='font-poppins text-lg'>Address: {company.address}</h1>
