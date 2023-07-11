@@ -12,6 +12,7 @@ import SelectComponent from '../../../components/customInputs/SelectComponent'
 import { getDayAndHourBySelection } from '../../../common/utilities'
 import { opleidingOptions } from '../../../common/options/opleidingOptions'
 import TooltipComponent from '../../../components/customInputs/TooltipComponent'
+import { Chip } from '@material-tailwind/react'
 
 interface Props {
   id?: string
@@ -24,6 +25,8 @@ export default observer(function LaborMarketFormHotel ({ id = '' }: Props) {
   const [timeDetailValue, setTimeDetailValue] = useState('')
   const [timeDetailFutureValue, setTimeDetailFutureValue] = useState('')
   const [funtionValue, setFuntionValue] = useState('')
+  const [salaryValue, setSalaryValue] = useState(1893.40)
+  const [salaryFutureValue, setSalaryFutureValue] = useState(1893.40)
   useEffect(() => {
     if (id) {
       void laborMarketFormsStore.loadMarketRecord(id).then(record => {
@@ -46,6 +49,14 @@ export default observer(function LaborMarketFormHotel ({ id = '' }: Props) {
 
   function handleFunctionChangeAction (value: string) {
     setFuntionValue(value)
+  }
+
+  function handleSalaryChangeAction (value: number) {
+    setSalaryValue(value)
+  }
+
+  function handleSalaryFutureChangeAction (value: number) {
+    setSalaryFutureValue(value)
   }
 
   function handleFormSubmit (record: LaborMarketFormValues) {
@@ -141,7 +152,15 @@ export default observer(function LaborMarketFormHotel ({ id = '' }: Props) {
                                 className='p-3 rounded-md cursor-not-allowed text-center font-poppins'/>
                                 <input name='salaryMonth' hidden type='number' value={1}/>
                               </>
-                            : <InputCustom name='salaryMonth' variant='standard' type='number' label='*Bruto salaris per maand' step='any'/>
+                            : <>
+                            <InputCustom name='salaryMonth' variant='standard' type='number' label='*Bruto salaris per maand' step='any' onChange={handleSalaryChangeAction}/>
+                              {
+                                salaryValue < 1893.40 &&
+                                // <label className='w-full absolute'>Part Time</label>
+                                <Chip variant='ghost' color='amber' size='sm' value='Part Time' className='absolute w-24 normal-case font-poppins text-sm mt-2'
+                                                    icon={<span className="content-[''] block w-2 h-2 rounded-full mx-auto mt-1 bg-orange-600" />} />
+                              }
+                            </>
                         }
                       </div>
                       <div className='w-1'>
@@ -178,7 +197,16 @@ export default observer(function LaborMarketFormHotel ({ id = '' }: Props) {
                                 className='p-3 rounded-md cursor-not-allowed text-center font-poppins'/>
                               <input hidden name='salaryMonthFuture' type='number'/>
                             </>
-                            : <InputCustom name='salaryMonthFuture' variant='standard' type='number' label='*Bruto salaris per maand' step='any'/>
+                            : <>
+                              <InputCustom name='salaryMonthFuture' variant='standard' type='number' label='*Bruto salaris per maand' step='any' onChange={handleSalaryFutureChangeAction}/>
+                              {
+                                salaryFutureValue < 1893.40 &&
+                                // <label className='w-full absolute'>Part Time</label>
+                                <Chip variant='ghost' color='amber' size='sm' value='Part Time' className='absolute w-24 normal-case font-poppins text-sm mt-2'
+                                                    icon={<span className="content-[''] block w-2 h-2 rounded-full mx-auto mt-1 bg-orange-600" />} />
+                              }
+                            </>
+
                         }
                       </div>
                       <div className='w-1'>

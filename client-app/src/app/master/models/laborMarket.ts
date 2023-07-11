@@ -43,13 +43,13 @@ export class LaborMarketFormValues {
   vtvQuantity: number = 0
   vvQuantity: number = 0
   training: string = ''
-  salaryMonth: number = 1
+  salaryMonth: number = 1893.40
   daysWeek: number = 0
   hoursWeek: number = 0
   timeDetail: string = ''
   needCount: number = 0
   trainingFuture: string = ''
-  salaryMonthFuture: number = 1
+  salaryMonthFuture: number = 1893.40
   daysWeekFuture: number = 0
   hoursWeekFuture: number = 0
   timeDetailFuture: string = ''
